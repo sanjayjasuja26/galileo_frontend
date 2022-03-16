@@ -1,5 +1,4 @@
 import React from 'react';
-import CSSModules from 'react-css-modules';
 import './auth.css';
 import LeftContent from '../../components/Auth/LeftContent'
 import RightSection from '../../components/Auth/RightSection'
