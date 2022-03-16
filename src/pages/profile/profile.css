@@ -1,0 +1,29 @@
+.profile {
+    margin-top: 5rem;
+  }
+  .profile .wrap {
+    border-radius: 5px;
+    box-shadow: 8px 4px 19px 0px #00000011;
+    padding: 3rem;
+  }
+  .profile .wrap button {
+    width: 100%;
+    padding: 11px 20px !important;
+    border-radius: 35px !important;
+    background-color: #ff992b;
+    border-color: #ff992b;
+    box-shadow: 0px 3px 12px rgba(249, 161, 27, 0.382321);
+    margin-top: 19px;
+  }
+  .profile .wrap button:focus {
+    box-shadow: unset;
+  }
+  .profile .wrap .form label {
+    color: #002a4a;
+  }
+  .profile .wrap .form input {
+    border: 0;
+    background-color: #fafafa;
+    padding: 10px 9px;
+  }
+  

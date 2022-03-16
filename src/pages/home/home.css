@@ -1,0 +1,19 @@
+.inner-wrap .heading {
+    padding: 35px 0;
+  }
+  @media (max-width: 425px) {
+    .inner-wrap .heading {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+  .inner-wrap .heading p {
+    color: #002a4a;
+  }
+  .inner-wrap .heading p a {
+    color: #000;
+    text-decoration: none;
+  }
+  .inner-wrap .heading p a:hover {
+    color: #000;
+  }

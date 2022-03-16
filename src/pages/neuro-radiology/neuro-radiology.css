@@ -1,0 +1,167 @@
+.findings {
+    background-color: #fff;
+    box-shadow: 8px 4px 19px 0px #00000011;
+    color: #002a4a;
+  }
+  .findings .inner-cover {
+    padding: 2rem;
+    border-right: 1px dashed #dddddd;
+    margin: 4px;
+  }
+  @media (max-width: 991px) {
+    .findings .inner-cover {
+      border-right: unset;
+      padding-bottom: 0;
+    }
+  }
+  @media (max-width: 425px) {
+    .findings .inner-cover {
+      padding-left: 14px;
+      padding-right: 14px;
+      padding-top: 14px;
+    }
+  }
+  .findings h5 {
+    text-transform: uppercase;
+  }
+  .findings .types {
+    margin-bottom: 20px;
+    justify-content: center;
+  }
+  @media (max-width: 425px) {
+    .findings .types {
+      flex-direction: column;
+    }
+  }
+  @media (max-width: 425px) {
+    .findings .types .w-25 {
+      width: 100% !important;
+    }
+  }
+  .findings .types strong {
+    text-transform: uppercase;
+    font-size: 14px;
+  }
+  @media (max-width: 600px) {
+    .findings .types strong {
+      font-size: 13px;
+    }
+  }
+  .findings .types .w-75 {
+    justify-content: end;
+    flex-wrap: wrap;
+  }
+  @media (max-width: 425px) {
+    .findings .types .w-75 {
+      justify-content: flex-start;
+      width: 100% !important;
+    }
+  }
+  .findings .types .cat {
+    padding: 7px 19px;
+    border: 1px solid #d9d9d9;
+    border-radius: 2px;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+  .findings .types .cat span {
+    color: #002a4a;
+    font-size: 14px;
+  }
+  @media (max-width: 600px) {
+    .findings .types .cat span {
+      font-size: 12px;
+    }
+  }
+  .findings .right-cover {
+    padding: 2rem;
+  }
+  @media (max-width: 991px) {
+    .findings .right-cover {
+      padding-top: 0px;
+    }
+  }
+  @media (max-width: 425px) {
+    .findings .right-cover {
+      padding-left: 14px;
+      padding-right: 14px;
+      padding-top: 14px;
+      padding-bottom: 0px;
+    }
+  }
+  .findings .right-cover h5 {
+    visibility: hidden;
+  }
+  @media (max-width: 991px) {
+    .findings .right-cover h5 {
+      display: none;
+    }
+  }
+  
+  .location {
+    padding: 2rem;
+  }
+  @media (max-width: 425px) {
+    .location {
+      padding-left: 14px;
+      padding-right: 14px;
+      padding-top: 14px;
+    }
+  }
+  
+  .impression {
+    color: #002a4a;
+    margin-top: 3rem;
+  }
+  @media (max-width: 568px) {
+    .impression {
+      padding: 0 13px;
+    }
+  }
+  .impression h5 {
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .impression p {
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+  @media (max-width: 991px) {
+    .impression p {
+      margin-top: 13px;
+    }
+  }
+  @media (max-width: 600px) {
+    .impression p {
+      font-size: 14px;
+    }
+  }
+  .impression select {
+    font-size: 14px;
+  }
+  
+  .next button {
+    padding: 11px 20px !important;
+    border-radius: 35px !important;
+    background-color: #ff992b;
+    border-color: #ff992b;
+    box-shadow: 0px 3px 12px rgba(249, 161, 27, 0.382321);
+    width: 135px;
+  }
+  .next button:focus {
+    box-shadow: unset;
+  }
+  .next button:hover {
+    background-color: #ff992b;
+    color: #fff;
+    border-color: #ff992b;
+  }
+  .next button:focus {
+    box-shadow: unset;
+    background-color: #ff992b;
+    color: #fff;
+    border-color: #ff992b;
+  }
+  .next button:active {
+    box-shadow: unset;
+  }
