@@ -93,6 +93,7 @@
   border-radius: 36px;
   display: flex;
   padding: 4px 18px;
+  align-items: center;
 }
 .loginn .login .form .username input {
   border: 0px !important;
@@ -147,4 +148,9 @@
         width: 100%;
         margin-top: 2.8rem;
       }
+}
+@media(max-height: 800px){
+  .leftside .bottom-text{
+    height: 235px;
+  }
 }
