@@ -4,13 +4,13 @@ import LeftContent from '../../components/Auth/LeftContent'
 import RightSection from '../../components/Auth/RightSection'
 
 const Auth = () => {
-  return (
+  return (                     
     <div className="container-fluid p-0">
         <div className="row">
             <LeftContent />
             <RightSection />
         </div>
-    </div>
+    </div>                   
   )
 }
 
