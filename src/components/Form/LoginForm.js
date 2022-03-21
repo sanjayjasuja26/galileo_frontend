@@ -1,87 +1,78 @@
 import React from "react";
 import { Formik, Form } from "formik";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebase";
 import { EmailIconSVG, PasswordIconSVG } from "../../assets/svgComponents";
 import { loginFormSchema } from "../../utils/validation";
+import InputElement from "./components/InputElement";
 
 const LoginForm = ({ setIsLogin }) => {
-  return (
+  return (                      
     <Formik
-      initialValues={{
-        email: "",
+      initialValues={{   
+        email: "",      
         password: "",
-      }}
+      }}             
       validateOnChange={true}
       validationSchema={loginFormSchema}
-      onSubmit={(values, { resetForm }) => {
-        if (values) {          
+      onSubmit={async(values, { resetForm }) => {
+        if (values) {                
           console.log(values);
-        }             
-      }}
-    >                 
+
+          signInWithEmailAndPassword(auth, values.email, values.password)
+            .then((userCredential) => {
+              console.log(userCredential.user);
+            })
+            .catch(error => console.log(error.message));
+        }                  
+      }}          
+    >                                                                          
       {({ touched, errors, values, handleChange, handleSubmit }) => (
-        <form class="form" onSubmit={handleSubmit}>
-          <div class="mb-3">
-            <label for="exampleFormControlInput1" class="form-label">
-              Institutional Email
-            </label>
-            <div class="username">
-              <EmailIconSVG />
+        <Form className="form" onSubmit={handleSubmit}>
+          <InputElement
+            name="email"
+            type="email"                  
+            value={values.email}
+            placeholder="Johndoe@gmail.com"
+            className="form-control"
+            label="Institutional Email"
+            handleChange={handleChange}
+            icon={<EmailIconSVG />}
+            error={errors.email}
+          />                                           
+          <InputElement                           
+            name="password"
+            type="password"
+            value={values.password}
+            placeholder="********"
+            className="form-control"
+            label="Password"
+            handleChange={handleChange}
+            icon={<PasswordIconSVG />}
+            error={errors.password}
+          />    
+          <div className="paasrd d-flex justify-content-between">
+            <div className="form-check">
               <input
-                value={values.email}
-                onChange={handleChange}
-                type="email"
-                class="form-control"
-                id="exampleFormControlInput1"
-                placeholder="Johndoe@gmail.com"
-              />
-            </div>                             
-            {
-                (touched.email && errors.email !== '') &&
-                <span>{errors.email}</span>
-            }
-          </div>
-          <div class="mb-3">
-            <label for="exampleFormControlInput1" class="form-label">
-              Password
-            </label>
-            <div class="username">
-              <PasswordIconSVG />
-              <input
-                value={values.password}
-                onChange={handleChange}
-                type="password"
-                class="form-control"
-                id="exampleFormControlInput1"
-                placeholder="Password"
-              />
-            </div>     
-            {
-                (touched.email && errors.email !== '') &&
-                <span>{errors.email}</span>
-            }                   
-          </div>            
-          <div class="paasrd d-flex justify-content-between">
-            <div class="form-check">
-              <input
-                class="form-check-input"
+                className="form-check-input"
                 type="checkbox"
                 value=""
                 id="flexCheckDefault"
               />
-              <label class="form-check-label" for="flexCheckDefault">
+              <label className="form-check-label" htmlFor="flexCheckDefault">
                 Remember me
               </label>
             </div>
             <a href="#">Forgot password?</a>
           </div>
-          <button type="submit" class="btn btn-primary">
+          <button type="submit" className="btn btn-primary">
             Login
           </button>
           <p>          
             Don’t have an account?{" "}
             <span onClick={() => setIsLogin(false)}>Signup</span>
           </p>            
-          <div class="bottom-text important-link">
+          <div className="bottom-text important-link">
             <ul>                      
               <li>                                  
                 <a href="#">About us</a>
@@ -91,10 +82,11 @@ const LoginForm = ({ setIsLogin }) => {
               </li>
             </ul>
           </div>
-        </form>
+        </Form>
       )}
     </Formik>
   );                            
 };
 
 export default LoginForm;
+                          

@@ -8,9 +8,9 @@ const RightSection = () => {
   const [isLogin, setIsLogin] = useState(true);
 
   return (
-    <div class="col-lg-7 loginn">
-        <div class="login">
-            <div class="logo text-center">
+    <div className="col-lg-7 loginn">
+        <div className="login">
+            <div className="logo text-center">
                 <img src={Logo} alt=""/>
                 <h3>
                     {isLogin ? 'Login' : 'SignUp'} your account
