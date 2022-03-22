@@ -1,17 +1,17 @@
 import React from 'react';
-import './auth.css';
+import './auth.css';                    
 import LeftContent from '../../components/Auth/LeftContent'
 import RightSection from '../../components/Auth/RightSection'
-
+                         
 const Auth = () => {
-  return (                     
+  return (                                         
     <div className="container-fluid p-0">
         <div className="row">
-            <LeftContent />
+            <LeftContent />                                   
             <RightSection />
-        </div>
-    </div>                   
+        </div>                              
+    </div>                                  
   )
-}
+}            
 
-export default Auth;
+export default Auth;       

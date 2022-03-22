@@ -27,11 +27,11 @@ const Home = () => {
   return (
     <>
       <Header />
-      <section class="body">
-        <div class="container">
-            <div class="row">
-              <div class="inner-wrap">
-                  <div class="heading">
+      <section className="body">
+        <div className="container">
+            <div className="row">
+              <div className="inner-wrap">
+                  <div className="heading">
                       <p>Neuroradiology Module : <a href="/">Brain Pathologies</a></p>
                   </div>
                   {

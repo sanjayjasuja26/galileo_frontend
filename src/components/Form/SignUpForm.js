@@ -7,15 +7,16 @@ import {
 } from "../../assets/svgComponents";
 import { signUpFormSchema } from "../../utils/validation";
 import { db, auth } from '../../firebase';
-import { collection, getDocs } from "firebase/firestore";
-import { createUserWithEmailAndPassword } from "firebase/auth"; 
+import { addDoc, collection, getDocs, Timestamp } from "firebase/firestore";
+import { createUserWithEmailAndPassword, getAuth } from "firebase/auth"; 
 import InputElement from "./components/InputElement";
+import { toast } from "react-toastify";
 
 const SignUpForm = ({ setIsLogin }) => {
 
-    const checkDomainAndHandleCases = async (email) => {
+    const checkDomainAndHandleCases = async (values, id) => {
         try {
-            const domain = email.split('@')[1];
+            const domain = values.email.split('@')[1];
             let matchedDomain = null;
 
             const querySnapshot = await getDocs(collection(db, "domains"));
@@ -26,16 +27,55 @@ const SignUpForm = ({ setIsLogin }) => {
             });  
             
             if(!matchedDomain){
-                // Scenario 4
+                // Scenario 4: Create record in users and temp_users collection
+                
+                let user = await addDoc(collection(db, "users"), {
+                    fname: values.firstName,
+                    lname: values.lastName,
+                    user_email: values.email,
+                    role: "student",
+                    date_created: Timestamp.fromDate(new Date()),
+                    guid: id
+                });
+
+                let temp_user = await addDoc(collection(db, "temp_users"), {
+                    guid: user.id,
+                    allowed: "P",
+                    date_start: Timestamp.fromDate(new Date()),
+                });
+
+                return true;
             } else {      
                 if(matchedDomain.allowed === 'Y'){
-                    // Scenario 1
+                    // Scenario 1: Create record in users collection
+                    await addDoc(collection(db, "users"), {
+                        fname: values.firstName,
+                        lname: values.lastName,
+                        user_email: values.email,      
+                        role: "student",
+                        date_created: Timestamp.fromDate(new Date()),
+                        guid: id
+                    });
+                    return true;
                 } else if(matchedDomain.allowed === 'N'){
-                    // Scenario 2
+                    // Scenario 2: Delete user from auth
+                    let user = getAuth().currentUser;
+                    user.delete();
+                    // TODO: Send email to Admin
+                    return false;
                 } else if(matchedDomain.allowed === 'P'){
-                    // Scenario 3
+                    // Scenario 3: Create record in users collection
+                    await addDoc(collection(db, "users"), {
+                        fname: values.firstName,
+                        lname: values.lastName,
+                        user_email: values.email,
+                        role: "student",
+                        date_created: Timestamp.fromDate(new Date()),
+                        guid: id
+                    });
+                    return true;
                 } else {        
-                    return;
+                    return false;
                 }    
             }
 
@@ -56,17 +96,26 @@ const SignUpForm = ({ setIsLogin }) => {
         validateOnChange={true}
         validationSchema={signUpFormSchema}
         onSubmit={async (values, { resetForm }) => {
-            if (values) {          
-                console.log(values);    
-                
-                createUserWithEmailAndPassword(auth, values.email, values.password)     
-                    .then(userCred => {
-                        console.log(userCred.user);
-                    }) 
-                    .catch(err => console.log(err))
+            if (values) { 
+                try {
+                    const userCred = await createUserWithEmailAndPassword(auth, values.email, values.password);
+                    const userCreated = await checkDomainAndHandleCases(values, userCred.user.uid)
 
-                checkDomainAndHandleCases(values.email);
-            }      
+                    if(userCreated){
+                        toast.success('SignUp success')
+                        resetForm();
+                        setIsLogin(true)
+                    } else {
+                        toast.error('Unauthenticated Email')
+                    }
+                } catch (err) {
+                    if(err.code === 'auth/email-already-in-use'){
+                        toast.error('Email already registered')
+                    } else {
+                        toast.error('Something went wrong')
+                    }
+                }                    
+            }
         }}
     >      
     {({ touched, errors, values, handleChange, handleSubmit }) => (
