@@ -114,6 +114,34 @@ body {
     box-shadow: unset;
   }
 
+  /* 24 mar 2022 */
+  .dropdown-menu{
+    display: block;
+  }
+  ul.dropdown-menu li a {
+    color: #000;
+    text-decoration: none;
+}
+ul.dropdown-menu li:first-child {
+  max-width: 100%;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 7px;
+  padding-left: 4px;
+  padding-bottom: 9px;
+  margin-left: 10px;
+  margin-right: 10px;
+  font-size: 14px;
+}
+ul.dropdown-menu li button {
+  margin-left: 13px;
+  background-color: #f9a11b;
+  border-color: #f9a11b;
+  border: 0;
+  border-radius: 4px;
+  padding: 5px 15px;
+  font-size: 14px;
+}
+
   @media (max-width: 991px) {
     .inner-wrap .email-confirmation {
       margin-left: 0;

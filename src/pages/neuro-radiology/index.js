@@ -8,11 +8,11 @@ const index = () => {
   return (
     <>
       <Header />
-      <section class="body">
-        <div class="container">
-          <div class="row">
-            <div class="inner-wrap">
-              <div class="heading d-flex justify-content-between">
+      <section className="body">
+        <div className="container">
+          <div className="row">
+            <div className="inner-wrap">
+              <div className="heading d-flex justify-content-between">
                 <p>
                   {" "}
                   Brain Pathologies : <a href="/">Study ID : 001041</a>

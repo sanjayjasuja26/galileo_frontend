@@ -1,32 +1,31 @@
 import React from 'react'
-import { useRoutes } from 'react-router-dom'
+import { Navigate, useRoutes } from 'react-router-dom'
 import Home from '../pages/home';
 import Auth from '../pages/auth';
 import Profile from '../pages/profile';
 import NeuroRadiology from '../pages/neuro-radiology';
-import Cases from '../pages/cases';
+import { useSelector } from 'react-redux';
 
 const AppRoutes = () => {
+
+  const { user } = useSelector(state => state.auth);
+
   return useRoutes([
       {
         path: "/",
-        element: <Home />
+        element: user === null ? <Navigate to="/auth" /> : <Home />
       },
       {
         path: "/auth",
-        element: <Auth />
+        element: user !== null ? <Navigate to="/" /> : <Auth />
       },
       {
         path: "/neuro-radiology",
-        element: <NeuroRadiology />
-      },
-      {
-        path: '/cases',
-        element: <Cases />
+        element: user === null ? <Navigate to="/auth" /> : <NeuroRadiology />
       },
       {
         path: "/profile",
-        element: <Profile />
+        element: user === null ? <Navigate to="/auth" /> : <Profile />
       }
   ])
 }

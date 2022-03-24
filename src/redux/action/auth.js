@@ -1,12 +1,13 @@
 import { toast } from 'react-toastify';
 import { auth } from '../../firebase';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { checkDomainAccess, checkDomainAndHandleCases, createDBLogs, getUserDoc } from '../../utils/helper';
 import { 
     AUTH_LOADING,
     AUTH_SUCCESS,
     AUTH_ERROR,
-    ACCESS_TYPE,              
+    ACCESS_TYPE,
+    USER_LOGOUT,              
 } from '../types';    
 
 export const signUp = (body) => async (dispatch) => {
@@ -14,21 +15,16 @@ export const signUp = (body) => async (dispatch) => {
     try {
         const userCred = await createUserWithEmailAndPassword(auth, body.email, body.password);
         const userCreated = await checkDomainAndHandleCases(body, userCred.user.uid)     
-        
-        const user = getUserDoc(userCred);
-        if(!user){
-            throw new Error('User not Found')
-        }
-
+    
         if(userCreated){     
-            dispatch({ type: AUTH_SUCCESS, payload: user })
-            toast.success('SignUp success')
+            toast.success('User SignUp success')
             return true;
         } else {           
             dispatch({ type: AUTH_ERROR })
             toast.error('Unauthenticated Email')
             return false;
-        }               
+        }  
+
     } catch (err) {  
         dispatch({ type: AUTH_ERROR })
         if(err.code === 'auth/email-already-in-use'){
@@ -44,10 +40,12 @@ export const login = (body) => async (dispatch) => {
     try {
         // Get AuthUser
         const userCredential = await signInWithEmailAndPassword(auth, body.email, body.password)       
-        const user = getUserDoc(userCredential);
+        const user = await getUserDoc(userCredential);
 
         if(!user){
-            throw new Error('User not Found')
+            dispatch({ type: AUTH_ERROR })
+            toast.error('User not Found');
+            return false;
         }
 
         // Generate DB Logs 
@@ -73,3 +71,16 @@ export const login = (body) => async (dispatch) => {
       }
     }    
 }   
+
+export const logOut = () => async (dispatch) => {
+    // dispatch({ type: AUTH_LOADING })
+    signOut(auth)
+    .then(() => {
+        toast.success('User logout success')
+        dispatch({ type: USER_LOGOUT });
+    })   
+    .catch(error => {
+        dispatch({ type: AUTH_ERROR })
+        toast.error('Something went wrong')
+    }) 
+}

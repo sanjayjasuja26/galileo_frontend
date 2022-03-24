@@ -1,9 +1,9 @@
 import React from "react";
 
-const CaseTable = () => {
+const FullAccess = () => {
   return (
-    <div class="study-table table-responsive">
-      <table class="table table-bordered table-striped">
+    <div className="study-table table-responsive">
+      <table className="table table-bordered table-striped">
         <thead>
           <tr>
             <th scope="col">Study ID</th>
@@ -93,4 +93,4 @@ const CaseTable = () => {
   );
 };
 
-export default CaseTable;
+export default FullAccess;

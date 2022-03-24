@@ -1,8 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import Logo from '../../assets/images/logo.svg';
 import { ProfileIconSVG } from '../../assets/svgComponents';
+import { logOut } from '../../redux/action/auth';
 
-const index = () => {
+const Header = () => {
+
+    const dispatch = useDispatch();
+    const [showDropDown, setShowDropDown] = useState(false);
+
   return (
     <section className="head">
         <div className="container">
@@ -11,15 +18,24 @@ const index = () => {
             <div className="outer d-flex justify-content-between">
             <a href="/"> <img src={Logo} alt="" /></a>
                 <div className="dropdown ">
-                    <button className="d-flex align-items-center justify-content-center btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button onClick={() => setShowDropDown(!showDropDown)} className="d-flex align-items-center justify-content-center btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1">
                     <ProfileIconSVG />
                     <p className="mb-0 mx-2">John Doe</p>
                     </button>
-                    <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a className="dropdown-item" href="#">Action</a></li>
-                        <li><a className="dropdown-item" href="#">Another action</a></li>
-                        <li><a className="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
+                    {
+                        showDropDown 
+                        ?
+                        <ul className="dropdown-menu shadow-sm">
+                            <li>
+                                <Link to="/profile">Profile</Link>
+                            </li>
+                            <li>
+                                <button onClick={() => dispatch(logOut())}>Logout</button>
+                            </li>
+                        </ul>
+                        : 
+                        ''
+                    }
                 </div>
             </div>
         </header>
@@ -29,4 +45,4 @@ const index = () => {
   )
 }
 
-export default index;
+export default Header;

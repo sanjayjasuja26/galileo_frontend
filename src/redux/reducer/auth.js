@@ -3,6 +3,7 @@ import {
     AUTH_SUCCESS,
     AUTH_ERROR,
     ACCESS_TYPE,
+    USER_LOGOUT,
  } from '../types';
 
 const INITIAL_STATE = {          
@@ -35,6 +36,14 @@ const reducer = (state = INITIAL_STATE, action) => {
                 authError: true,
                 user: null,
             };
+        case USER_LOGOUT:
+            return {
+                ...state, 
+                authLoading: false,
+                authError: false,
+                user: null,
+                access: ''
+            }
         case ACCESS_TYPE:
             return {
                 ...state,      

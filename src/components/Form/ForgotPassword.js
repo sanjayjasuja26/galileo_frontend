@@ -3,8 +3,9 @@ import { Formik, Form } from "formik";
 import InputElement from './components/InputElement'
 import { EmailIconSVG } from '../../assets/svgComponents';
 import { emailFormValidation } from '../../utils/validation';
+import { sendResetPasswordEmail } from '../../utils/helper';
 
-const ForgetPassword = () => {
+const ForgotPassword = ({ setIsForgetPwd, setIsLogin }) => {
   return (
       <Formik
         initialValues={{  
@@ -12,8 +13,11 @@ const ForgetPassword = () => {
         }}
         validateOnChange={true}
         validationSchema={emailFormValidation}
-        onSubmit={(values, { resetForm }) => {
-            console.log(values);
+        onSubmit={async (values, { resetForm }) => {
+            const isEmailSend = await sendResetPasswordEmail(values.email);
+            if(isEmailSend){
+              resetForm();
+            }
         }}
       >
         {
@@ -33,6 +37,13 @@ const ForgetPassword = () => {
                  <button type="submit" className="btn btn-primary">
                     Send Email
                 </button>
+                <div className='d-flex justify-content-center mt-3'>
+                  <small className="pointer text-muted" 
+                  onClick={() => {
+                    setIsForgetPwd(false)
+                    setIsLogin(true)
+                  }}>Back to Login?</small>
+                </div>
                 <div className="bottom-text important-link">
                     <ul>                                    
                     <li>                                  
@@ -50,4 +61,4 @@ const ForgetPassword = () => {
   )
 }
 
-export default ForgetPassword
+export default ForgotPassword

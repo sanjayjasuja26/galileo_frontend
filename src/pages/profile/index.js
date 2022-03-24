@@ -7,50 +7,50 @@ const index = () => {
   return (
     <>
       <Header />
-      <section class="body">
-        <div class="container">
-          <div class="row">
-            <div class="inner-wrap col-lg-6 bg-white mx-auto profile">
-              <div class="wrap">
-                <div class="text-center">
+      <section className="body">
+        <div className="container">
+          <div className="row">
+            <div className="inner-wrap col-lg-6 bg-white mx-auto profile">
+              <div className="wrap">
+                <div className="text-center">
                   <EditProfileIconSVG />
                 </div>
-                <div class="form mt-3">
-                  <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">
+                <div className="form mt-3">
+                  <div className="mb-3">
+                    <label htmlFor="exampleFormControlInput1" className="form-label">
                       First Name
                     </label>
                     <input
                       type="email"
-                      class="form-control"
+                      className="form-control"
                       id="exampleFormControlInput1"
                       placeholder=""
                     />
                   </div>
-                  <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">
+                  <div className="mb-3">
+                    <label htmlFor="exampleFormControlInput1" className="form-label">
                       Last Name
                     </label>
                     <input
                       type="email"
-                      class="form-control"
+                      className="form-control"
                       id="exampleFormControlInput1"
                       placeholder=""
                     />
                   </div>
-                  <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">
+                  <div className="mb-3">
+                    <label htmlFor="exampleFormControlInput1" className="form-label">
                       Institutional email
                     </label>
                     <input
                       type="email"
-                      class="form-control"
+                      className="form-control"
                       id="exampleFormControlInput1"
                       placeholder=""
                     />
                   </div>
                 </div>
-                <button type="button" class="btn btn-primary">
+                <button type="button" className="btn btn-primary">
                   UPDATE
                 </button>
               </div>

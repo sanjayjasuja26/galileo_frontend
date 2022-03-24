@@ -5,10 +5,14 @@ import { EmailIconSVG, PasswordIconSVG } from "../../assets/svgComponents";
 import { loginFormSchema } from "../../utils/validation";
 import InputElement from "./components/InputElement";
 import { login } from "../../redux/action/auth";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
-const LoginForm = ({ setIsLogin }) => {
+const LoginForm = ({ setIsLogin, setIsForgetPwd }) => {
 
   const history = useNavigate();
+  const dispatch = useDispatch();
+  const { loading } = useSelector(state => state.auth);
 
   return (                      
     <Formik
@@ -20,11 +24,12 @@ const LoginForm = ({ setIsLogin }) => {
       validationSchema={loginFormSchema}
       onSubmit={ async(values, { resetForm }) => {
         if(values){
-          const loginSuccess = login(values);
+          const loginSuccess = await dispatch(login(values));
 
           if(loginSuccess){
             resetForm();
             history('/');
+            toast.success('User login success')
           }
         }         
       }}          
@@ -65,15 +70,15 @@ const LoginForm = ({ setIsLogin }) => {
                 Remember me
               </label>
             </div>
-            <a href="#">Forgot password?</a>
+            <small className="pointer text-muted" onClick={() => setIsForgetPwd(true)}>Forgot password?</small>
           </div>
           <button type="submit" className="btn btn-primary">
-            Login
+            {loading ? 'Loading...' : 'Login'}
           </button>
           <p>          
             Don’t have an account?{" "}
             <span className="pointer text-decoration-underline" onClick={() => setIsLogin(false)}>Signup</span>
-          </p>            
+          </p>             
           <div className="bottom-text important-link">
             <ul>                                    
               <li>                                  

@@ -133,6 +133,14 @@
   color: #ff992b;
 }
 
+.error-border{
+  /* border: 1px solid red !important; */
+}
+
+.error-msg{
+  color: red;
+}
+
 @media (max-width: 1024px) {
     .leftside {
         height: auto !important;

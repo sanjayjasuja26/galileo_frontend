@@ -9,7 +9,7 @@ const InputElement = (props) => {
         <label htmlFor={name} className="form-label">
             {label}
         </label>
-        <div className="username">
+        <div className={error ? 'username error-border' : 'username'}>
             { icon }
             <input
                 type={type}
@@ -21,7 +21,7 @@ const InputElement = (props) => {
             />
         </div>     
         {
-            <span>{error}</span>
+            <small className='error-msg'>{error}</small>
         }                   
     </div> 
   )

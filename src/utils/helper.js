@@ -1,7 +1,8 @@
 import axios from "axios";
-import { getAuth } from "firebase/auth";
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import { addDoc, collection, doc, getDocs, query, Timestamp, updateDoc, where } from "firebase/firestore";
-import { db } from "../firebase";
+import { toast } from "react-toastify";
+import { auth, db } from "../firebase";
 
 export const getIPAddress = async () => {
   try {
@@ -94,13 +95,12 @@ export const getUserDoc = async (userCredential) => {
   );
 
   const querySnapshot = await getDocs(userQuery);
-  querySnapshot.forEach((docSnap) => {
+  querySnapshot.forEach(async (docSnap) => {
     user = {
       id: docSnap.id,
       ...docSnap.data(),
     };
   });
-
   return user;
 };
 
@@ -171,40 +171,53 @@ export const checkDomainAccess = async (values, user) => {
       temp_user = docSnap.data();
     });
 
-    access = verifyAccess(temp_user, user);
+    if(!temp_user){
+      access = '';
+    } else {
+      access = verifyAccess(temp_user, user, false);
+    }
   } else {
-    access = verifyAccess(matchedDomain, user);
+    access = verifyAccess(matchedDomain, user, true);
   }
   return access;
 };
 
-export const verifyAccess = ({ allowed, date_start, date_end }, user) => {
+export const verifyAccess = ({ allowed, date_start, date_end }, user, fromDomainList) => {
   date_start = date_start ? date_start.toDate() : null;
   date_end = date_end ? date_end.toDate() : null;
 
   let access = allowed;
+  
+  if(fromDomainList){
 
-  // Email verify Case
-  if (user.verify) {
-    access = "Y";
-  } else {
-    access = "P";
-  }
+    if (access === "Y") {
+      // Dates Case
+      const currentDate = new Date();
 
-  if (access === "Y") {
-    // Dates Case
-    const currentDate = new Date();
-
-    if (!date_start && !date_end) {
-      access = "Y";
-    } else {
-      if (currentDate > date_start && currentDate < date_end) {
+      if (!date_start && !date_end) {
         access = "Y";
       } else {
-        access = "P";
+        if (currentDate > date_start && currentDate < date_end) {
+          access = "Y";
+        } else {
+          access = "P";
+        }
       }
     }
   }
-
   return access;
 };
+
+export const sendResetPasswordEmail = async (email) => {
+  try {
+      let res = await sendPasswordResetEmail(auth, email);
+      toast.success('Please check your email');
+      return true;
+  } catch (err) {
+    if(err.code === 'auth/user-not-found'){
+      toast.error('Email not registered');
+    } else {
+      toast.error('Something went wrong');
+    }
+  }
+}
