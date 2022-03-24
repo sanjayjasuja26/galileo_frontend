@@ -15,3 +15,7 @@ export const loginFormSchema = object({
     email: string().email('Please enter valid email').matches(spaceValidation, 'Please enter valid email').required('Email is required'),
     password: string().matches(spaceValidation, 'Password should not contain white space').min(6, 'Password should be atleast 6 character long').required('Password is required')
 })
+
+export const emailFormValidation = object({
+    email: string().email('Please enter valid email').matches(spaceValidation, 'Please enter valid email').required('Email is required')
+})

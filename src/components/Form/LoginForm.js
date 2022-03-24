@@ -1,14 +1,10 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { Formik, Form } from "formik";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth, db } from "../../firebase";
 import { EmailIconSVG, PasswordIconSVG } from "../../assets/svgComponents";
 import { loginFormSchema } from "../../utils/validation";
 import InputElement from "./components/InputElement";
-import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
-import { addDoc, collection, doc, getDoc, getDocs, query, setDoc, Timestamp, updateDoc, where } from "firebase/firestore";
-import { getIPAddress } from "../../utils/helper";
+import { login } from "../../redux/action/auth";
 
 const LoginForm = ({ setIsLogin }) => {
 
@@ -19,77 +15,18 @@ const LoginForm = ({ setIsLogin }) => {
       initialValues={{   
         email: "",      
         password: "",
-      }}             
+      }}                                  
       validateOnChange={true}
       validationSchema={loginFormSchema}
       onSubmit={ async(values, { resetForm }) => {
-        try {
-          const currentIP = await getIPAddress();
+        if(values){
+          const loginSuccess = login(values);
 
-          if (values && currentIP) {
-            let user = null;
-
-            const userCredential = await signInWithEmailAndPassword(auth, values.email, values.password)       
-               
-            // Get User from users collection         
-            const userQuery = await query(collection(db, "users"), where("guid", "==", userCredential.user.uid));
-
-            const querySnapshot = await getDocs(userQuery);
-            querySnapshot.forEach(docSnap => {
-              user = docSnap.id;    
-            })                                                    
-
-            if(user){              
-              const userLogQuery = await query(collection(db, "user_login_log"), where("guid", "==", user))
-
-              const querySnapshot = await getDocs(userLogQuery);
-              console.log(querySnapshot);          
-
-              querySnapshot.forEach(docSnap => {
-                // let data = docSnap.data();
-
-                console.log(docSnap.exists());
-
-                // if(docSnap.exists()){
-                //   console.log('exist');
-                //   updateDoc(doc(db, "user_login_log", docSnap.id), {
-                //     ...data,
-                //     login_details: [
-                //       ...data.login_details,
-                //       {
-                //         ip: currentIP,
-                //         date_time: Timestamp.fromDate(new Date())
-                //       }
-                //     ]
-                //   })
-                // } else {
-                //   console.log('not exist');
-                //   addDoc(collection(db, "user_login_log"), {
-                //     guid: user,
-                //     login_details: [
-                //       { 
-                //         ip: currentIP,
-                //         date_time: Timestamp.fromDate(new Date())
-                //       }
-                //     ]
-                //   })
-                // }
-              })
-            }
-
-            // TODO: Maintain Auth User
+          if(loginSuccess){
+            resetForm();
             history('/');
-          }     
-        } catch (error) {     
-          console.log(error);                        
-          if(error.code === 'auth/user-not-found'){
-            toast.error('Invalid credentials')
-          } else if(error.code === 'auth/wrong-password') {
-            toast.error('Invalid credentials')
-          } else {                   
-            toast.error('Something went wrong')
           }
-        }             
+        }         
       }}          
     >                                                                          
       {({ touched, errors, values, handleChange, handleSubmit }) => (
@@ -106,12 +43,12 @@ const LoginForm = ({ setIsLogin }) => {
             error={errors.email}
           />                                           
           <InputElement                           
-            name="password"
+            name="password"                      
             type="password"
             value={values.password}
             placeholder="********"
             className="form-control"
-            label="Password"
+            label="Password"           
             handleChange={handleChange}
             icon={<PasswordIconSVG />}
             error={errors.password}
@@ -121,7 +58,7 @@ const LoginForm = ({ setIsLogin }) => {
               <input
                 className="form-check-input"
                 type="checkbox"
-                value=""
+                value=""   
                 id="flexCheckDefault"
               />
               <label className="form-check-label" htmlFor="flexCheckDefault">
@@ -135,17 +72,17 @@ const LoginForm = ({ setIsLogin }) => {
           </button>
           <p>          
             Don’t have an account?{" "}
-            <span onClick={() => setIsLogin(false)}>Signup</span>
+            <span className="pointer text-decoration-underline" onClick={() => setIsLogin(false)}>Signup</span>
           </p>            
           <div className="bottom-text important-link">
-            <ul>                      
+            <ul>                                    
               <li>                                  
                 <a href="#">About us</a>
-              </li>              
-              <li>
+              </li>                 
+              <li>   
                 <a href="#">Support</a>
               </li>
-            </ul>
+            </ul>                                    
           </div>
         </Form>
       )}

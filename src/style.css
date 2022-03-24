@@ -3,6 +3,10 @@ body {
   font-family: "Ubuntu", sans-serif;
 }
 
+.pointer{
+  cursor: pointer;
+}
+
 .row {
   --bs-gutter-x: unset;
 }
