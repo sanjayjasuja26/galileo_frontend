@@ -70,7 +70,7 @@ const LoginForm = ({ setIsLogin, setIsForgetPwd }) => {
                 Remember me
               </label>
             </div>
-            <small className="pointer text-muted" onClick={() => setIsForgetPwd(true)}>Forgot password?</small>
+            <small className="pointer text-muted" onClick={() => setIsForgetPwd(true)}>Forgot password</small>
           </div>
           <button type="submit" className="btn btn-primary">
             {loading ? 'Loading...' : 'Login'}

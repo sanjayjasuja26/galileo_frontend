@@ -28,7 +28,7 @@ const RightSection = () => {
 
     if(mode === 'resetPassword'){
         setHeading('Reset Password')
-        setSection(<ResetPassword code={code} setIsLogin={setIsLogin} />)
+        setSection(<ResetPassword code={code} setIsLogin={setIsLogin} setIsForgetPwd={setIsForgetPwd} />)
     }
     if(isForgetPwd){
         setHeading('Forgot Password')

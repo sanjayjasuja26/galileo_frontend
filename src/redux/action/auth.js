@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 import { auth } from '../../firebase';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updatePassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { checkDomainAccess, checkDomainAndHandleCases, createDBLogs, getUserDoc } from '../../utils/helper';
 import { 
     AUTH_LOADING,
@@ -85,12 +85,24 @@ export const logOut = () => async (dispatch) => {
     }) 
 }
 
-export const resetPassword = () => async (dispatch) => {
-    dispatch({ type: AUTH_LOADING })
+export const resetPassword = async (body) => {
     try {
-        updatePassword()
-    } catch (error) {
-      dispatch({ type: AUTH_ERROR })
-      toast.error('Something went wrong')
+      const passResetUrl = `https://identitytoolkit.googleapis.com/v1/accounts:resetPassword?key=AIzaSyDXupbfINVUTAU85mwmbYQHmHp9OhyXa_E`;
+  
+      const res = await fetch(passResetUrl, {
+        method: "POST",
+        body: JSON.stringify({
+          oobCode: body.code,
+          newPassword: body.password,
+        }),
+        headers: { "Content-Type": "application/json" },
+      })
+  
+      if(res){
+        toast.success('Password reset success')
+      }
+    } catch (err) {
+      console.log(err.code);
+      toast.error('Oops!! Link has expired')
     }
 }

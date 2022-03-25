@@ -42,7 +42,7 @@ const ForgotPassword = ({ setIsForgetPwd, setIsLogin }) => {
                   onClick={() => {
                     setIsForgetPwd(false)
                     setIsLogin(true)
-                  }}>Back to Login?</small>
+                  }}>Back to Login</small>
                 </div>
                 <div className="bottom-text important-link">
                     <ul>                                    
