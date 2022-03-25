@@ -5,12 +5,13 @@ import { PasswordIconSVG } from "../../assets/svgComponents";
 import { useNavigate } from "react-router-dom";
 import { resetPasswordValidation } from "../../utils/validation";
 import { resetPassword } from "../../redux/action/auth";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const ResetPassword = ({ code, setIsLogin, setIsForgetPwd }) => {
   const history = useNavigate();
 
   const dispatch = useDispatch();
+  const { loading } = useSelector(state => state.auth);
 
   return (
     <Formik
@@ -55,7 +56,7 @@ const ResetPassword = ({ code, setIsLogin, setIsForgetPwd }) => {
             error={errors.confirmPassword}
           />
           <button type="submit" className="btn btn-primary">
-            Reset Password
+            {loading ? 'Loading...' : 'Reset Password'}
           </button>
           <div className="d-flex justify-content-between mt-3">
             <small

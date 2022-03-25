@@ -4,11 +4,12 @@ import InputElement from './components/InputElement'
 import { EmailIconSVG } from '../../assets/svgComponents';
 import { emailFormValidation } from '../../utils/validation';
 import { sendResetPasswordEmail } from '../../redux/action/auth';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const ForgotPassword = ({ setIsForgetPwd, setIsLogin }) => {
 
   const dispatch = useDispatch();
+  const { loading } = useSelector(state => state.auth);
   
   return (
       <Formik
@@ -39,7 +40,7 @@ const ForgotPassword = ({ setIsForgetPwd, setIsLogin }) => {
                     error={errors.email}
                 />
                  <button type="submit" className="btn btn-primary">
-                    Send Email
+                    {loading ? 'Loading...' : 'Send Email'}
                 </button>
                 <div className='d-flex justify-content-center mt-3'>
                   <small className="pointer text-muted" 
