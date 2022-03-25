@@ -91,6 +91,7 @@ export const sendResetPasswordEmail = (email) => async (dispatch) => {
     dispatch({ type: AUTH_LOADING })
     try {
         let res = await sendPasswordResetEmail(auth, email);
+        console.log(res);
         if(res){
             dispatch({ type: AUTH_SUCCESS })
             toast.success('Please check your email');
@@ -120,6 +121,8 @@ export const resetPassword = (body) => async (dispatch) => {
         headers: { "Content-Type": "application/json" },
       })
   
+      const data = await res.json();
+      console.log(data);
       if(res){
         dispatch({ type: AUTH_SUCCESS })
         toast.success('Password reset success');
