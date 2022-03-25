@@ -5,9 +5,12 @@ import { PasswordIconSVG } from "../../assets/svgComponents";
 import { useNavigate } from "react-router-dom";
 import { resetPasswordValidation } from "../../utils/validation";
 import { resetPassword } from "../../redux/action/auth";
+import { useDispatch } from "react-redux";
 
 const ResetPassword = ({ code, setIsLogin, setIsForgetPwd }) => {
   const history = useNavigate();
+
+  const dispatch = useDispatch();
 
   return (
     <Formik
@@ -19,7 +22,11 @@ const ResetPassword = ({ code, setIsLogin, setIsForgetPwd }) => {
       validationSchema={resetPasswordValidation}
       onSubmit={async (values, { resetForm }) => {
         if (values && code) {
-         resetPassword({ code, password: values.password })
+         const success = dispatch(resetPassword({ code, password: values.password }));
+
+         if(success){
+           resetForm();
+         }
         }
       }}
     >

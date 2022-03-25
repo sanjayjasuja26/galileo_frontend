@@ -28,7 +28,7 @@ const SignUpForm = ({ setIsLogin }) => {
         validationSchema={signUpFormSchema}
         onSubmit={async (values, { resetForm }) => {
             if(values) { 
-                const signupSuccess = await dispatch(signUp(values));        
+                const signupSuccess = dispatch(signUp(values));        
                 
                 if(signupSuccess){
                     resetForm();

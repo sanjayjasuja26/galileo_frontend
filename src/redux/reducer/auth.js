@@ -4,6 +4,7 @@ import {
     AUTH_ERROR,
     ACCESS_TYPE,
     USER_LOGOUT,
+    USER_LOGIN,
  } from '../types';
 
 const INITIAL_STATE = {          
@@ -22,13 +23,19 @@ const reducer = (state = INITIAL_STATE, action) => {
                 authError: false,
                 user: null,
             };
-        case AUTH_SUCCESS:
+        case USER_LOGIN:
             return {
                 ...state, 
                 authLoading: false,
                 authError: false,
                 user: action.payload,
             };
+        case AUTH_SUCCESS:
+            return {
+                ...state, 
+                authLoading: false,
+                authError: false,   
+            }
         case AUTH_ERROR:
             return {
                 ...state, 

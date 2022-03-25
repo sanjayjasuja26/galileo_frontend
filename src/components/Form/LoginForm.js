@@ -24,12 +24,11 @@ const LoginForm = ({ setIsLogin, setIsForgetPwd }) => {
       validationSchema={loginFormSchema}
       onSubmit={ async(values, { resetForm }) => {
         if(values){
-          const loginSuccess = await dispatch(login(values));
+          const loginSuccess = dispatch(login(values));
 
           if(loginSuccess){
             resetForm();
             history('/');
-            toast.success('User login success')
           }
         }         
       }}          

@@ -3,9 +3,13 @@ import { Formik, Form } from "formik";
 import InputElement from './components/InputElement'
 import { EmailIconSVG } from '../../assets/svgComponents';
 import { emailFormValidation } from '../../utils/validation';
-import { sendResetPasswordEmail } from '../../utils/helper';
+import { sendResetPasswordEmail } from '../../redux/action/auth';
+import { useDispatch } from 'react-redux';
 
 const ForgotPassword = ({ setIsForgetPwd, setIsLogin }) => {
+
+  const dispatch = useDispatch();
+  
   return (
       <Formik
         initialValues={{  
@@ -14,7 +18,7 @@ const ForgotPassword = ({ setIsForgetPwd, setIsLogin }) => {
         validateOnChange={true}
         validationSchema={emailFormValidation}
         onSubmit={async (values, { resetForm }) => {
-            const isEmailSend = await sendResetPasswordEmail(values.email);
+            const isEmailSend = dispatch(sendResetPasswordEmail(values.email));
             if(isEmailSend){
               resetForm();
             }

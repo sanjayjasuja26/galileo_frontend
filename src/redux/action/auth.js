@@ -1,13 +1,14 @@
 import { toast } from 'react-toastify';
 import { auth } from '../../firebase';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendPasswordResetEmail } from 'firebase/auth';
 import { checkDomainAccess, checkDomainAndHandleCases, createDBLogs, getUserDoc } from '../../utils/helper';
 import { 
     AUTH_LOADING,
     AUTH_SUCCESS,
     AUTH_ERROR,
     ACCESS_TYPE,
-    USER_LOGOUT,              
+    USER_LOGOUT,
+    USER_LOGIN,              
 } from '../types';    
 
 export const signUp = (body) => async (dispatch) => {
@@ -56,9 +57,10 @@ export const login = (body) => async (dispatch) => {
 
         // Maintain Auth User
         dispatch({ type: ACCESS_TYPE, payload: access })
-        dispatch({ type: AUTH_SUCCESS, payload: user })
+        dispatch({ type: USER_LOGIN, payload: user })
         localStorage.setItem('user', user);   
 
+        toast.success('User login success')
         return true;
     } catch (error) {    
       dispatch({ type: AUTH_ERROR })
@@ -85,7 +87,27 @@ export const logOut = () => async (dispatch) => {
     }) 
 }
 
-export const resetPassword = async (body) => {
+export const sendResetPasswordEmail = (email) => async (dispatch) => {
+    dispatch({ type: AUTH_LOADING })
+    try {
+        let res = await sendPasswordResetEmail(auth, email);
+        if(res){
+            dispatch({ type: AUTH_SUCCESS })
+            toast.success('Please check your email');
+            return true;
+        }
+    } catch (err) {
+      dispatch({ type: AUTH_ERROR })
+      if(err.code === 'auth/user-not-found'){
+        toast.error('Email not registered');
+      } else {
+        toast.error('Something went wrong');
+      }
+    }
+}
+
+export const resetPassword = (body) => async (dispatch) => {
+    dispatch({ type: AUTH_LOADING })
     try {
       const passResetUrl = `https://identitytoolkit.googleapis.com/v1/accounts:resetPassword?key=AIzaSyDXupbfINVUTAU85mwmbYQHmHp9OhyXa_E`;
   
@@ -99,10 +121,12 @@ export const resetPassword = async (body) => {
       })
   
       if(res){
-        toast.success('Password reset success')
+        dispatch({ type: AUTH_SUCCESS })
+        toast.success('Password reset success');
+        return true;
       }
     } catch (err) {
-      console.log(err.code);
-      toast.error('Oops!! Link has expired')
+        dispatch({ type: AUTH_ERROR })
+        toast.error('Oops!! Link has expired')
     }
 }
