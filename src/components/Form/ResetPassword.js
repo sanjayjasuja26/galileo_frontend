@@ -12,9 +12,9 @@ const ResetPassword = ({ setIsLogin }) => {
   return (
     <Formik
         initialValues={{  
-            password: "",
+            password: "", 
             confirmPassword: ""
-        }}
+        }}            
         validateOnChange={true}
         validationSchema={resetPasswordValidation}
         onSubmit={async (values, { resetForm }) => {
@@ -26,7 +26,7 @@ const ResetPassword = ({ setIsLogin }) => {
         <Form className="form" onSubmit={handleSubmit}>
             <InputElement 
                 name="password"
-                type="password"                  
+                type="password"                              
                 value={values.password}
                 placeholder="********"
                 className="form-control"
@@ -58,12 +58,12 @@ const ResetPassword = ({ setIsLogin }) => {
             </div>
             <div className="bottom-text important-link">
                 <ul>                                    
-                <li>                                  
-                    <a href="#">About us</a>
-                </li>                 
-                <li>   
-                    <a href="#">Support</a>
-                </li>
+                    <li>                                  
+                        <a href="#">About us</a>
+                    </li>                     
+                    <li>   
+                        <a href="#">Support</a>
+                    </li>
                 </ul>
             </div>
         </Form>

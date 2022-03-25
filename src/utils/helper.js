@@ -180,7 +180,7 @@ export const checkDomainAccess = async (values, user) => {
     access = verifyAccess(matchedDomain, user, true);
   }
   return access;
-};
+};               
 
 export const verifyAccess = ({ allowed, date_start, date_end }, user, fromDomainList) => {
   date_start = date_start ? date_start.toDate() : null;

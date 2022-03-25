@@ -10,6 +10,9 @@ const RightSection = () => {
 
   const [search] = useSearchParams();
   const mode = search.get('mode');
+  const code = search.get('oobCode');
+
+  console.log(code);
 
   const [isLogin, setIsLogin] = useState(true);
   const [isForgetPwd, setIsForgetPwd] = useState(false);
@@ -17,7 +20,7 @@ const RightSection = () => {
   const [section, setSection] = useState('');
 
   useEffect(() => {
-    if(isLogin){
+    if(isLogin && !mode){
         setHeading('Login your account')
         setSection(<LoginForm setIsForgetPwd={setIsForgetPwd} setIsLogin={setIsLogin} />)
     } else {

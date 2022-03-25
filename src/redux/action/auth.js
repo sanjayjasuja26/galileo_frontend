@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 import { auth } from '../../firebase';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updatePassword } from 'firebase/auth';
 import { checkDomainAccess, checkDomainAndHandleCases, createDBLogs, getUserDoc } from '../../utils/helper';
 import { 
     AUTH_LOADING,
@@ -83,4 +83,14 @@ export const logOut = () => async (dispatch) => {
         dispatch({ type: AUTH_ERROR })
         toast.error('Something went wrong')
     }) 
+}
+
+export const resetPassword = () => async (dispatch) => {
+    dispatch({ type: AUTH_LOADING })
+    try {
+        updatePassword()
+    } catch (error) {
+      dispatch({ type: AUTH_ERROR })
+      toast.error('Something went wrong')
+    }
 }
