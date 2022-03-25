@@ -12,8 +12,6 @@ const RightSection = () => {
   const mode = search.get('mode');
   const code = search.get('oobCode');
 
-  console.log(code);
-
   const [isLogin, setIsLogin] = useState(true);
   const [isForgetPwd, setIsForgetPwd] = useState(false);
   const [heading, setHeading] = useState('');
@@ -30,7 +28,7 @@ const RightSection = () => {
 
     if(mode === 'resetPassword'){
         setHeading('Reset Password')
-        setSection(<ResetPassword setIsLogin={setIsLogin} />)
+        setSection(<ResetPassword code={code} setIsLogin={setIsLogin} />)
     }
     if(isForgetPwd){
         setHeading('Forgot Password')

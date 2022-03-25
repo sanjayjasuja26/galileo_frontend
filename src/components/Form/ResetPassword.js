@@ -5,7 +5,7 @@ import { PasswordIconSVG } from '../../assets/svgComponents';
 import { useNavigate } from 'react-router-dom';
 import { resetPasswordValidation } from '../../utils/validation';
 
-const ResetPassword = ({ setIsLogin }) => {
+const ResetPassword = ({ code, setIsLogin }) => {
 
     const history = useNavigate();
 
@@ -18,7 +18,19 @@ const ResetPassword = ({ setIsLogin }) => {
         validateOnChange={true}
         validationSchema={resetPasswordValidation}
         onSubmit={async (values, { resetForm }) => {
-           console.log(values);
+          if(values && code){
+          const passResetUrl = `https://identitytoolkit.googleapis.com/v1/accounts:resetPassword?key=AIzaSyDXupbfINVUTAU85mwmbYQHmHp9OhyXa_E`;
+
+            fetch(passResetUrl, { method: 'POST', body: JSON.stringify({ "oobCode": code, newPassword: "password" }), headers: { "Content-Type": "application/json" } }).then(async (res) => {
+              const resJson = await res.json()
+              //const email = resJson.email
+              console.log(resJson)
+              return "ok"
+            }).catch((errVerifyingCode) => {
+              console.log(errVerifyingCode)
+              return "error"
+            })
+          }
         }}
     >
     {
