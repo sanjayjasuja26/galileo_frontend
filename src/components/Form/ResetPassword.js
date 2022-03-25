@@ -11,7 +11,7 @@ const ResetPassword = ({ code, setIsLogin, setIsForgetPwd }) => {
   const history = useNavigate();
 
   const dispatch = useDispatch();
-  const { loading } = useSelector(state => state.auth);
+  const { authLoading } = useSelector(state => state.auth);
 
   return (
     <Formik
@@ -23,7 +23,7 @@ const ResetPassword = ({ code, setIsLogin, setIsForgetPwd }) => {
       validationSchema={resetPasswordValidation}
       onSubmit={async (values, { resetForm }) => {
         if (values && code) {
-         const success = dispatch(resetPassword({ code, password: values.password }));
+         const success = await dispatch(resetPassword({ code, password: values.password }));
 
          if(success){
            resetForm();
@@ -56,7 +56,7 @@ const ResetPassword = ({ code, setIsLogin, setIsForgetPwd }) => {
             error={errors.confirmPassword}
           />
           <button type="submit" className="btn btn-primary">
-            {loading ? 'Loading...' : 'Reset Password'}
+            {authLoading ? 'Loading...' : 'Reset Password'}
           </button>
           <div className="d-flex justify-content-between mt-3">
             <small

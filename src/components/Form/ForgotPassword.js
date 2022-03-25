@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 const ForgotPassword = ({ setIsForgetPwd, setIsLogin }) => {
 
   const dispatch = useDispatch();
-  const { loading } = useSelector(state => state.auth);
+  const { authLoading } = useSelector(state => state.auth);
   
   return (
       <Formik
@@ -19,7 +19,7 @@ const ForgotPassword = ({ setIsForgetPwd, setIsLogin }) => {
         validateOnChange={true}
         validationSchema={emailFormValidation}
         onSubmit={async (values, { resetForm }) => {
-            const isEmailSend = dispatch(sendResetPasswordEmail(values.email));
+            const isEmailSend = await dispatch(sendResetPasswordEmail(values.email));
             if(isEmailSend){
               resetForm();
             }
@@ -40,7 +40,7 @@ const ForgotPassword = ({ setIsForgetPwd, setIsLogin }) => {
                     error={errors.email}
                 />
                  <button type="submit" className="btn btn-primary">
-                    {loading ? 'Loading...' : 'Send Email'}
+                    {authLoading ? 'Loading...' : 'Send Email'}
                 </button>
                 <div className='d-flex justify-content-center mt-3'>
                   <small className="pointer text-muted" 

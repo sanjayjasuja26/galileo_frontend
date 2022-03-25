@@ -11,8 +11,10 @@ const LoginForm = ({ setIsLogin, setIsForgetPwd }) => {
 
   const history = useNavigate();
   const dispatch = useDispatch();
-  const { loading } = useSelector(state => state.auth);
+  const { authLoading } = useSelector(state => state.auth);
 
+  console.log(authLoading);
+  
   return (                      
     <Formik
       initialValues={{   
@@ -23,7 +25,7 @@ const LoginForm = ({ setIsLogin, setIsForgetPwd }) => {
       validationSchema={loginFormSchema}
       onSubmit={ async(values, { resetForm }) => {
         if(values){
-          const loginSuccess = dispatch(login(values));
+          const loginSuccess = await dispatch(login(values));
 
           if(loginSuccess){
             resetForm();
@@ -71,7 +73,7 @@ const LoginForm = ({ setIsLogin, setIsForgetPwd }) => {
             <small className="pointer text-muted" onClick={() => setIsForgetPwd(true)}>Forgot password</small>
           </div>
           <button type="submit" className="btn btn-primary">
-            {loading ? 'Loading...' : 'Login'}
+            {authLoading ? 'Loading...' : 'Login'}
           </button>
           <p>          
             Don’t have an account?{" "}

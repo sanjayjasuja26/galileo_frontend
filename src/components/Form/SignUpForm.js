@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 const SignUpForm = ({ setIsLogin }) => {
 
     const dispatch = useDispatch();
-    const { loading } = useSelector(state => state.auth);
+    const { authLoading } = useSelector(state => state.auth);
 
   return (
     <Formik
@@ -28,7 +28,7 @@ const SignUpForm = ({ setIsLogin }) => {
         validationSchema={signUpFormSchema}
         onSubmit={async (values, { resetForm }) => {
             if(values) { 
-                const signupSuccess = dispatch(signUp(values));        
+                const signupSuccess = await dispatch(signUp(values));        
                 
                 if(signupSuccess){
                     resetForm();
@@ -96,7 +96,7 @@ const SignUpForm = ({ setIsLogin }) => {
             /> 
 
         <button type="submit" className="btn btn-primary">
-            {loading ? 'Loading...' : 'Signup'}        
+            {authLoading ? 'Loading...' : 'Signup'}        
         </button>
         <p>
             Already have an account?{" "}

@@ -18,6 +18,7 @@ export const signUp = (body) => async (dispatch) => {
         const userCreated = await checkDomainAndHandleCases(body, userCred.user.uid)     
     
         if(userCreated){     
+            dispatch({ type: AUTH_SUCCESS })
             toast.success('User SignUp success')
             return true;
         } else {           
@@ -126,6 +127,7 @@ export const resetPassword = (body) => async (dispatch) => {
         toast.success('Password reset success');
         return true;
       } else {
+        dispatch({ type: AUTH_ERROR })
         toast.error('Oops!! Link has expired')
         return false;
       }
