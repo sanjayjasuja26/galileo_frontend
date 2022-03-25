@@ -55,9 +55,6 @@ const ResetPassword = ({ code, setIsLogin, setIsForgetPwd }) => {
             icon={<PasswordIconSVG />}
             error={errors.confirmPassword}
           />
-          <button type="submit" className="btn btn-primary">
-            {authLoading ? 'Loading...' : 'Reset Password'}
-          </button>
           <div className="d-flex justify-content-between mt-3">
             <small
               className="pointer text-muted"
@@ -79,6 +76,9 @@ const ResetPassword = ({ code, setIsLogin, setIsForgetPwd }) => {
               Back to Login
             </small>
           </div>
+          <button type="submit" className="btn btn-primary">
+            {authLoading ? 'Loading...' : 'Reset Password'}
+          </button>
           <div className="bottom-text important-link">
             <ul>
               <li>
