@@ -18,8 +18,8 @@ export const signUp = (body) => async (dispatch) => {
         const userCreated = await checkDomainAndHandleCases(body, userCred.user.uid)     
     
         if(userCreated){     
-            dispatch({ type: AUTH_SUCCESS })
             toast.success('User SignUp success')
+            dispatch({ type: AUTH_SUCCESS })
             return true;
         } else {           
             dispatch({ type: AUTH_ERROR })
@@ -122,6 +122,7 @@ export const resetPassword = (body) => async (dispatch) => {
       })
   
       const data = await res.json();
+      console.log(data);
       if(data.code === 200){
         dispatch({ type: AUTH_SUCCESS })
         toast.success('Password reset success');
