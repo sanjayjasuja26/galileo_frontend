@@ -3,7 +3,7 @@ import { Formik, Form } from "formik";
 import InputElement from './components/InputElement'
 import { EmailIconSVG } from '../../assets/svgComponents';
 import { emailFormValidation } from '../../utils/validation';
-import { sendResetPasswordEmail } from '../../utils/helper';
+import { sendResetPasswordEmail } from '../../redux/action/auth';
 
 const ForgotPassword = ({ setIsForgetPwd, setIsLogin }) => {
   return (

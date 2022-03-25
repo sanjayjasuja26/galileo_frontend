@@ -1,8 +1,7 @@
 import axios from "axios";
-import { getAuth, sendPasswordResetEmail } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 import { addDoc, collection, doc, getDocs, query, Timestamp, updateDoc, where } from "firebase/firestore";
-import { toast } from "react-toastify";
-import { auth, db } from "../firebase";
+import { db } from "../firebase";
 
 export const getIPAddress = async () => {
   try {
@@ -207,17 +206,3 @@ export const verifyAccess = ({ allowed, date_start, date_end }, user, fromDomain
   }
   return access;
 };
-
-export const sendResetPasswordEmail = async (email) => {
-  try {
-      let res = await sendPasswordResetEmail(auth, email);
-      toast.success('Please check your email');
-      return true;
-  } catch (err) {
-    if(err.code === 'auth/user-not-found'){
-      toast.error('Email not registered');
-    } else {
-      toast.error('Something went wrong');
-    }
-  }
-}
