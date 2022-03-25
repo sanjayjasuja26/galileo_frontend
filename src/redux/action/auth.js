@@ -33,6 +33,7 @@ export const signUp = (body) => async (dispatch) => {
         } else {
             toast.error('Something went wrong')
         }
+        return false;
     }            
 }
 
@@ -71,6 +72,7 @@ export const login = (body) => async (dispatch) => {
       } else {                    
         toast.error('Something went wrong')
       }
+      return false;
     }    
 }   
 
@@ -90,13 +92,10 @@ export const logOut = () => async (dispatch) => {
 export const sendResetPasswordEmail = (email) => async (dispatch) => {
     dispatch({ type: AUTH_LOADING })
     try {
-        let res = await sendPasswordResetEmail(auth, email);
-        console.log(res);
-        if(res){
-            dispatch({ type: AUTH_SUCCESS })
-            toast.success('Please check your email');
-            return true;
-        }
+        await sendPasswordResetEmail(auth, email);
+        dispatch({ type: AUTH_SUCCESS })
+        toast.success('Please check your email');
+        return true;
     } catch (err) {
       dispatch({ type: AUTH_ERROR })
       if(err.code === 'auth/user-not-found'){
@@ -122,14 +121,17 @@ export const resetPassword = (body) => async (dispatch) => {
       })
   
       const data = await res.json();
-      console.log(data);
-      if(res){
+      if(data.code === 200){
         dispatch({ type: AUTH_SUCCESS })
         toast.success('Password reset success');
         return true;
+      } else {
+        toast.error('Oops!! Link has expired')
+        return false;
       }
     } catch (err) {
         dispatch({ type: AUTH_ERROR })
         toast.error('Oops!! Link has expired')
+        return false;
     }
 }
