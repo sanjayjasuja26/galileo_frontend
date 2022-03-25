@@ -122,8 +122,7 @@ export const resetPassword = (body) => async (dispatch) => {
       })
   
       const data = await res.json();
-      console.log(data);
-      if(data.code === 200){
+      if(data.requestType === "PASSWORD_RESET"){
         dispatch({ type: AUTH_SUCCESS })
         toast.success('Password reset success');
         return true;
