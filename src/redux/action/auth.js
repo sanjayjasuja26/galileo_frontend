@@ -60,7 +60,6 @@ export const login = (body) => async (dispatch) => {
         // Maintain Auth User
         dispatch({ type: ACCESS_TYPE, payload: access })
         dispatch({ type: USER_LOGIN, payload: user })
-        localStorage.setItem('user', user);   
 
         toast.success('User login success')
         return true;

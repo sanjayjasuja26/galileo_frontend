@@ -1,5 +1,5 @@
 import axios from "axios";
-import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
 import { getAuth } from "firebase/auth";
 import { addDoc, collection, doc, getDocs, query, Timestamp, updateDoc, where } from "firebase/firestore";
 import { db } from "../firebase";
@@ -209,5 +209,5 @@ export const verifyAccess = ({ allowed, date_start, date_end }, user, fromDomain
 };
 
 export const hashPwd = (password) => {
-  return jwt.sign(password, process.env.REACT_APP_JWT_SECRET)
+  return bcrypt.hashSync(password, 10);
 }

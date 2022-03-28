@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Formik, Form } from "formik";
 import { EmailIconSVG, PasswordIconSVG } from "../../assets/svgComponents";
@@ -14,21 +14,38 @@ const LoginForm = ({ setIsLogin, setIsForgetPwd }) => {
   const dispatch = useDispatch();
   const { authLoading } = useSelector(state => state.auth);
   const [save, setSave] = useState(false);
+  const [savedData, setSavedData] = useState({
+    email: '',
+    password: ''
+  });
+
+  useEffect(() => {
+    let email = JSON.parse(localStorage.getItem('cred'))?.email;
+    setSavedData({ 
+      ...savedData, 
+      email: email ? email : ''
+    });
+    email && setSave(true)
+  }, [])
+
+  const handleRememberMe = value => {
+    setSave(value)
+    if(!value){
+      localStorage.removeItem('cred');
+    }
+  }
 
   return (                      
     <Formik
-      initialValues={{   
-        email: "",      
-        password: "",
-      }}                                  
+      enableReinitialize={true}
+      initialValues={savedData}                                  
       validateOnChange={true}
       validationSchema={loginFormSchema}
       onSubmit={ async(values, { resetForm }) => {
         if(values){
           if(save) {
             localStorage.setItem('cred', JSON.stringify({
-              email: values.email,
-              password: hashPwd(values.password)
+              email: values.email
             }))
           }
           const loginSuccess = await dispatch(login(values));
@@ -69,9 +86,10 @@ const LoginForm = ({ setIsLogin, setIsForgetPwd }) => {
               <input
                 className="form-check-input"
                 type="checkbox"   
+                checked={(save) ? true : false}
                 id="flexCheckDefault"
                 onChange={e => {
-                  setSave(e.target.checked)
+                  handleRememberMe(e.target.checked)
                 }}
               />
               <label className="form-check-label" htmlFor="flexCheckDefault">
