@@ -175,8 +175,85 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
         margin-top: 2.8rem;
       }
 }
+@media(max-width:991px){
+  .loginn .login{
+    margin-top: 0;
+  }
+  .loginn .login .logo{
+    margin-top: 0;
+  }
+  .leftside {
+    padding-bottom: 0;
+    background-color: transparent;
+    position: unset;
+    overflow-y: auto;
+    max-width: 100%;
+    width: 100%;
+  }
+  .leftside .bottom-text {
+    display: none;
+  }
+  .leftside .bottom-text {
+    height: auto;
+    align-items: center;
+    justify-content: center;
+  }
+  .leftside .bottom-text ul li a {
+    color: #000;
+  }
+  .leftside .upper-content {
+    padding: 0;
+    margin: 0;
+    padding-bottom: 0;
+    text-align: center;
+  }
+  .leftside .upper-content .small-screen {
+    display: block !important;
+  }
+  .leftside .upper-content p {
+    color: #151515;
+  }
+  .leftside .upper-content h2 {
+    margin-bottom: 5px;
+  }
+  .leftside .upper-content h2 br {
+    display: none;
+  }
+  .leftside .upper-content h2 span {
+    color: #303030;
+  }
+  .loginn .important-link {
+    display: block;
+  }
+  .loginn .important-link ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+  }
+  .loginn .important-link ul li {
+    margin-left: 11px;
+  }
+  .loginn .important-link ul li a {
+    color: #000 !important;
+    text-decoration: underline !important;
+  }
+  .loginn .login .logo {
+    margin-bottom: 24px;
+  }
+  .loginn .login .logo img {
+    display: none;
+  }
+}
 @media(max-height: 800px){
   .leftside .bottom-text{
     height: 235px;
+  }
+}
+@media(max-width:320px){
+  .leftside .upper-content h2 {
+    font-size: 26px;
+  }
+  .loginn .login h3 {
+    font-size: 22px;
   }
 }
