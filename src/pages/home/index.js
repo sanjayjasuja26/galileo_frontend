@@ -41,7 +41,6 @@ const Home = () => {
     }
   }
 
-  console.log(section);
   return (
     <>
       <Header />
