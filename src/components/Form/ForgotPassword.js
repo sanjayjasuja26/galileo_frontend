@@ -5,6 +5,7 @@ import { EmailIconSVG } from '../../assets/svgComponents';
 import { emailFormValidation } from '../../utils/validation';
 import { sendResetPasswordEmail } from '../../redux/action/auth';
 import { useDispatch, useSelector } from 'react-redux';
+import Loading from '../../assets/loading.gif'
 
 const ForgotPassword = ({ setIsForgetPwd, setIsLogin }) => {
 
@@ -40,7 +41,7 @@ const ForgotPassword = ({ setIsForgetPwd, setIsLogin }) => {
                     error={errors.email}
                 />
                  <button type="submit" className="btn btn-primary">
-                    {authLoading ? 'Loading...' : 'Send Email'}
+                    {authLoading ? <img src={Loading} height="20" width="50" alt="" /> : 'Send Email'}
                 </button>
                 <div className='d-flex justify-content-center mt-3'>
                   <small className="pointer text-muted" 

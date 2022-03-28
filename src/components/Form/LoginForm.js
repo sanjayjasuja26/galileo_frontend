@@ -6,7 +6,7 @@ import { loginFormSchema } from "../../utils/validation";
 import InputElement from "./components/InputElement";
 import { login } from "../../redux/action/auth";
 import { useDispatch, useSelector } from "react-redux";
-import { hashPwd } from "../../utils/helper";
+import Loading from '../../assets/loading.gif'
 
 const LoginForm = ({ setIsLogin, setIsForgetPwd }) => {
 
@@ -57,7 +57,7 @@ const LoginForm = ({ setIsLogin, setIsForgetPwd }) => {
         }         
       }}          
     >                                                                          
-      {({ touched, errors, values, handleChange, handleSubmit }) => (
+      {({ errors, values, handleChange, handleSubmit }) => (
         <Form className="form" onSubmit={handleSubmit}>
           <InputElement
             name="email"
@@ -94,15 +94,15 @@ const LoginForm = ({ setIsLogin, setIsForgetPwd }) => {
               />
               <label className="form-check-label" htmlFor="flexCheckDefault">
                 Remember me    
-              </label>  
+              </label>        
             </div>
             <small className="pointer text-muted" onClick={() => setIsForgetPwd(true)}>Forgot password</small>
           </div>
           <button type="submit" className="btn btn-primary">
-            {authLoading ? 'Loading...' : 'Login'}
-          </button>
+            {authLoading ? <img src={Loading} height="15" width="70" alt="" /> : 'Login'}
+          </button>    
           <p>           
-            Don’t have an account?{" "}
+            Don’t have an account?{" "}    
             <span className="pointer text-decoration-underline" onClick={() => setIsLogin(false)}>Signup</span>
           </p>             
           <div className="bottom-text important-link">

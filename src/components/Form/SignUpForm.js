@@ -9,6 +9,7 @@ import { signUpFormSchema } from "../../utils/validation";
 import InputElement from "./components/InputElement";
 import { signUp } from "../../redux/action/auth";
 import { useDispatch, useSelector } from "react-redux";
+import Loading from '../../assets/loading.gif'
 
 const SignUpForm = ({ setIsLogin }) => {
 
@@ -37,7 +38,7 @@ const SignUpForm = ({ setIsLogin }) => {
             }
         }}
     >      
-    {({ touched, errors, values, handleChange, handleSubmit }) => (
+    {({ errors, values, handleChange, handleSubmit }) => (
         <Form className="form">
             <InputElement
                 name="firstName"
@@ -96,7 +97,7 @@ const SignUpForm = ({ setIsLogin }) => {
             /> 
 
         <button type="submit" className="btn btn-primary">
-            {authLoading ? 'Loading...' : 'Signup'}        
+            {authLoading ? <img src={Loading} height="20" width="50" alt="" /> : 'Signup'}        
         </button>
         <p>
             Already have an account?{" "}

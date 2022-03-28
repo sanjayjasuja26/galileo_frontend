@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { resetPasswordValidation } from "../../utils/validation";
 import { resetPassword } from "../../redux/action/auth";
 import { useDispatch, useSelector } from "react-redux";
+import Loading from '../../assets/loading.gif'
 
 const ResetPassword = ({ code, setIsLogin, setIsForgetPwd }) => {
   const history = useNavigate();
@@ -77,7 +78,7 @@ const ResetPassword = ({ code, setIsLogin, setIsForgetPwd }) => {
             </small>
           </div>
           <button type="submit" className="btn btn-primary">
-            {authLoading ? 'Loading...' : 'Reset Password'}
+            {authLoading ? <img src={Loading} height="20" width="50" alt="" /> : 'Reset Password'}
           </button>
           <div className="bottom-text important-link">
             <ul>

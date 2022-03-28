@@ -1,5 +1,4 @@
 import axios from "axios";
-import bcrypt from 'bcryptjs';
 import { getAuth } from "firebase/auth";
 import { addDoc, collection, doc, getDocs, query, Timestamp, updateDoc, where } from "firebase/firestore";
 import { db } from "../firebase";
@@ -207,7 +206,3 @@ export const verifyAccess = ({ allowed, date_start, date_end }, user, fromDomain
   }
   return access;
 };
-
-export const hashPwd = (password) => {
-  return bcrypt.hashSync(password, 10);
-}
