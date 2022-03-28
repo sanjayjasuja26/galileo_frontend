@@ -7,7 +7,7 @@
   background-position: 0% 9%, right top, bottom left;
   background-repeat: no-repeat;
   position: fixed;
-  overflow-y: scroll;
+  overflow-y: auto;
   max-width: 40%;
   width: 100%;
 }
