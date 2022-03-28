@@ -6,6 +6,10 @@
   height: 100vh;
   background-position: 0% 9%, right top, bottom left;
   background-repeat: no-repeat;
+  position: fixed;
+  overflow-y: scroll;
+  max-width: 40%;
+  width: 100%;
 }
 .leftside .bottom-text {
   height: 500px;
@@ -52,6 +56,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100vh;
 }
 .loginn .important-link {
   display: none;
@@ -63,6 +68,7 @@
 }
 .loginn .login .logo {
   margin-bottom: 40px;
+  margin-top: 6rem;
 }
 .loginn .login h3 {
   font-family: "Montserrat", sans-serif;
@@ -140,7 +146,19 @@
 .error-msg{
   color: red;
 }
+.loginn .login .form .username input:focus{
+  background-color: transparent;
+}
 
+.loginn .login form {
+  margin-bottom: 3rem;
+}
+.signup {
+  height: auto !important;
+}
+input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus, input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
 @media (max-width: 1024px) {
     .leftside {
         height: auto !important;

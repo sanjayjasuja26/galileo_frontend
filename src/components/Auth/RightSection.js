@@ -37,7 +37,7 @@ const RightSection = () => {
   }, [isLogin, isForgetPwd, mode])
 
   return (
-    <div className="col-lg-7 loginn">
+    <div className="col-lg-7 loginn signup">
         <div className="login">
             <div className="logo text-center">
                 <img src={Logo} alt=""/>
