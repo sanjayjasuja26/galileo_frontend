@@ -52,7 +52,7 @@ const LoginForm = ({ setIsLogin, setIsForgetPwd }) => {
 
           if(loginSuccess){
             resetForm();
-            history('/');
+            history('/');    
           }
         }         
       }}          
@@ -99,14 +99,14 @@ const LoginForm = ({ setIsLogin, setIsForgetPwd }) => {
             <small className="pointer text-muted" onClick={() => setIsForgetPwd(true)}>Forgot password</small>
           </div>
           <button type="submit" className="btn btn-primary">
-            {authLoading ? <img src={Loading} height="15" width="70" alt="" /> : 'Login'}
+            {authLoading ? <img src={Loading} height="15" width="70" alt="" /> : 'Login'}       
           </button>    
           <p>           
             Don’t have an account?{" "}    
             <span className="pointer text-decoration-underline" onClick={() => setIsLogin(false)}>Signup</span>
-          </p>             
+          </p>                 
           <div className="bottom-text important-link">
-            <ul>                                    
+            <ul>                                        
               <li>                                  
                 <a href="#">About us</a>
               </li>                 
@@ -123,3 +123,5 @@ const LoginForm = ({ setIsLogin, setIsForgetPwd }) => {
 
 export default LoginForm;
                           
+
+

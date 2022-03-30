@@ -16,8 +16,8 @@ const Header = () => {
         <div className="row">
         <header >
             <div className="outer d-flex justify-content-between">
-            <a href="/"> <img src={Logo} alt="" /></a>
-                <div className="dropdown ">
+            <Link to="/"> <img src={Logo} alt="" /></Link>
+                <div className="dropdown ">  
                     <button onClick={() => setShowDropDown(!showDropDown)} className="d-flex align-items-center justify-content-center btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1">
                     <ProfileIconSVG />
                     <p className="mb-0 mx-2">John Doe</p>

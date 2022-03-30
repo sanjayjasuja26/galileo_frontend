@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { resetPasswordValidation } from "../../utils/validation";
 import { resetPassword } from "../../redux/action/auth";
 import { useDispatch, useSelector } from "react-redux";
-import Loading from '../../assets/loading.gif'
+import Loading from '../../assets/loading.gif';
 
 const ResetPassword = ({ code, setIsLogin, setIsForgetPwd }) => {
   const history = useNavigate();

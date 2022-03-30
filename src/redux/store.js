@@ -9,7 +9,7 @@ const persistConfig = {
     storage,
     whitelist: ['auth']
 }
-  
+      
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 export let store = createStore(persistedReducer, applyMiddleware(thunk))

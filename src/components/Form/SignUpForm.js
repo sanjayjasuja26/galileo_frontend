@@ -36,8 +36,8 @@ const SignUpForm = ({ setIsLogin }) => {
                     setIsLogin(true)
                 }
             }
-        }}
-    >      
+        }}     
+    >            
     {({ errors, values, handleChange, handleSubmit }) => (
         <Form className="form">
             <InputElement
@@ -62,8 +62,8 @@ const SignUpForm = ({ setIsLogin }) => {
                 icon={<UserIconSVG />}
                 error={errors.lastName}
             />
-            <InputElement
-                name="email"
+            <InputElement      
+                name="email"                
                 type="email"
                 value={values.email}
                 placeholder="Johndoe@gmail.com"
@@ -94,7 +94,7 @@ const SignUpForm = ({ setIsLogin }) => {
                 handleChange={handleChange}
                 icon={<PasswordIconSVG />}
                 error={errors.confirmPassword}
-            /> 
+            />    
 
         <button type="submit" className="btn btn-primary">
             {authLoading ? <img src={Loading} height="20" width="50" alt="" /> : 'Signup'}        
