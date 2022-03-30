@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom';
 import Logo from '../../assets/images/logo.svg'
 import ForgotPassword from '../Form/ForgotPassword';
-import LoginForm from '../Form/LoginForm'
+import LoginForm from '../Form/Login'
 import ResetPassword from '../Form/ResetPassword';
-import SignUpForm from '../Form/SignUpForm';
+import SignUpForm from '../Form/SignUp';
 
 const RightSection = () => {
 

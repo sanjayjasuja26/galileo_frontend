@@ -18,12 +18,12 @@ export const signUp = (body) => async (dispatch) => {
         const userCreated = await checkDomainAndHandleCases(body, userCred.user.uid)     
     
         if(userCreated){     
-            toast.success('User SignUp success')
+            // toast.success('User SignUp success')
             dispatch({ type: AUTH_SUCCESS })
             return true;
         } else {           
             dispatch({ type: AUTH_ERROR })
-            toast.error('Unauthenticated Email')
+            // toast.error('Unauthenticated Email')
             return false;
         }  
 

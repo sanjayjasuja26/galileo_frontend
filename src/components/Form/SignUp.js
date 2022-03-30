@@ -10,6 +10,8 @@ import InputElement from "./components/InputElement";
 import { signUp } from "../../redux/action/auth";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from '../../assets/loading.gif'
+import { sendVarificationEmail } from "../../utils/helper";
+import { toast } from "react-toastify";
 
 const SignUpForm = ({ setIsLogin }) => {
 
@@ -32,8 +34,18 @@ const SignUpForm = ({ setIsLogin }) => {
                 const signupSuccess = await dispatch(signUp(values));        
                 
                 if(signupSuccess){
-                    resetForm();
-                    setIsLogin(true)
+                    const sendEmailSuccess = sendVarificationEmail({
+                        name: `${values.firstName} ${values.lastName}`,
+                        email: values.email,
+                        message: Math.floor(1000 + Math.random() * 9000)
+                    })
+                    if(signupSuccess && sendEmailSuccess){
+                        toast.success('Please check your email for varification')    
+                        resetForm();
+                        setIsLogin(true)       
+                    } else {
+                        toast.error('Something went wrong')
+                    }
                 }
             }
         }}     

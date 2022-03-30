@@ -1,6 +1,19 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import { sendVarificationEmail } from "../../utils/helper";
 
 const PartialAccessVerify = () => {
+
+  const { user } = useSelector(state => state.auth);
+
+  const sendOtp = () => {
+    const sendEmailSuccess = sendVarificationEmail({
+      name: `${user.firstName} ${user.lastName}`,
+      email: user.user_email,
+      message: Math.floor(1000 + Math.random() * 9000)
+    })
+  }
+
   return (
     <div className="email-confirmation">
       <p className="mb-0 alert">Partial Access: Please confirm your email id.</p>
@@ -38,7 +51,8 @@ const PartialAccessVerify = () => {
           </button>
         </div>
       </div>
-      <p className="other-info">
+      <small className="text-decoration-underline pointer" onClick={sendOtp}>Resend OTP</small>
+      <p className="other-info pt-2">
         For help, please email us at education@galileocds.com{" "}
       </p>
     </div>

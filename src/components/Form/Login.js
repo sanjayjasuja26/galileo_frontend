@@ -6,7 +6,7 @@ import { loginFormSchema } from "../../utils/validation";
 import InputElement from "./components/InputElement";
 import { login } from "../../redux/action/auth";
 import { useDispatch, useSelector } from "react-redux";
-import Loading from '../../assets/loading.gif'
+import Loading from '../../assets/loading.gif';
 
 const LoginForm = ({ setIsLogin, setIsForgetPwd }) => {
 
@@ -27,10 +27,10 @@ const LoginForm = ({ setIsLogin, setIsForgetPwd }) => {
     });
     email && setSave(true)
   }, [])
-
+                 
   const handleRememberMe = value => {
     setSave(value)
-    if(!value){
+    if(!value){                        
       localStorage.removeItem('cred');
     }
   }
@@ -51,11 +51,11 @@ const LoginForm = ({ setIsLogin, setIsForgetPwd }) => {
           const loginSuccess = await dispatch(login(values));
 
           if(loginSuccess){
-            resetForm();
-            history('/');    
+            resetForm();      
+            history('/');       
           }
         }         
-      }}          
+      }}                         
     >                                                                          
       {({ errors, values, handleChange, handleSubmit }) => (
         <Form className="form" onSubmit={handleSubmit}>
