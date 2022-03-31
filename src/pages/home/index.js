@@ -23,6 +23,7 @@ const Home = () => {
       location.state.code &&
       location.state.for === "email-verify"
     ) {
+      console.log(location.state);
       varifyEmailLink(location.state.code);
     }
   }, [location.state]);
