@@ -16,6 +16,7 @@ const Home = () => {
   const [section, setSection] = useState("");
   const { access, user } = useSelector((state) => state.auth);
 
+  console.log(location.state);
   useEffect(() => {
     if (
       location.state &&
@@ -23,7 +24,6 @@ const Home = () => {
       location.state.code &&
       location.state.for === "email-verify"
     ) {
-      console.log(location.state);
       varifyEmailLink(location.state.code);
     }
   }, [location.state]);
