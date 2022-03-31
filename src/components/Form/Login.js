@@ -29,7 +29,7 @@ const LoginForm = ({ setIsLogin, setIsForgetPwd }) => {
   }, [])
                  
   const handleRememberMe = value => {
-    setSave(value)
+    setSave(value)     
     if(!value){                        
       localStorage.removeItem('cred');
     }
@@ -43,17 +43,17 @@ const LoginForm = ({ setIsLogin, setIsForgetPwd }) => {
       validationSchema={loginFormSchema}
       onSubmit={ async(values, { resetForm }) => {
         if(values){
-          if(save) {
+          if(save) {   
             localStorage.setItem('cred', JSON.stringify({
               email: values.email
-            }))
+            }))      
           }
           const loginSuccess = await dispatch(login(values));
 
           if(loginSuccess){
             resetForm();      
-            history('/');       
-          }
+            history('/');                    
+          }         
         }         
       }}                         
     >                                                                          

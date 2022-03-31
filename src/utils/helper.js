@@ -1,7 +1,7 @@
-import { async } from "@firebase/util";
 import axios from "axios";
 import { getAuth } from "firebase/auth";
 import { addDoc, collection, doc, getDocs, query, Timestamp, updateDoc, where } from "firebase/firestore";
+import { toast } from "react-toastify";
 import { db } from "../firebase";
 
 export const getIPAddress = async () => {
@@ -209,6 +209,8 @@ export const verifyAccess = ({ allowed, date_start, date_end }, user, fromDomain
 };
 
 export const validateFirebaseLink = async (body) => {
+  try {
+    
     const passResetUrl = `https://identitytoolkit.googleapis.com/v1/accounts:resetPassword?key=${process.env.REACT_APP_FIREBASE_API_KEY}`;
 
     if(body.password){
@@ -230,4 +232,8 @@ export const validateFirebaseLink = async (body) => {
 
     const data = await res.json();
     return data;
+  } catch (error) {
+    toast.error('Oops!! Link has expired')
+    return false;
+  }
 }

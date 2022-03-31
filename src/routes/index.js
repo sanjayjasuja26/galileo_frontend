@@ -6,7 +6,7 @@ import Profile from '../pages/profile';
 import NeuroRadiology from '../pages/neuro-radiology';
 import { useSelector } from 'react-redux';
 
-const AppRoutes = () => {
+const AppRoutes = () => {  
 
   const { user } = useSelector(state => state.auth);
 
@@ -23,7 +23,7 @@ const AppRoutes = () => {
         path: "/neuro-radiology",
         element: user === null ? <Navigate to="/auth" /> : <NeuroRadiology />
       },
-      {
+      {     
         path: "/profile",
         element: user === null ? <Navigate to="/auth" /> : <Profile />
       }

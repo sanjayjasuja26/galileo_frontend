@@ -8,25 +8,11 @@ import Header from "../../components/Header";
 import HomeTable from "../../components/Tables/HomeTable";
 import { HomePageAccess } from "../../constants";
 import FullAccess from "../../components/Access/FullAccess";
-import { useLocation } from "react-router-dom";
-import { varifyEmailLink } from "../../redux/action/auth";
 
 const Home = () => {
-  const location = useLocation();
   const [section, setSection] = useState("");
   const { access, user } = useSelector((state) => state.auth);
 
-  console.log(location.state);
-  useEffect(() => {
-    if (
-      location.state &&
-      location.state.for &&
-      location.state.code &&
-      location.state.for === "email-verify"
-    ) {
-      varifyEmailLink(location.state.code);
-    }
-  }, [location.state]);
 
   useEffect(() => {
     if (access === "N") {

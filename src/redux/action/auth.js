@@ -138,7 +138,6 @@ export const varifyEmail = () => async (dispatch) => {
 } 
 
 export const varifyEmailLink = async (body) => {
-  try {
     const data = await validateFirebaseLink(body);
     console.log(data);
     // if(data.requestType === "PASSWORD_RESET"){
@@ -148,8 +147,4 @@ export const varifyEmailLink = async (body) => {
     //   toast.error('Oops!! Link has expired')
     //   return false;
     // }
-  } catch (err) {
-      toast.error('Oops!! Link has expired')
-      return false;
-  }
 }

@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import Logo from '../../assets/images/logo.svg'
+import { varifyEmail } from '../../redux/action/auth';
 import ForgotPassword from '../Form/ForgotPassword';
 import LoginForm from '../Form/Login'
 import ResetPassword from '../Form/ResetPassword';
 import SignUpForm from '../Form/SignUp';
 
 const RightSection = () => {
-
-    const history = useNavigate();
+                
+    const navigate = useNavigate();
 
   const [search] = useSearchParams();
   const mode = search.get('mode');
@@ -20,7 +21,11 @@ const RightSection = () => {
   const [section, setSection] = useState('');
 
   useEffect(() => {
-    if(isLogin && !mode){
+    displaySection(isLogin, isForgetPwd, mode)
+  }, [isLogin, isForgetPwd, mode])
+
+  const displaySection = async (isLogin, isForgetPwd, mode) => {
+    if(isLogin && !mode){   
         setHeading('Login your account')
         setSection(<LoginForm setIsForgetPwd={setIsForgetPwd} setIsLogin={setIsLogin} />)
     } else {
@@ -34,19 +39,15 @@ const RightSection = () => {
     }
 
     if(mode === 'verifyEmail'){
-        history('/', {
-            state: { 
-                for: 'email-verify',
-                link: code
-            }
-        });
+        await varifyEmail({ code });
+        // navigate('/');
     }
 
     if(isForgetPwd){
         setHeading('Forgot Password')
         setSection(<ForgotPassword setIsForgetPwd={setIsForgetPwd} setIsLogin={setIsLogin} />)
     }
-  }, [isLogin, isForgetPwd, mode])
+  }
 
   return (
     <div className="col-lg-7 loginn signup">
