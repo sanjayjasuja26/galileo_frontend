@@ -18,6 +18,7 @@ const Home = () => {
 
   useEffect(() => {
     if (
+      location.state &&
       location.state.for &&
       location.state.code &&
       location.state.for === "email-verify"
