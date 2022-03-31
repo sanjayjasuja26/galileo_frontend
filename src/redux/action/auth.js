@@ -1,7 +1,7 @@
 import { toast } from 'react-toastify';
 import { auth } from '../../firebase';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendPasswordResetEmail } from 'firebase/auth';
-import { checkDomainAccess, checkDomainAndHandleCases, createDBLogs, getUserDoc } from '../../utils/helper';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, sendEmailVerification } from 'firebase/auth';
+import { checkDomainAccess, checkDomainAndHandleCases, createDBLogs, getUserDoc, validateFirebaseLink } from '../../utils/helper';
 import { 
     AUTH_LOADING,
     AUTH_SUCCESS,
@@ -18,12 +18,12 @@ export const signUp = (body) => async (dispatch) => {
         const userCreated = await checkDomainAndHandleCases(body, userCred.user.uid)     
     
         if(userCreated){     
-            // toast.success('User SignUp success')
+            toast.success('User SignUp success')
             dispatch({ type: AUTH_SUCCESS })
             return true;
         } else {           
             dispatch({ type: AUTH_ERROR })
-            // toast.error('Unauthenticated Email')
+            toast.error('Unauthenticated Email')
             return false;
         }  
 
@@ -106,33 +106,50 @@ export const sendResetPasswordEmail = (email) => async (dispatch) => {
     }
 }
 
-export const resetPassword = (body) => async (dispatch) => {
-    dispatch({ type: AUTH_LOADING })
-    try {
-      const passResetUrl = `https://identitytoolkit.googleapis.com/v1/accounts:resetPassword?key=AIzaSyDXupbfINVUTAU85mwmbYQHmHp9OhyXa_E`;
-  
-      const res = await fetch(passResetUrl, {
-        method: "POST",
-        body: JSON.stringify({
-          oobCode: body.code,
-          newPassword: body.password,
-        }),
-        headers: { "Content-Type": "application/json" },
-      })
-  
-      const data = await res.json();
-      if(data.requestType === "PASSWORD_RESET"){
-        dispatch({ type: AUTH_SUCCESS })
-        toast.success('Password reset success');
-        return true;
-      } else {
-        dispatch({ type: AUTH_ERROR })
-        toast.error('Oops!! Link has expired')
-        return false;
-      }
-    } catch (err) {
-        dispatch({ type: AUTH_ERROR })
-        toast.error('Oops!! Link has expired')
-        return false;
+export const varifyResetPasswordLink = (body) => async (dispatch) => {
+  dispatch({ type: AUTH_LOADING })
+  try {
+    const data = await validateFirebaseLink(body);
+    if(data.requestType === "PASSWORD_RESET"){
+      dispatch({ type: AUTH_SUCCESS })
+      toast.success('Password reset success');
+      return true;
+    } else {
+      dispatch({ type: AUTH_ERROR })
+      toast.error('Oops!! Link has expired')
+      return false;
     }
+  } catch (err) {
+      dispatch({ type: AUTH_ERROR })
+      toast.error('Oops!! Link has expired')
+      return false;
+  }
+}
+
+export const varifyEmail = () => async (dispatch) => {
+  try {
+    await sendEmailVerification(auth.currentUser);
+    toast.success('Please check your email');
+    return true;
+  } catch (error) {
+    toast.error('Oops!! Link has expired')
+    return false;
+  }
+} 
+
+export const varifyEmailLink = async (body) => {
+  try {
+    const data = await validateFirebaseLink(body);
+    console.log(data);
+    // if(data.requestType === "PASSWORD_RESET"){
+    //   toast.success('Password reset success');
+    //   return true;
+    // } else {
+    //   toast.error('Oops!! Link has expired')
+    //   return false;
+    // }
+  } catch (err) {
+      toast.error('Oops!! Link has expired')
+      return false;
+  }
 }

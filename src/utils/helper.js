@@ -1,9 +1,8 @@
+import { async } from "@firebase/util";
 import axios from "axios";
 import { getAuth } from "firebase/auth";
-import { send } from 'emailjs-com';
 import { addDoc, collection, doc, getDocs, query, Timestamp, updateDoc, where } from "firebase/firestore";
 import { db } from "../firebase";
-import { toast } from "react-toastify";
 
 export const getIPAddress = async () => {
   try {
@@ -13,28 +12,6 @@ export const getIPAddress = async () => {
     console.log(error);
   }
 };
-
-export const sendVarificationEmail = async (data) => {
-    send(
-      process.env.REACT_APP_EMAIL_SERVICE_ID, 
-      process.env.REACT_APP_EMAIL_TEMPLATE_ID, 
-      data, 
-      process.env.REACT_APP_EMAIL_USER_ID
-    )
-    .then((result) => {
-        if(result.status === 200){
-          // toast.success('Please check your email for varification')
-          return true;  
-        } else {
-          // toast.error('Something went wrong')
-          return false;
-        }
-    },(error) => {      
-      console.log(error);   
-        toast.error('Something went wrong')
-        return false;            
-    });
-}
 
 export const checkDomainAndHandleCases = async (values, id) => {
   try {
@@ -230,3 +207,27 @@ export const verifyAccess = ({ allowed, date_start, date_end }, user, fromDomain
   }
   return access;
 };
+
+export const validateFirebaseLink = async (body) => {
+    const passResetUrl = `https://identitytoolkit.googleapis.com/v1/accounts:resetPassword?key=${process.env.REACT_APP_FIREBASE_API_KEY}`;
+
+    if(body.password){
+      body = {
+        oobCode: body.code,
+        newPassword: body.password,
+      }
+    } else {
+      body = {
+        oobCode: body.code,
+      }
+    }
+
+    const res = await fetch(passResetUrl, {
+      method: "POST",
+      body: JSON.stringify(body),
+      headers: { "Content-Type": "application/json" },
+    })
+
+    const data = await res.json();
+    return data;
+}

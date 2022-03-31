@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import Logo from '../../assets/images/logo.svg'
 import ForgotPassword from '../Form/ForgotPassword';
 import LoginForm from '../Form/Login'
@@ -7,6 +7,8 @@ import ResetPassword from '../Form/ResetPassword';
 import SignUpForm from '../Form/SignUp';
 
 const RightSection = () => {
+
+    const history = useNavigate();
 
   const [search] = useSearchParams();
   const mode = search.get('mode');
@@ -30,6 +32,16 @@ const RightSection = () => {
         setHeading('Reset Password')
         setSection(<ResetPassword code={code} setIsLogin={setIsLogin} setIsForgetPwd={setIsForgetPwd} />)
     }
+
+    if(mode === 'verifyEmail'){
+        history('/', {
+            state: { 
+                for: 'email-verify',
+                link: code
+            }
+        });
+    }
+
     if(isForgetPwd){
         setHeading('Forgot Password')
         setSection(<ForgotPassword setIsForgetPwd={setIsForgetPwd} setIsLogin={setIsLogin} />)

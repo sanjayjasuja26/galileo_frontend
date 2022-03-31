@@ -31,7 +31,7 @@ const EditProfile = () => {
                         handleChange={handleChange}
                         icon={<UserIconSVG />}
                         error={errors.firstName}
-                    />
+                    />           
                     <InputElement
                         name="lastName"   
                         type="text"

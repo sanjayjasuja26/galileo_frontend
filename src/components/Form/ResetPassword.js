@@ -4,7 +4,7 @@ import InputElement from "./components/InputElement";
 import { PasswordIconSVG } from "../../assets/svgComponents";
 import { useNavigate } from "react-router-dom";
 import { resetPasswordValidation } from "../../utils/validation";
-import { resetPassword } from "../../redux/action/auth";
+import { varifyResetPasswordLink } from "../../redux/action/auth";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from '../../assets/loading.gif';
 
@@ -24,7 +24,7 @@ const ResetPassword = ({ code, setIsLogin, setIsForgetPwd }) => {
       validationSchema={resetPasswordValidation}
       onSubmit={async (values, { resetForm }) => {
         if (values && code) {
-         const success = await dispatch(resetPassword({ code, password: values.password }));
+         const success = await dispatch(varifyResetPasswordLink({ code, password: values.password }));
 
          if(success){
            resetForm();

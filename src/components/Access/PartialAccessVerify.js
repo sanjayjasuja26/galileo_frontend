@@ -1,18 +1,10 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { sendVarificationEmail } from "../../utils/helper";
+import { useDispatch } from "react-redux";
+import { varifyEmail } from "../../redux/action/auth";
 
 const PartialAccessVerify = () => {
 
-  const { user } = useSelector(state => state.auth);
-
-  const sendOtp = () => {
-    const sendEmailSuccess = sendVarificationEmail({
-      name: `${user.firstName} ${user.lastName}`,
-      email: user.user_email,
-      message: Math.floor(1000 + Math.random() * 9000)
-    })
-  }
+  const dispatch = useDispatch();
 
   return (
     <div className="email-confirmation">
@@ -27,8 +19,8 @@ const PartialAccessVerify = () => {
         your five digit verification code below and press the ‘Verify’ button.{" "}
       </p>
       <div className="verification d-flex my-4">
-        <strong>Verification Code:</strong>
-        <div className="v-code d-flex">
+        {/* <strong>Verification Code:</strong> */}
+        {/* <div className="v-code d-flex">
           <div>
             <input className="form-control" />
           </div>
@@ -44,14 +36,15 @@ const PartialAccessVerify = () => {
           <div>
             <input className="form-control" />
           </div>
-        </div>
+        </div> */}
         <div>
-          <button type="button" className="btn btn-primary">
-            Verify
+          <button type="button" className="btn btn-primary" onClick={() => {
+            dispatch(varifyEmail())
+          }}>
+            Verify Email
           </button>
         </div>
       </div>
-      <small className="text-decoration-underline pointer" onClick={sendOtp}>Resend OTP</small>
       <p className="other-info pt-2">
         For help, please email us at education@galileocds.com{" "}
       </p>
