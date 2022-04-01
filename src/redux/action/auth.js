@@ -140,11 +140,15 @@ export const varifyEmail = () => async (dispatch) => {
 export const varifyEmailLink = async (body) => {
     const data = await validateFirebaseLink(body);
     console.log(data);
-    // if(data.requestType === "PASSWORD_RESET"){
-    //   toast.success('Password reset success');
-    //   return true;
-    // } else {
-    //   toast.error('Oops!! Link has expired')
-    //   return false;
-    // }
+    if(data.requestType === "VERIFY_EMAIL"){
+      toast.success('Email varified success');
+      return true;
+    } else {
+      toast.error('Oops!! Link has expired')
+      return false;
+    }
+}
+
+export const updateUser = () => async (body) => {
+  
 }

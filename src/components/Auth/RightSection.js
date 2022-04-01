@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import Logo from '../../assets/images/logo.svg'
-import { varifyEmail } from '../../redux/action/auth';
+import { varifyEmailLink } from '../../redux/action/auth';
 import ForgotPassword from '../Form/ForgotPassword';
 import LoginForm from '../Form/Login'
 import ResetPassword from '../Form/ResetPassword';
@@ -10,6 +11,7 @@ import SignUpForm from '../Form/SignUp';
 const RightSection = () => {
                 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
   const [search] = useSearchParams();
   const mode = search.get('mode');
@@ -39,8 +41,11 @@ const RightSection = () => {
     }
 
     if(mode === 'verifyEmail'){
-        await varifyEmail({ code });
-        // navigate('/');
+        const varified = await varifyEmailLink({ code });
+        if(varified) {
+            navigate('/');
+            dispatch()
+        }
     }
 
     if(isForgetPwd){
