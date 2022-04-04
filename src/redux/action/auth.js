@@ -8,7 +8,8 @@ import {
     AUTH_ERROR,
     ACCESS_TYPE,
     USER_LOGOUT,
-    USER_LOGIN,              
+    USER_LOGIN,
+    UPDATE_USER,              
 } from '../types';    
 
 export const signUp = (body) => async (dispatch) => {
@@ -139,9 +140,7 @@ export const varifyEmail = () => async (dispatch) => {
 
 export const varifyEmailLink = async (body) => {
     const data = await validateFirebaseLink(body);
-    console.log(data);
     if(data.requestType === "VERIFY_EMAIL"){
-      toast.success('Email varified success');
       return true;
     } else {
       toast.error('Oops!! Link has expired')
@@ -149,6 +148,9 @@ export const varifyEmailLink = async (body) => {
     }
 }
 
-export const updateUser = () => async (body) => {
-  
+export const updateUser = (body) => {
+  return {
+    type: UPDATE_USER,
+    payload: body
+  }
 }

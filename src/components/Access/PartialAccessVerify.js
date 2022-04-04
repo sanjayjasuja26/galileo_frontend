@@ -15,8 +15,7 @@ const PartialAccessVerify = () => {
       </p>
       <p className="other-info">
         Your email “user email” needs to be verified to grant you full access.
-        Please check your email for the verification link. Alternatively, enter
-        your five digit verification code below and press the ‘Verify’ button.{" "}
+        Please check your email for the verification link.{" "}
       </p>
       <div className="verification d-flex my-4">
         {/* <strong>Verification Code:</strong> */}
@@ -41,7 +40,7 @@ const PartialAccessVerify = () => {
           <button type="button" className="btn btn-primary" onClick={() => {
             dispatch(varifyEmail())
           }}>
-            Verify Email
+            Send me verification link again
           </button>
         </div>
       </div>

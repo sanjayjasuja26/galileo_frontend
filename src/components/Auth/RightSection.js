@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import Logo from '../../assets/images/logo.svg'
-import { varifyEmailLink } from '../../redux/action/auth';
+import { updateUser, varifyEmailLink } from '../../redux/action/auth';
+import { updateUserDocument } from '../../utils/helper';
 import ForgotPassword from '../Form/ForgotPassword';
 import LoginForm from '../Form/Login'
 import ResetPassword from '../Form/ResetPassword';
@@ -42,9 +44,14 @@ const RightSection = () => {
 
     if(mode === 'verifyEmail'){
         const varified = await varifyEmailLink({ code });
-        if(varified) {
-            navigate('/');
-            dispatch()
+        if(varified){
+            const isUpdated = await updateUserDocument();
+
+            if(isUpdated) {
+                dispatch(updateUser({ verify: true }))
+                toast.success('Email varified success');
+                navigate('/');
+            }
         }
     }
 

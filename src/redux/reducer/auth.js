@@ -5,6 +5,7 @@ import {
     ACCESS_TYPE,
     USER_LOGOUT,
     USER_LOGIN,
+    UPDATE_USER,
  } from '../types';
 
 const INITIAL_STATE = {          
@@ -55,6 +56,14 @@ const reducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,      
                 access: action.payload
+            }
+        case UPDATE_USER:
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    ...action.payload
+                }
             }
         default: return state;
     }

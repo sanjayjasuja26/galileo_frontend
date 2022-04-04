@@ -17,7 +17,7 @@ const AppRoutes = () => {
       },
       {
         path: "/auth",
-        element: user !== null ? <Navigate to="/" /> : <Auth />
+        element: (user !== null && user.verify) ? <Navigate to="/" /> : <Auth />
       },
       {
         path: "/neuro-radiology",

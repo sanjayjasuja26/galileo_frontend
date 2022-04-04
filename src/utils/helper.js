@@ -2,7 +2,7 @@ import axios from "axios";
 import { getAuth } from "firebase/auth";
 import { addDoc, collection, doc, getDocs, query, Timestamp, updateDoc, where } from "firebase/firestore";
 import { toast } from "react-toastify";
-import { db } from "../firebase";
+import { db, auth } from "../firebase";
 
 export const getIPAddress = async () => {
   try {
@@ -87,11 +87,13 @@ export const checkDomainAndHandleCases = async (values, id) => {
 
 export const getUserDoc = async (userCredential) => {
   let user = null;
+  
+  let authId = userCredential.user ? userCredential.user.uid : userCredential.currentUser.uid;
 
   // Get User from users collection
   const userQuery = await query(
     collection(db, "users"),
-    where("guid", "==", userCredential.user.uid)
+    where("guid", "==", authId)
   );
 
   const querySnapshot = await getDocs(userQuery);
@@ -101,6 +103,7 @@ export const getUserDoc = async (userCredential) => {
       ...docSnap.data(),
     };
   });
+
   return user;
 };
 
@@ -234,6 +237,21 @@ export const validateFirebaseLink = async (body) => {
     return data;
   } catch (error) {
     toast.error('Oops!! Link has expired')
+    return false;
+  }
+}     
+
+export const updateUserDocument = async () => {
+  try {
+    let user = await getUserDoc(auth);     
+
+    await updateDoc(doc(db, "users", user.id), {
+      verify: true
+    })
+
+    return true;
+  } catch (error) {
+    toast.error('Something went wrong');
     return false;
   }
 }
