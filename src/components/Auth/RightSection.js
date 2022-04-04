@@ -44,7 +44,8 @@ const RightSection = () => {
 
     if(mode === 'verifyEmail'){
         setHeading('Email Verification')
-        setSection(<h4>Please wait. We are working on your email verification.</h4>)
+        setSection(<h5 className='text-center'>Please wait. We are working on your email verification.</h5>)
+
         const varified = await varifyEmailLink({ code });
         if(varified){
             const isUpdated = await updateUserDocument();
