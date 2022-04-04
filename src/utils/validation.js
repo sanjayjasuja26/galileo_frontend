@@ -28,5 +28,4 @@ export const resetPasswordValidation = object({
 export const editProfileValidation = object({
     firstName: string().matches(textValidation, 'Invalid First Name').min(3, 'First Name should be atleast 3 character long').max(200, 'First Name should not be greater than 200 character').required('First Name is required'),
     lastName: string().matches(textValidation, 'Invalid Last Name').min(3, 'Last Name should be atleast 3 character long').max(200, 'Last Name should not be greater than 200 character').required('Last Name is required'),
-    email: string().email('Please enter valid email').matches(spaceValidation, 'Please enter valid email').required('Email is required'),
 })

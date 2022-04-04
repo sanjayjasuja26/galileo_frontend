@@ -2,7 +2,7 @@ import React from 'react'
 
 const InputElement = (props) => {
 
-    const { name, type, value, placeholder, className, label, handleChange, icon, error } = props;
+    const { name, type, value, placeholder, className, label, handleChange, icon, error, disable } = props;
 
   return (
     <div className="mb-3">
@@ -12,7 +12,7 @@ const InputElement = (props) => {
         <div className={error ? 'username error-border' : 'username'}>
             { icon }
             <input
-                type={type}
+                type={disable ? 'hidden' : type}
                 name={name}
                 value={value}
                 onChange={handleChange}

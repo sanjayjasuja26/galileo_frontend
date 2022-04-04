@@ -1,8 +1,9 @@
 import axios from "axios";
 import { getAuth } from "firebase/auth";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { addDoc, collection, doc, getDocs, query, Timestamp, updateDoc, where } from "firebase/firestore";
 import { toast } from "react-toastify";
-import { db, auth } from "../firebase";
+import { db, auth, storage } from "../firebase";
 
 export const getIPAddress = async () => {
   try {
@@ -98,11 +99,19 @@ export const getUserDoc = async (userCredential) => {
 
   const querySnapshot = await getDocs(userQuery);
   querySnapshot.forEach(async (docSnap) => {
-    user = {
-      id: docSnap.id,
-      ...docSnap.data(),
-    };
+      user = {
+        id: docSnap.id,
+        ...docSnap.data(),
+      };
   });
+
+  let image = await getUserProfilePic(user.id);
+  if(image){
+    user = {
+      ...user,
+      image
+    }
+  }
 
   return user;
 };
@@ -241,17 +250,46 @@ export const validateFirebaseLink = async (body) => {
   }
 }     
 
-export const updateUserDocument = async () => {
+export const updateUserDocument = async (body) => {
   try {
     let user = await getUserDoc(auth);     
 
-    await updateDoc(doc(db, "users", user.id), {
-      verify: true
-    })
+    await updateDoc(doc(db, "users", user.id), body)
 
     return true;
   } catch (error) {
     toast.error('Something went wrong');
     return false;
+  }
+}
+
+export const updateProfilePic = async (user, pic) => {
+  try {
+    let storageRef = ref(storage, `/user-profile/${user.id}`);
+    let uploaded = await uploadBytes(storageRef, pic)
+     
+    if(uploaded){
+      let image = await getUserProfilePic(user.id);
+      return image;
+    }
+  } catch (error) {
+    console.log(error);
+    toast.error('Something went wrong');
+    return false;
+  }
+}
+
+export const getUserProfilePic = async (id) => {
+  try {
+    const profilePic = await getDownloadURL(ref(storage, `/user-profile/${id}`))
+
+    if(profilePic){
+      return profilePic;
+    } else {
+      return '';
+    }
+  } catch (error) {
+    console.log(error);
+    return '';
   }
 }

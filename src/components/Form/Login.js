@@ -7,7 +7,6 @@ import InputElement from "./components/InputElement";
 import { login } from "../../redux/action/auth";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from '../../assets/loading.gif';
-import { updateUserDocument } from "../../utils/helper";
 
 const LoginForm = ({ setIsLogin, setIsForgetPwd }) => {
 
