@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import "./home.css";
+import Pagination from '../../components/Pagination';
 import NoAccess from "../../components/Access/NoAccess";
 import PartialAccess from "../../components/Access/PartialAccess";
 import PartialAccessVerify from "../../components/Access/PartialAccessVerify";
@@ -45,12 +47,12 @@ const Home = () => {
     <>
       <Header />
       <section className="body">
-        <div className="container">
+        <div className="container mb-4">
           <div className="row">
             <div className="inner-wrap">
               <div className="heading">
                 <p>
-                  Neuroradiology Module : <a href="/">Brain Pathologies</a>
+                  Neuroradiology Module : <Link to="/neuro-radiology">Brain Pathologies</Link>
                 </p>
               </div>
               {section === HomePageAccess.PARTIAL_ACCESS ||
@@ -62,6 +64,7 @@ const Home = () => {
               {renderSection()}
             </div>
           </div>
+          <Pagination />
         </div>
       </section>
     </>

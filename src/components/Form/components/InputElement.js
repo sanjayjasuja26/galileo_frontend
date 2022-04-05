@@ -12,7 +12,7 @@ const InputElement = (props) => {
         <div className={error ? 'username error-border' : 'username'} id={id ? id : ''}>
             { icon }
             <input
-                type={disable ? 'hidden' : type}
+                type={type}
                 name={name}
                 value={value}
                 onChange={handleChange}

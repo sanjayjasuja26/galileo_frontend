@@ -18,20 +18,20 @@ const Header = () => {
         <header>
             <div className="outer d-flex justify-content-between">
             <Link to="/"> <img src={Logo} alt="" /></Link>
-                <div className="dropdown ">  
+                <div className="dropdown">  
                     <button onClick={() => setShowDropDown(!showDropDown)} className="d-flex align-items-center justify-content-center btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1">
                         {
-                            user.image 
+                            user.image    
                             ?
                             <img src={user.image} alt="" className="rounded rounded-circle" height={20} width={20} />
-                            :
+                            :     
                             <ProfileIconSVG />
                         }    
-                    <p className="mb-0 mx-2">
-                        {
-                            (user.fname && user.lname) ? `${user.fname} ${user.lname}` : 'John Doe'
-                        }
-                    </p>
+                        <p className="mb-0 mx-2">
+                            {
+                                (user.fname && user.lname) ? `${user.fname} ${user.lname}` : 'John Doe'
+                            }
+                        </p>
                     </button>
                     {
                         showDropDown 

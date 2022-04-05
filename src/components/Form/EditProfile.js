@@ -11,7 +11,7 @@ const EditProfile = () => {
 
     const dispatch = useDispatch();
     const { user, authLoading } = useSelector(state => state.auth);
-
+    
   return (
     <Formik
         initialValues={{

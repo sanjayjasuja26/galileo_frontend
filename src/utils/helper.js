@@ -1,5 +1,4 @@
 import axios from "axios";
-import { getAuth } from "firebase/auth";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { addDoc, collection, doc, getDocs, query, Timestamp, updateDoc, where } from "firebase/firestore";
 import { toast } from "react-toastify";
@@ -61,7 +60,7 @@ export const checkDomainAndHandleCases = async (values, id) => {
         return true;
       } else if (matchedDomain.allowed === "N") {
         // Scenario 2: Delete user from auth
-        let user = getAuth().currentUser;
+        let user = auth.currentUser;
         user.delete();
         // TODO: Send email to Admin
         return false;

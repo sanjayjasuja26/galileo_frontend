@@ -1,6 +1,7 @@
 import React from "react";
 
 const HomeTable = () => {
+
   return (
     <div className="study-table table-responsive">
       <table className="table table-bordered table-striped">

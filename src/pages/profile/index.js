@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import './profile.css';                      
-import { EditProfileIconSVG } from "../../assets/svgComponents";
+import { EditIconSVG, EditProfileIconSVG } from "../../assets/svgComponents";
 import Header from "../../components/Header";   
 import EditProfile from "../../components/Form/EditProfile";
 import { updateProfilePic } from "../../utils/helper";
@@ -65,10 +65,20 @@ const Profile = () => {
                   <div onClick={handleImage}>
                     {                      
                       preview              
-                      ?                     
-                      <img src={preview} alt="" className="rounded rounded-circle" height={80} width={80} />
+                      ?  
+                      <div className="user_img">
+                        <img src={preview} alt="" className="rounded rounded-circle" height={80} width={80} />
+                        <div className="edit_userimg">
+                        <EditIconSVG />                      
+                        </div>                      
+                      </div>                   
                       :
-                      <EditProfileIconSVG />
+                      <div className="user_img">
+                        <EditProfileIconSVG />
+                        <div className="edit_userimg">
+                        <EditIconSVG />                      
+                        </div>
+                      </div>
                     }               
                   </div>
                 </div>     

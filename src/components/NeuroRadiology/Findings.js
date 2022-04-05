@@ -222,7 +222,7 @@ const Findings = () => {
               </div>
             </div>
           </div>
-          <div className="types d-flex">
+          {/* <div className="types d-flex">
             <div className="w-25">
               <strong>Diffusion </strong>
             </div>
@@ -241,9 +241,10 @@ const Findings = () => {
                 <span>N/A</span>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
+
       <div className="col-lg-12 types d-flex location">
         <div className="w-25">
           <strong>Location</strong>

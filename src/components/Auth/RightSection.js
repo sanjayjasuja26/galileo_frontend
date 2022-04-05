@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import Logo from "../../assets/images/logo.svg";
+import { EnvelopeIconSVG } from "../../assets/svgComponents";
 import { updateUser, varifyEmailLink } from "../../redux/action/auth";
 import { updateUserDocument } from "../../utils/helper";
 import ForgotPassword from "../Form/ForgotPassword";
@@ -51,11 +52,12 @@ const RightSection = () => {
       );
     }
 
-    if (mode === "verifyEmail") {
+    if (mode === "verifyEmail") {  
       setHeading("Email Verification");
-      setSection(
+      setSection(   
         <p className="text-center">
-          Please wait. We are working on your email verification.
+          <EnvelopeIconSVG />
+          Please wait. We are verifying your email.
         </p>
       );
 
@@ -69,7 +71,7 @@ const RightSection = () => {
           dispatch(updateUser({ verify: true }));
           toast.success("Email varified success");
         }
-        navigate("/");
+        // navigate("/");
       }
     }
 
