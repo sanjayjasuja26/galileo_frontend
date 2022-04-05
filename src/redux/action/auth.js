@@ -1,7 +1,7 @@
 import { toast } from 'react-toastify';
 import { auth } from '../../firebase';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, sendEmailVerification } from 'firebase/auth';
-import { checkDomainAccess, checkDomainAndHandleCases, createDBLogs, getUserDoc, validateFirebaseLink } from '../../utils/helper';
+import { checkDomainAccess, checkDomainAndHandleCases, createDBLogs, getUserDoc, updateUserDocument, validateFirebaseLink } from '../../utils/helper';
 import { 
     AUTH_LOADING,
     AUTH_SUCCESS,
@@ -152,5 +152,29 @@ export const updateUser = (body) => {
   return {
     type: UPDATE_USER,
     payload: body
+  }
+}
+
+export const editUserProfile = (body) => async (dispatch) => {
+  dispatch({ type: AUTH_LOADING })
+  try {
+    const isUpdated = await updateUserDocument({ 
+      fname: body.firstName, 
+      lname: body.lastName, 
+    })              
+
+    if(isUpdated){
+        dispatch({ type: AUTH_SUCCESS })
+        dispatch(updateUser({ 
+            fname: body.firstName, 
+            lname: body.lastName,
+        }))
+        toast.success('Profile updated success');
+    } else {
+        toast.error('Something went wrong')
+    }
+  } catch (error) {
+    dispatch({ type: AUTH_ERROR })
+    toast.error('Something went wrong')
   }
 }

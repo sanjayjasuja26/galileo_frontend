@@ -54,9 +54,9 @@ const RightSection = () => {
     if (mode === "verifyEmail") {
       setHeading("Email Verification");
       setSection(
-        <h5 className="text-center">
+        <p className="text-center">
           Please wait. We are working on your email verification.
-        </h5>
+        </p>
       );
 
       const varified = await varifyEmailLink({ code });
@@ -68,8 +68,8 @@ const RightSection = () => {
         if (isUpdated) {
           dispatch(updateUser({ verify: true }));
           toast.success("Email varified success");
-          navigate("/");
         }
+        navigate("/");
       }
     }
 

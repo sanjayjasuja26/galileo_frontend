@@ -30,7 +30,7 @@ const Profile = () => {
   useEffect(() => {     
     if(file){                         
       setPreview(URL.createObjectURL(file))
-      checkFileUpload();            
+      checkFileUpload();             
     }                                   
   }, [file])                            
                         
@@ -39,6 +39,7 @@ const Profile = () => {
     if(image){               
       dispatch(updateUser({ image }))
       toast.success('Profile picture updated success')
+      setFile('')
     } else {               
       toast.error('Something went wrong')
     }                           

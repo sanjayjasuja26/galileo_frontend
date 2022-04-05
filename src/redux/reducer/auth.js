@@ -22,7 +22,7 @@ const reducer = (state = INITIAL_STATE, action) => {
                 ...state, 
                 authLoading: true,
                 authError: false,
-                user: null,
+                // user: null,
             };
         case USER_LOGIN:
             return {

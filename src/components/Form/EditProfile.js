@@ -3,13 +3,14 @@ import { Formik, Form } from "formik";
 import InputElement from './components/InputElement'
 import { EmailIconSVG, UserIconSVG } from '../../assets/svgComponents';
 import { editProfileValidation } from '../../utils/validation';
-import { updateUserDocument } from '../../utils/helper';
-import { toast } from 'react-toastify';     
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { editUserProfile } from '../../redux/action/auth';
+import Loading from '../../assets/loading.gif';
 
 const EditProfile = () => {
 
-    const { user } = useSelector(state => state.auth);
+    const dispatch = useDispatch();
+    const { user, authLoading } = useSelector(state => state.auth);
 
   return (
     <Formik
@@ -20,18 +21,8 @@ const EditProfile = () => {
         validateOnChange={true}    
         validationSchema={editProfileValidation}
         onSubmit={async (values, { resetForm }) => {
-            if(values){
-                const isUpdated = await updateUserDocument({ 
-                    fname: values.firstName, 
-                    lname: values.lastName, 
-                })      
-
-                if(isUpdated){
-                    toast.success('Profile updated success');
-                    resetForm();
-                } else {
-                    toast.error('Something went wrong')
-                }
+            if(values && (values.firstName !== user.fname || values.lastName !== user.lname)){
+                dispatch(editUserProfile(values));
             }
         }}                            
     >   
@@ -43,7 +34,7 @@ const EditProfile = () => {
                         type="text"                 
                         value={values.firstName}
                         placeholder="John"
-                        className="form-control"
+                        className="form-control"      
                         label="First Name"
                         handleChange={handleChange}
                         icon={<UserIconSVG />}
@@ -72,7 +63,9 @@ const EditProfile = () => {
                         icon={<EmailIconSVG />}
                     />                   
                 <button type="submit" className="btn btn-primary">
-                    UPDATE       
+                    {
+                        authLoading ? <img src={Loading} height="15" width="70" alt="" /> : 'Update'
+                    }       
                 </button>
             </Form>
         )
