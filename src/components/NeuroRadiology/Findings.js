@@ -121,7 +121,6 @@ const Findings = () => {
           </div>
         </div>
       </div>
-
       <div className="col-lg-6">
         <div className="right-cover">
           <div>
@@ -172,15 +171,15 @@ const Findings = () => {
             <div className="w-75 d-flex">
               <div className="cat">
                 <span>Single</span>
-              </div>
+              </div>               
               <div className="cat">
                 <span>Multiple</span>
-              </div>
+              </div>             
               <div className="cat">
                 <span>N/A</span>
               </div>
             </div>
-          </div>
+          </div>                   
           <div className="types d-flex">
             <div className="w-25">
               <strong>Dominant Pattern </strong>
@@ -210,10 +209,10 @@ const Findings = () => {
               </div>
               <div className="cat">
                 <span>Right</span>
-              </div>
+              </div>  
               <div className="cat">
                 <span>Bilateral Symmetric</span>
-              </div>
+              </div> 
               <div className="cat">
                 <span>Bilateral Asymmetric</span>
               </div>
@@ -244,7 +243,6 @@ const Findings = () => {
           </div> */}
         </div>
       </div>
-
       <div className="col-lg-12 types d-flex location">
         <div className="w-25">
           <strong>Location</strong>

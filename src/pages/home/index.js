@@ -15,17 +15,16 @@ const Home = () => {
   const [section, setSection] = useState("");
   const { access, user } = useSelector((state) => state.auth);
 
-
-  useEffect(() => {
+  useEffect(() => {                       
     if (access === "N") {
       setSection(HomePageAccess.NO_ACCESS);
     } else if (access === "Y" && user.verify) {
       setSection(HomePageAccess.FULL_ACCESS);
     } else if (access === "P") {
       setSection(HomePageAccess.PARTIAL_ACCESS);
-    } else {
+    } else {                  
       setSection(HomePageAccess.PARTIAL_VERIFY_ACCESS);
-    }
+    }                            
   }, [access, user]);
 
   const renderSection = () => {
@@ -38,7 +37,7 @@ const Home = () => {
         return <PartialAccessVerify />;
       case HomePageAccess.FULL_ACCESS:
         return <FullAccess />;
-      default:
+      default:    
         return <PartialAccessVerify />;
     }
   };

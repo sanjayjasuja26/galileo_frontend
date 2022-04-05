@@ -39,13 +39,13 @@ const Impressions = () => {
                         <option value="3">Three</option>
                     </select>
                 </div>
-            </div>
-        </div>
+            </div>  
+        </div>                  
         <div className="next d-flex justify-content-end mt-3 mb-5">
             <button type="button" className="btn btn-primary">Next</button>
-        </div>
+        </div>  
     </>
-  )
+  )    
 }
 
-export default Impressions
+export default Impressions;
