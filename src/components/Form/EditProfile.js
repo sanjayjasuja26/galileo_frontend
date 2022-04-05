@@ -36,6 +36,7 @@ const EditProfile = () => {
                         placeholder="John"
                         className="form-control"      
                         label="First Name"
+                        id="profile_firstname"
                         handleChange={handleChange}
                         icon={<UserIconSVG />}
                         error={errors.firstName}
@@ -47,6 +48,7 @@ const EditProfile = () => {
                         placeholder="Doe"
                         className="form-control"
                         label="Last Name"
+                        id="profile_lastname"
                         handleChange={handleChange}
                         icon={<UserIconSVG />}
                         error={errors.lastName}

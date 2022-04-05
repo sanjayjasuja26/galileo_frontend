@@ -26,4 +26,26 @@
     background-color: #fafafa;
     padding: 10px 9px;
   }
-  
+  #profile_firstname {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fafafa;
+    padding: 2px 13px;
+    border-radius: 5px;
+}
+#profile_firstname input:focus {
+  box-shadow: unset !important;
+}
+#profile_lastname {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fafafa;
+  padding: 2px 13px;
+  border-radius: 5px;
+}
+#profile_lastname input:focus {
+box-shadow: unset !important;
+}
+

@@ -2,14 +2,14 @@ import React from 'react'
 
 const InputElement = (props) => {
 
-    const { name, type, value, placeholder, className, label, handleChange, icon, error, disable } = props;
+    const { name, type, value, placeholder, className, label, handleChange, icon, error, disable, id } = props;
 
   return (
     <div className="mb-3">
         <label htmlFor={name} className="form-label">
             {label}
         </label>
-        <div className={error ? 'username error-border' : 'username'}>
+        <div className={error ? 'username error-border' : 'username'} id={id ? id : ''}>
             { icon }
             <input
                 type={disable ? 'hidden' : type}
