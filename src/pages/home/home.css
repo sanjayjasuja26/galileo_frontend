@@ -1,6 +1,10 @@
 .inner-wrap .heading {
     padding: 35px 0;
   }
+  .pagination{
+    justify-content: end;
+    margin-top: 20px;
+  }
   @media (max-width: 425px) {
     .inner-wrap .heading {
       flex-direction: column;
