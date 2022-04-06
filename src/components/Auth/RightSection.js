@@ -65,12 +65,12 @@ const RightSection = () => {
       if (varified) {
         const isUpdated = await updateUserDocument({
           verify: true,
-        });                   
+        });                            
 
         if (isUpdated) {
           dispatch(updateUser({ verify: true }));
           toast.success("Email varified success");
-        }
+        }     
         // navigate("/");
       }
     }
@@ -82,8 +82,8 @@ const RightSection = () => {
           setIsForgetPwd={setIsForgetPwd}
           setIsLogin={setIsLogin}
         />
-      );
-    }
+      );                         
+    }   
   };
 
   return (
@@ -93,7 +93,7 @@ const RightSection = () => {
           <img src={Logo} alt="" />
           <h3>{heading}</h3>
         </div>
-        {section}
+        {section}   
       </div>
     </div>
   );

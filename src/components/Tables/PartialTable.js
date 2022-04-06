@@ -1,6 +1,7 @@
 import React from "react";
 
-const FullAccess = () => {
+const PartialTable = () => {
+  
   return (
     <div className="study-table table-responsive">
       <table className="table table-bordered table-striped">
@@ -28,13 +29,13 @@ const FullAccess = () => {
             <td>MRI</td>
             <td>Completed</td>
             <td>Multiple Sclerosis</td>
-            <td>10/10</td>
+            <td>9/10</td>
             <td>Correct</td>
           </tr>
           <tr>
             <th scope="row">001039</th>
             <td>MRI</td>
-            <td>To be done</td>
+            <td>Completed</td>
             <td>-</td>
             <td>-</td>
             <td>-</td>
@@ -42,47 +43,7 @@ const FullAccess = () => {
           <tr>
             <th scope="row">001040</th>
             <td>MRI</td>
-            <td>To be done</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-          </tr>
-          <tr>
-            <th scope="row">001041</th>
-            <td>MRI</td>
-            <td>To be done</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-          </tr>
-          <tr>
-            <th scope="row">001042</th>
-            <td>MRI</td>
-            <td>To be done</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-          </tr>
-          <tr>
-            <th scope="row">001043</th>
-            <td>MRI</td>
-            <td>To be done</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-          </tr>
-          <tr>
-            <th scope="row">001044</th>
-            <td>MRI</td>
-            <td>To be done</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-          </tr>
-          <tr>
-            <th scope="row">001045</th>
-            <td>MRI</td>
-            <td>To be done</td>
+            <td>Completed</td>
             <td>-</td>
             <td>-</td>
             <td>-</td>
@@ -93,4 +54,4 @@ const FullAccess = () => {
   );
 };
 
-export default FullAccess;
+export default PartialTable;

@@ -61,7 +61,11 @@ form .username input:focus {
 }
 .user_img img {
   object-fit: cover;
+  border: 1px solid #ccccccb5;
 }
 .dropdown img {
   object-fit: cover;
+  width: 35px;
+  height: 35px;
+  border: 1px solid #ccccccde;
 }

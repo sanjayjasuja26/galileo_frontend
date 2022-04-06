@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import "./home.css";                 
 import Pagination from '../../components/Pagination';
@@ -7,14 +7,18 @@ import NoAccess from "../../components/Access/NoAccess";
 import PartialAccess from "../../components/Access/PartialAccess";
 import PartialAccessVerify from "../../components/Access/PartialAccessVerify";
 import Header from "../../components/Header";
-import HomeTable from "../../components/Tables/HomeTable";
+import PartialTable from "../../components/Tables/PartialTable";
 import { HomePageAccess } from "../../constants";
-import FullAccess from "../../components/Access/FullAccess";
-import { getDataFromColection } from "../../utils/helper";
+import CaseAccess from "../../components/Access/CaseAccess";
+import { fetchCases } from "../../redux/action/cases";
 
 const Home = () => {
+
+  const dispatch = useDispatch();
+
   const [section, setSection] = useState("");
   const { access, user } = useSelector((state) => state.auth);
+  const { cases } = useSelector(state => state.cases);
 
   useEffect(() => {                       
     if (access === "N") {         
@@ -26,31 +30,36 @@ const Home = () => {
     } else {                                
       setSection(HomePageAccess.PARTIAL_VERIFY_ACCESS);
     }                                  
-  }, [access, user]);                     
+  }, [access, user]);                       
 
   const renderSection = () => {
-    switch (section) {           
+    switch (section) {              
       case HomePageAccess.NO_ACCESS:
         return <NoAccess />;         
       case HomePageAccess.PARTIAL_ACCESS:
-        return <PartialAccess />;
+        return (
+          <>
+            <CaseAccess />
+            <PartialAccess />
+          </>
+        );
       case HomePageAccess.PARTIAL_VERIFY_ACCESS:
-        return <PartialAccessVerify />;
+        return (
+          <>
+            <CaseAccess />
+            <PartialAccessVerify />
+          </>
+        );
       case HomePageAccess.FULL_ACCESS:
-        return <FullAccess />;
+        return <CaseAccess />;
       default:                  
         return ''; 
     }
   };
 
   useEffect(() => {
-    getCases();
-  }, [])
-
-  const getCases = async () => {
-    const data = await getDataFromColection("cases_neuro");
-    console.log(data);
-  }       
+    dispatch(fetchCases(access));
+  }, [dispatch, access])     
 
   return (          
     <>
@@ -64,17 +73,11 @@ const Home = () => {
                   Neuroradiology Module : <Link to="/neuro-radiology">Brain Pathologies</Link>
                 </p>
               </div>
-              {section === HomePageAccess.PARTIAL_ACCESS ||
-              section === HomePageAccess.PARTIAL_VERIFY_ACCESS ? (
-                <HomeTable />
-              ) : (
-                ""
-              )}
               {renderSection()}
             </div>
           </div>
           {
-            (section === HomePageAccess.FULL_ACCESS) &&
+            (section === HomePageAccess.FULL_ACCESS && cases.length > 0) &&
             <Pagination />
           }
         </div>

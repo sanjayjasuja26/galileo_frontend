@@ -1,9 +1,10 @@
 import axios from "axios";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { addDoc, collection, doc, getDocs, query, Timestamp, updateDoc, where } from "firebase/firestore";
-import { toast } from "react-toastify";
+import { addDoc, collection, doc, getDocs, query, Timestamp, updateDoc, where, limit, startAt, orderBy } from "firebase/firestore";
+import { toast } from "react-toastify";         
 import { db, auth, storage } from "../firebase";
-
+import { CASE_LIMIT } from "../constants";         
+              
 export const getIPAddress = async () => {
   try {
     const res = await axios.get("https://geolocation-db.com/json/");
@@ -83,7 +84,7 @@ export const checkDomainAndHandleCases = async (values, id) => {
   } catch (error) {
     console.log(error);
   }
-};
+};    
 
 export const getUserDoc = async (userCredential) => {
   let user = null;
@@ -293,15 +294,51 @@ export const getUserProfilePic = async (id) => {
   }
 }
 
-export const getDataFromColection = async (coll) => {
+export const getDataFromCollection = async (coll, filter = null) => {
   try {
-    const querySnapshot = await getDocs(collection(db, coll));
+
+    let Query;
+
+    if(filter){
+      Query = await query(
+        collection(db, coll),
+        where(filter.key, "==", filter.value),
+        orderBy(filter.orderBy),
+        startAt(filter.page),
+        limit(CASE_LIMIT)
+      );
+    } else {
+      Query = await query(
+        collection(db, coll)
+      );
+    }
+    
+    const querySnapshot = await getDocs(Query);
+
     const data = [];
     querySnapshot.forEach((doc) => {
       data.push(doc.data())
     });
     return data;
+
   } catch (error) {
     console.log(error);
   }
 }
+
+export const getCollectionDocCounts = async (coll, filter = null) => {
+  try {
+
+    let count;
+
+    if(filter) {
+      count = (await getDocs(collection(db, coll), where(filter.key, "==", filter.value))).size
+    } else {
+      count = (await getDocs(collection(db, coll))).size
+    }    
+
+    return count;
+  } catch (error) {
+    console.log(error);    
+  }
+}                        
