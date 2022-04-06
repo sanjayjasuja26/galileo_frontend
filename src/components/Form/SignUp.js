@@ -38,7 +38,7 @@ const SignUpForm = ({ setIsLogin }) => {
             }
         }}     
     >            
-    {({ errors, values, handleChange, handleSubmit }) => (
+    {({ errors, values, touched, handleChange, handleSubmit }) => (
         <Form className="form">
             <InputElement
                 name="firstName"
@@ -50,6 +50,7 @@ const SignUpForm = ({ setIsLogin }) => {
                 handleChange={handleChange}
                 icon={<UserIconSVG />}
                 error={errors.firstName}
+                touched={touched.firstName}
             />
             <InputElement
                 name="lastName"   
@@ -61,6 +62,7 @@ const SignUpForm = ({ setIsLogin }) => {
                 handleChange={handleChange}
                 icon={<UserIconSVG />}
                 error={errors.lastName}
+                touched={touched.lastName}
             />
             <InputElement      
                 name="email"                
@@ -72,6 +74,7 @@ const SignUpForm = ({ setIsLogin }) => {
                 handleChange={handleChange}
                 icon={<EmailIconSVG />}
                 error={errors.email}
+                touched={touched.email}
             />
             <InputElement
                 name="password"
@@ -83,6 +86,7 @@ const SignUpForm = ({ setIsLogin }) => {
                 handleChange={handleChange}
                 icon={<PasswordIconSVG />}
                 error={errors.password}
+                touched={touched.password}
             /> 
             <InputElement
                 name="confirmPassword"
@@ -94,6 +98,7 @@ const SignUpForm = ({ setIsLogin }) => {
                 handleChange={handleChange}
                 icon={<PasswordIconSVG />}
                 error={errors.confirmPassword}
+                touched={touched.confirmPassword}
             />    
 
         <button type="submit" className="btn btn-primary">

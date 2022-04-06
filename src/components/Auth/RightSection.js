@@ -16,20 +16,20 @@ const RightSection = () => {
   const dispatch = useDispatch();
 
   const [search] = useSearchParams();
-  const mode = search.get("mode");
+  const mode = search.get("mode");       
   const code = search.get("oobCode");
 
   const [isLogin, setIsLogin] = useState(true);
   const [isForgetPwd, setIsForgetPwd] = useState(false);
-  const [heading, setHeading] = useState("");
-  const [section, setSection] = useState("");
+  const [heading, setHeading] = useState("");  
+  const [section, setSection] = useState("");   
 
-  useEffect(() => {
+  useEffect(() => {        
     displaySection(isLogin, isForgetPwd, mode);
-  }, [isLogin, isForgetPwd, mode]);
+  }, [isLogin, isForgetPwd, mode]);    
 
   const displaySection = async (isLogin, isForgetPwd, mode) => {
-    if (isLogin && !mode) {
+    if (isLogin && !mode) {              
       setHeading("Login your account");
       setSection(
         <LoginForm setIsForgetPwd={setIsForgetPwd} setIsLogin={setIsLogin} />
@@ -65,7 +65,7 @@ const RightSection = () => {
       if (varified) {
         const isUpdated = await updateUserDocument({
           verify: true,
-        });
+        });                   
 
         if (isUpdated) {
           dispatch(updateUser({ verify: true }));

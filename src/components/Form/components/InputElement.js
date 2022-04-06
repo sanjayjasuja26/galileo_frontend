@@ -2,14 +2,14 @@ import React from 'react'
 
 const InputElement = (props) => {
 
-    const { name, type, value, placeholder, className, label, handleChange, icon, error, disable, id } = props;
+    const { name, type, value, placeholder, className, label, handleChange, icon, error, touched, id } = props;
 
   return (
     <div className="mb-3">
         <label htmlFor={name} className="form-label">
             {label}
         </label>
-        <div className={error ? 'username error-border' : 'username'} id={id ? id : ''}>
+        <div className={(error && touched) ? 'username error-border' : 'username'} id={id ? id : ''}>
             { icon }
             <input
                 type={type}
@@ -21,7 +21,7 @@ const InputElement = (props) => {
             />
         </div>     
         {
-            <small className='error-msg'>{error}</small>
+            (error && touched) && <small className='error-msg'>{error}</small>
         }                   
     </div> 
   )

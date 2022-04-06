@@ -27,7 +27,7 @@ const EditProfile = () => {
         }}                            
     >   
     {
-        ({ errors, values, handleChange, handleSubmit }) => (
+        ({ errors, values, touched, handleChange, handleSubmit }) => (
             <Form className="form mt-3" onSubmit={handleSubmit}>
                     <InputElement         
                         name="firstName"
@@ -40,6 +40,7 @@ const EditProfile = () => {
                         handleChange={handleChange}
                         icon={<UserIconSVG />}
                         error={errors.firstName}
+                        touched={touched.firstName}
                     />                  
                     <InputElement        
                         name="lastName"   
@@ -52,6 +53,7 @@ const EditProfile = () => {
                         handleChange={handleChange}
                         icon={<UserIconSVG />}
                         error={errors.lastName}
+                        touched={touched.lastName}
                     />                                                    
                     <InputElement               
                         name="email"                  

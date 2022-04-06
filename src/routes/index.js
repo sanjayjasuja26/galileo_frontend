@@ -10,7 +10,7 @@ const AppRoutes = () => {
 
   const { user } = useSelector(state => state.auth);
 
-  return useRoutes([
+  return useRoutes([     
       {
         path: "/",
         element: user === null ? <Navigate to="/auth" /> : <Home />

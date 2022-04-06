@@ -32,7 +32,7 @@ const ResetPassword = ({ code, setIsLogin, setIsForgetPwd }) => {
         }
       }}
     >
-      {({ errors, values, handleChange, handleSubmit }) => (
+      {({ errors, values, touched, handleChange, handleSubmit }) => (
         <Form className="form" onSubmit={handleSubmit}>
           <InputElement
             name="password"
@@ -44,6 +44,7 @@ const ResetPassword = ({ code, setIsLogin, setIsForgetPwd }) => {
             handleChange={handleChange}
             icon={<PasswordIconSVG />}
             error={errors.password}
+            touched={touched.password}
           />
           <InputElement
             name="confirmPassword"
@@ -55,6 +56,7 @@ const ResetPassword = ({ code, setIsLogin, setIsForgetPwd }) => {
             handleChange={handleChange}
             icon={<PasswordIconSVG />}
             error={errors.confirmPassword}
+            touched={touched.confirmPassword}
           />
           <div className="d-flex justify-content-between mt-3">
             <small

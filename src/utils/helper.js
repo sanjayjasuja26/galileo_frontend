@@ -292,3 +292,16 @@ export const getUserProfilePic = async (id) => {
     return '';
   }
 }
+
+export const getDataFromColection = async (coll) => {
+  try {
+    const querySnapshot = await getDocs(collection(db, coll));
+    const data = [];
+    querySnapshot.forEach((doc) => {
+      data.push(doc.data())
+    });
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+}

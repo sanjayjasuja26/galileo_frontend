@@ -39,6 +39,7 @@ const ForgotPassword = ({ setIsForgetPwd, setIsLogin }) => {
                     handleChange={handleChange}
                     icon={<EmailIconSVG />}
                     error={errors.email}
+                    touched={touched.email}
                 />
                  <button type="submit" className="btn btn-primary">
                     {authLoading ? <img src={Loading} height="20" width="50" alt="" /> : 'Send Email'}

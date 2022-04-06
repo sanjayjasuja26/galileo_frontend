@@ -56,7 +56,7 @@ const LoginForm = ({ setIsLogin, setIsForgetPwd }) => {
         }         
       }}                         
     >                                                                          
-      {({ errors, values, handleChange, handleSubmit }) => (
+      {({ errors, touched, values, handleChange, handleSubmit }) => (
         <Form className="form" onSubmit={handleSubmit}>
           <InputElement
             name="email"
@@ -68,6 +68,7 @@ const LoginForm = ({ setIsLogin, setIsForgetPwd }) => {
             handleChange={handleChange}
             icon={<EmailIconSVG />}
             error={errors.email}
+            touched={touched.email}
           />                                           
           <InputElement                           
             name="password"                      
@@ -79,6 +80,7 @@ const LoginForm = ({ setIsLogin, setIsForgetPwd }) => {
             handleChange={handleChange}
             icon={<PasswordIconSVG />}
             error={errors.password}
+            touched={touched.password}
           />    
           <div className="paasrd d-flex justify-content-between">
             <div className="form-check">
