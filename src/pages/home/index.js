@@ -2,12 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import "./home.css";                 
-import Pagination from '../../components/Pagination';
+import Pagination from '../../components/Pagination/Pagination';
 import NoAccess from "../../components/Access/NoAccess";
 import PartialAccess from "../../components/Access/PartialAccess";
 import PartialAccessVerify from "../../components/Access/PartialAccessVerify";
 import Header from "../../components/Header";
-import PartialTable from "../../components/Tables/PartialTable";
 import { HomePageAccess } from "../../constants";
 import CaseAccess from "../../components/Access/CaseAccess";
 import { fetchCases } from "../../redux/action/cases";
@@ -58,8 +57,8 @@ const Home = () => {
   };
 
   useEffect(() => {
-    dispatch(fetchCases(access));
-  }, [dispatch, access])     
+    dispatch(fetchCases({ startFrom: cases.startFrom, endAt: cases.endAt, access }));
+  }, [dispatch, access, cases.startFrom, cases.endAt])     
 
   return (          
     <>
@@ -76,10 +75,10 @@ const Home = () => {
               {renderSection()}
             </div>
           </div>
-          {
-            (section === HomePageAccess.FULL_ACCESS && cases.length > 0) &&
+          {/* {
+            (section === HomePageAccess.FULL_ACCESS && cases.total > 0) &&
             <Pagination />
-          }
+          } */}
         </div>
       </section>
     </>

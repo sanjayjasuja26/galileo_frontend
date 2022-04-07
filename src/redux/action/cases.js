@@ -1,53 +1,59 @@
-import { getCollectionDocCounts, getDataFromCollection } from '../../utils/helper';
+import { getDataFromCollection } from '../../utils/helper';
 import {
     FETCH_CASES_LOADING,
     FETCH_CASE_SUCCESS,
     FETCH_CASES_SUCCESS,
-    FETCH_CASES_ERROR
+    FETCH_CASES_ERROR,
+    UPDATE_CASE_PAGE
 } from '../types';
 
-export const fetchCases = (access) => async (dispatch) => {
+
+export const updatePage = (body) => {
+    return {
+        type: UPDATE_CASE_PAGE,
+        payload: body
+    }
+}           
+
+export const fetchCases = ({startFrom, endAt, access}) => async (dispatch) => {
     dispatch({ type: FETCH_CASES_LOADING })
-    try {
+    try {                                    
 
         if(access === 'P'){
-            access = 'Y'
+            access = 'Y'         
         } else if(access === 'Y'){
             access = 'N'
-        } else {
+        } else {                                 
             access = ''
-        }
-
-        const data = await getDataFromCollection("cases_neuro", {
+        }   
+          
+        const obj = await getDataFromCollection("cases_neuro", {
             key: "partial_access",
             value: access,
             orderBy: "case_id",
-            page: 1
-        });
-
-        const count = await getCollectionDocCounts("cases_neuro", {
-            key: "partial_access",
-            value: access,
-        })
-
-        console.log(count);    
-
-        if(data){                
+            startFrom,
+            endAt
+        });                 
+    
+        if(obj.data){                
             dispatch({
                 type: FETCH_CASES_SUCCESS,
-                payload: data
+                payload: {
+                    total: obj.count,
+                    data: obj.data
+                }        
             })
         } else {               
-            dispatch({
+            dispatch({           
                 type: FETCH_CASES_ERROR,
                 payload: 'Something went wrong'
             })                
         }
 
-    } catch (error) {
-        dispatch({        
+    } catch (error) {       
+        dispatch({               
             type: FETCH_CASES_ERROR,
             payload: error.code
-        })       
+        })                                                      
     }
 }

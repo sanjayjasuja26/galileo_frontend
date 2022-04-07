@@ -10,8 +10,8 @@ const CaseAccess = () => {
     return (
       <div className="text-center">Loading...</div>
     )
-  } else if(cases.length > 0 && !loading && !error){
-    return <AllCasesTable cases={cases} />
+  } else if(cases?.data?.length > 0 && !loading && !error){
+    return <AllCasesTable cases={cases.data} />
   } else if(error){
     return (
       <div className="text-center">{error}</div>

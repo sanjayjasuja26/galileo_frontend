@@ -1,9 +1,9 @@
 import axios from "axios";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { addDoc, collection, doc, getDocs, query, Timestamp, updateDoc, where, limit, startAt, orderBy } from "firebase/firestore";
+import { addDoc, collection, doc, getDocs, query, Timestamp, updateDoc, where, limit, startAt, orderBy, endAt, startAfter } from "firebase/firestore";
 import { toast } from "react-toastify";         
 import { db, auth, storage } from "../firebase";
-import { CASE_LIMIT } from "../constants";         
+import { CASE_LIMIT } from "../constants";                  
               
 export const getIPAddress = async () => {
   try {
@@ -114,7 +114,7 @@ export const getUserDoc = async (userCredential) => {
   }
 
   return user;
-};
+};   
 
 export const createDBLogs = async (values, user) => {
   const currentIP = await getIPAddress();
@@ -156,7 +156,7 @@ export const createDBLogs = async (values, user) => {
       });
     }
   }
-};
+};  
 
 export const checkDomainAccess = async (values, user) => {
   const domain = values.email.split("@")[1];
@@ -218,7 +218,7 @@ export const verifyAccess = ({ allowed, date_start, date_end }, user, fromDomain
     }
   }
   return access;
-};
+};              
 
 export const validateFirebaseLink = async (body) => {
   try {
@@ -297,46 +297,48 @@ export const getUserProfilePic = async (id) => {
 export const getDataFromCollection = async (coll, filter = null) => {
   try {
 
-    let Query;
+    let Query; 
 
     if(filter){
-      Query = await query(
-        collection(db, coll),
+      Query = query( 
+        collection(db, coll),  
         where(filter.key, "==", filter.value),
-        orderBy(filter.orderBy),
-        startAt(filter.page),
-        limit(CASE_LIMIT)
-      );
-    } else {
-      Query = await query(
+        orderBy(filter.orderBy),                         
+        // startAfter(filter.startFrom),
+        // endAt(filter.endAt),  
+        limit(CASE_LIMIT),                
+      );                         
+    } else {                      
+      Query = query(
         collection(db, coll)
       );
-    }
+    }                          
     
     const querySnapshot = await getDocs(Query);
 
     const data = [];
     querySnapshot.forEach((doc) => {
-      data.push(doc.data())
-    });
-    return data;
+      data.push(doc.data());    
+    });                        
 
-  } catch (error) {
+    const count = await getCollectionDocCounts(coll, filter);
+    return { data, count };                                          
+  } catch (error) {    
     console.log(error);
   }
 }
-
+                       
 export const getCollectionDocCounts = async (coll, filter = null) => {
   try {
-
-    let count;
+    let Query;
 
     if(filter) {
-      count = (await getDocs(collection(db, coll), where(filter.key, "==", filter.value))).size
+      Query = await query(collection(db, coll), where(filter.key, "==", filter.value));
     } else {
-      count = (await getDocs(collection(db, coll))).size
+      Query = await query(collection(db, coll))
     }    
 
+    const count = (await getDocs(Query)).size;
     return count;
   } catch (error) {
     console.log(error);    

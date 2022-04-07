@@ -43,12 +43,12 @@ const RightSection = () => {
 
     if (mode === "resetPassword") {
       setHeading("Reset Password");
-      setSection(
+      setSection( 
         <ResetPassword
           code={code}
           setIsLogin={setIsLogin}
           setIsForgetPwd={setIsForgetPwd}
-        />
+        />                 
       );
     }
 
@@ -71,13 +71,13 @@ const RightSection = () => {
           dispatch(updateUser({ verify: true }));
           toast.success("Email varified success");
         }     
-        // navigate("/");
+        navigate("/");
       }
     }
 
     if (isForgetPwd) {
       setHeading("Forgot Password");
-      setSection(
+      setSection(               
         <ForgotPassword
           setIsForgetPwd={setIsForgetPwd}
           setIsLogin={setIsLogin}
