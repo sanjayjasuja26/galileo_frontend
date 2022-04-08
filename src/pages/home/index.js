@@ -98,10 +98,6 @@ const Home = () => {
               {renderSection()}
             </div>
           </div>
-          {
-            (cases.total > 0) &&
-            <Pagination />
-          }
         </div>
       </section>
     </>
