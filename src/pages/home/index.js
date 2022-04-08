@@ -9,7 +9,7 @@ import PartialAccessVerify from "../../components/Access/PartialAccessVerify";
 import Header from "../../components/Header";
 import { HomePageAccess } from "../../constants";
 import CaseAccess from "../../components/Access/CaseAccess";
-import { fetchCases, setCasesPaginationIndex } from "../../redux/action/cases";
+import { fetchCases, setCasesAccess, setCasesPaginationIndex, updatePage } from "../../redux/action/cases";
 
 const Home = () => {
 
@@ -17,7 +17,7 @@ const Home = () => {
 
   const [section, setSection] = useState("");
   const { access, user } = useSelector((state) => state.auth);
-  const { cases } = useSelector(state => state.cases);
+  const { cases, caseAccess } = useSelector(state => state.cases);
 
   useEffect(() => {                       
     if (access === "N") {         
@@ -28,8 +28,25 @@ const Home = () => {
       setSection(HomePageAccess.PARTIAL_ACCESS);
     } else {                                
       setSection(HomePageAccess.PARTIAL_VERIFY_ACCESS);
-    }                                  
-  }, [access, user]);                       
+    }        
+    
+    // Handle Case Access
+    let setCaseAccess = '';
+
+    if(access === 'P' || (access === 'Y' && !user.verify)){
+      setCaseAccess = 'Y'         
+    } else if(access === 'Y' && user.verify){
+      setCaseAccess = 'N'
+    } else {                                 
+      setCaseAccess = ''
+    }
+
+    dispatch(setCasesAccess(setCaseAccess))
+  }, [access, user, dispatch]);                       
+
+  useEffect(() => {
+    dispatch(updatePage({ page: 1 }))
+  }, [dispatch])
 
   const renderSection = () => {
     switch (section) {              
@@ -57,8 +74,8 @@ const Home = () => {
   };
 
   useEffect(() => {
-    dispatch(setCasesPaginationIndex({ page: cases.page, access }));
-  }, [dispatch, access, cases.page])     
+    dispatch(setCasesPaginationIndex({ page: cases.page, access: caseAccess }));
+  }, [dispatch, caseAccess, cases.page])     
 
   useEffect(() => {
     const paginationIndex = cases.paginationIndex;
@@ -66,7 +83,7 @@ const Home = () => {
 
     if(paginationIndex && page){
 
-      let body = { page: page, access };
+      let body = { page: page, access: caseAccess };
 
       if(paginationIndex.length > 0){
         paginationIndex.filter(rec => {
@@ -79,9 +96,10 @@ const Home = () => {
         })
       }
 
+      console.log(body);
       dispatch(fetchCases(body));
     }
-  }, [cases.page, cases.paginationIndex, access, dispatch])
+  }, [cases.page, cases.paginationIndex, caseAccess, dispatch])
 
   return (          
     <>

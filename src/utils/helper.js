@@ -339,6 +339,7 @@ export const calculatePagination = async (coll, filter) => {
       for(let i = 1; i <= pages; i++){
         snap = await getDocs(query( 
           collection(db, coll),       
+          where(filter.key, "==", filter.value),
           orderBy(filter.orderBy),                               
           startAfter(perPageData.length > 0 ? perPageData[perPageData.length - 1].end : ''),         
           limit(CASE_LIMIT),                       

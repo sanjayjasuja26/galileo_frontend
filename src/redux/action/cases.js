@@ -5,7 +5,8 @@ import {
     FETCH_CASES_SUCCESS,
     FETCH_CASES_ERROR,
     UPDATE_CASE_PAGE,
-    SET_PAGINATION
+    SET_PAGINATION,
+    SET_CASE_ACCESS
 } from '../types';
 
 
@@ -14,11 +15,21 @@ export const updatePage = (body) => {
         type: UPDATE_CASE_PAGE,
         payload: body
     }
-}           
+}       
+
+export const setCasesAccess = (body) => {
+    return {
+        type: SET_CASE_ACCESS,
+        payload: body
+    }
+}
 
 export const setCasesPaginationIndex = ({page, access}) => async (dispatch) => {
     try {
-        const collCount = await getCollectionDocCounts("cases_neuro"); 
+        const collCount = await getCollectionDocCounts("cases_neuro", {
+            key: "partial_access",
+            value: access,
+        }); 
         const perPageData = await calculatePagination("cases_neuro", {
             key: "partial_access",
             value: access,
@@ -42,16 +53,7 @@ export const setCasesPaginationIndex = ({page, access}) => async (dispatch) => {
 
 export const fetchCases = ({page, access, startAt}) => async (dispatch) => {
     dispatch({ type: FETCH_CASES_LOADING })
-    try {                                    
-
-        if(access === 'P'){
-            access = 'Y'         
-        } else if(access === 'Y'){
-            access = 'N'
-        } else {                                 
-            access = ''
-        }   
-          
+    try {                                      
         
         const obj = await getDataFromCollection("cases_neuro", {
             key: "partial_access",
