@@ -99,7 +99,7 @@ const Home = () => {
             </div>
           </div>
           {
-            (section === HomePageAccess.FULL_ACCESS && cases.total > 0) &&
+            (cases.total > 0) &&
             <Pagination />
           }
         </div>
