@@ -5,4 +5,4 @@ export const HomePageAccess = {
     PARTIAL_VERIFY_ACCESS: 'PARTIAL_VERIFY_ACCESS'
 }
 
-export const CASE_LIMIT = 10;
+export const CASE_LIMIT = 2;

@@ -8,7 +8,7 @@ const NumericPagination = () => {
   const limit = CASE_LIMIT;
 
   const dispatch = useDispatch();
-  const { cases: { page, total: totalRecords }} = useSelector(state => state.cases);
+  const { cases: { page, total: totalRecords, paginationIndex }} = useSelector(state => state.cases);
 
   const [maxPageNumberLimit, setmaxPageNumberLimit] = useState(limit);
   const [minPageNumberLimit, setminPageNumberLimit] = useState(0);
@@ -17,9 +17,9 @@ const NumericPagination = () => {
   for (let i = 1; i <= Math.ceil(totalRecords / limit); i++) {
     pages.push(i);
   }
-  
+    
   const handleClick = (num) => { 
-    dispatch(updatePage(num));
+    dispatch(updatePage({ page: num }));
   };
   
   const renderPageNumbers = pages.map((number) => {    
@@ -42,7 +42,7 @@ const NumericPagination = () => {
   });
 
   const handleNextbtn = () => {
-    dispatch(updatePage({page: page + 1, isNext: true}));
+    dispatch(updatePage({page: page + 1}));
 
     if (page + 1 > maxPageNumberLimit) {
       setmaxPageNumberLimit(maxPageNumberLimit + limit);
@@ -51,7 +51,7 @@ const NumericPagination = () => {
   };
 
   const handlePrevbtn = () => {
-    dispatch(updatePage({page: page - 1, isNext: false}));
+    dispatch(updatePage({page: page - 1}));
 
     if ((page - 1) % limit == 0) {
       setmaxPageNumberLimit(maxPageNumberLimit - limit);

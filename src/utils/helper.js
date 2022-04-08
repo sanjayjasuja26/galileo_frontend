@@ -1,6 +1,6 @@
 import axios from "axios";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { addDoc, collection, doc, getDocs, query, Timestamp, updateDoc, where, limit, startAt, orderBy, endAt, startAfter } from "firebase/firestore";
+import { addDoc, collection, doc, getDocs, query, Timestamp, updateDoc, where, limit, startAt, orderBy, endAt, startAfter, endBefore, limitToLast } from "firebase/firestore";
 import { toast } from "react-toastify";         
 import { db, auth, storage } from "../firebase";
 import { CASE_LIMIT } from "../constants";                  
@@ -299,15 +299,16 @@ export const getDataFromCollection = async (coll, filter = null) => {
 
     let Query; 
 
+    const count = await getCollectionDocCounts(coll, filter);
+
     if(filter){
-      Query = query( 
-        collection(db, coll),  
-        where(filter.key, "==", filter.value),
-        orderBy(filter.orderBy),                         
-        // startAfter(filter.startFrom),
-        // endAt(filter.endAt),  
-        limit(CASE_LIMIT),                
-      );                         
+        Query = query(                
+          collection(db, coll),  
+          where(filter.key, "==", filter.value),
+          orderBy(filter.orderBy),                         
+          startAt(filter.startAt),
+          limit(CASE_LIMIT),       
+        );                          
     } else {                      
       Query = query(
         collection(db, coll)
@@ -316,31 +317,67 @@ export const getDataFromCollection = async (coll, filter = null) => {
     
     const querySnapshot = await getDocs(Query);
 
-    const data = [];
+    const data = [];                                 
     querySnapshot.forEach((doc) => {
-      data.push(doc.data());    
+      data.push(doc.data());       
     });                        
 
-    const count = await getCollectionDocCounts(coll, filter);
-    return { data, count };                                          
+    return { data, count };                                        
   } catch (error) {    
     console.log(error);
   }
 }
-                       
+
+export const calculatePagination = async (coll, filter) => {
+  try {
+    
+    const perPageData = [];
+
+    const pages = Math.ceil(filter.count / CASE_LIMIT);
+
+    let snap;
+      for(let i = 1; i <= pages; i++){
+        snap = await getDocs(query( 
+          collection(db, coll),       
+          orderBy(filter.orderBy),                               
+          startAfter(perPageData.length > 0 ? perPageData[perPageData.length - 1].end : ''),         
+          limit(CASE_LIMIT),                       
+        ));
+
+        let d = [];
+        snap.forEach((doc) => {
+          d.push(doc.data())          
+        });
+
+        perPageData.push({
+          index: i,                
+          start: d[0].case_id,
+          end: d[d.length - 1].case_id
+        });
+      }
+
+      return perPageData;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export const getCollectionDocCounts = async (coll, filter = null) => {
   try {
     let Query;
 
     if(filter) {
-      Query = await query(collection(db, coll), where(filter.key, "==", filter.value));
+      Query = query(
+        collection(db, coll), 
+        where(filter.key, "==", filter.value)
+      );
     } else {
-      Query = await query(collection(db, coll))
+      Query = query(collection(db, coll))
     }    
 
     const count = (await getDocs(Query)).size;
     return count;
-  } catch (error) {
+  } catch (error) {  
     console.log(error);    
   }
 }                        

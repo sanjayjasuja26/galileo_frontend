@@ -9,7 +9,7 @@ import PartialAccessVerify from "../../components/Access/PartialAccessVerify";
 import Header from "../../components/Header";
 import { HomePageAccess } from "../../constants";
 import CaseAccess from "../../components/Access/CaseAccess";
-import { fetchCases } from "../../redux/action/cases";
+import { fetchCases, setCasesPaginationIndex } from "../../redux/action/cases";
 
 const Home = () => {
 
@@ -57,8 +57,31 @@ const Home = () => {
   };
 
   useEffect(() => {
-    dispatch(fetchCases({ startFrom: cases.startFrom, endAt: cases.endAt, access }));
-  }, [dispatch, access, cases.startFrom, cases.endAt])     
+    dispatch(setCasesPaginationIndex({ page: cases.page, access }));
+  }, [dispatch, access, cases.page])     
+
+  useEffect(() => {
+    const paginationIndex = cases.paginationIndex;
+    const page = cases.page;
+
+    if(paginationIndex && page){
+
+      let body = { page: page, access };
+
+      if(paginationIndex.length > 0){
+        paginationIndex.filter(rec => {
+          if(rec.index === page){
+            body = {
+              ...body, 
+              startAt: rec.start
+            }
+          }
+        })
+      }
+
+      dispatch(fetchCases(body));
+    }
+  }, [cases.page, cases.paginationIndex, access, dispatch])
 
   return (          
     <>
@@ -75,10 +98,10 @@ const Home = () => {
               {renderSection()}
             </div>
           </div>
-          {/* {
+          {
             (section === HomePageAccess.FULL_ACCESS && cases.total > 0) &&
             <Pagination />
-          } */}
+          }
         </div>
       </section>
     </>
