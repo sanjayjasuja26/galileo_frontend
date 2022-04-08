@@ -1,6 +1,6 @@
 import axios from "axios";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { addDoc, collection, doc, getDocs, query, Timestamp, updateDoc, where, limit, startAt, orderBy, endAt, startAfter, endBefore, limitToLast } from "firebase/firestore";
+import { addDoc, collection, doc, getDocs, query, Timestamp, updateDoc, where, limit, startAt, orderBy, startAfter } from "firebase/firestore";
 import { toast } from "react-toastify";         
 import { db, auth, storage } from "../firebase";
 import { CASE_LIMIT } from "../constants";                  
@@ -88,11 +88,11 @@ export const checkDomainAndHandleCases = async (values, id) => {
 
 export const getUserDoc = async (userCredential) => {
   let user = null;
-  
+    
   let authId = userCredential.user ? userCredential.user.uid : userCredential.currentUser.uid;
 
   // Get User from users collection
-  const userQuery = await query(
+  const userQuery = query(
     collection(db, "users"),
     where("guid", "==", authId)
   );
@@ -105,14 +105,16 @@ export const getUserDoc = async (userCredential) => {
       };
   });
 
-  let image = await getUserProfilePic(user.id);
-  if(image){
-    user = {
-      ...user,
-      image
+  if(user){
+    let image = await getUserProfilePic(user.id);
+    if(image){
+      user = {
+        ...user,
+        image
+      }
     }
   }
-
+  
   return user;
 };   
 
@@ -254,10 +256,13 @@ export const updateUserDocument = async (body) => {
   try {
     let user = await getUserDoc(auth);     
 
-    await updateDoc(doc(db, "users", user.id), body)
+    if(user){
+      await updateDoc(doc(db, "users", user.id), body)
+    }
 
     return true;
   } catch (error) {
+    console.log(error);
     toast.error('Something went wrong');
     return false;
   }

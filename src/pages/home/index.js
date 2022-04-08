@@ -80,10 +80,11 @@ const Home = () => {
   useEffect(() => {
     const paginationIndex = cases.paginationIndex;
     const page = cases.page;
+    const firstTimeDataFetch = cases.data.length > 0 ? false : true;
 
     if(paginationIndex && page){
 
-      let body = { page: page, access: caseAccess };
+      let body = { page: page, access: caseAccess, loading: firstTimeDataFetch };
 
       if(paginationIndex.length > 0){
         paginationIndex.filter(rec => {
@@ -96,10 +97,9 @@ const Home = () => {
         })
       }
 
-      console.log(body);
       dispatch(fetchCases(body));
     }
-  }, [cases.page, cases.paginationIndex, caseAccess, dispatch])
+  }, [cases.page, cases.paginationIndex, cases.data, caseAccess, dispatch])
 
   return (          
     <>
