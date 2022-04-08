@@ -70,8 +70,8 @@ const RightSection = () => {
         if (isUpdated) {
           dispatch(updateUser({ verify: true }));
           toast.success("Email varified success");
+          navigate("/");
         }     
-        navigate("/");
       }
     }
 

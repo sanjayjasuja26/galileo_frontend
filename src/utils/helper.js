@@ -90,8 +90,15 @@ export const getUserDoc = async (userCredential) => {
 
   let user = null;
       
-  let authId = await (userCredential.user ? userCredential.user.uid : userCredential.currentUser.uid);
+  const cred = await userCredential;
 
+  let authId;
+  if(cred.user || cred.currentUser){
+    authId = cred.user ? cred.user.uid : cred.currentUser.uid;
+  }
+
+  console.log('auth', authId);
+  
   // Get User from users collection
   const userQuery = query(
     collection(db, "users"),
