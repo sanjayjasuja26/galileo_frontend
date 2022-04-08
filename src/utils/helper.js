@@ -88,9 +88,7 @@ export const checkDomainAndHandleCases = async (values, id) => {
 
 export const getUserDoc = async (userCredential) => {
   let user = null;
-    
-  console.log(userCredential.currentUser.uid);
-  
+      
   let authId = userCredential.user ? userCredential.user.uid : userCredential.currentUser.uid;
 
   // Get User from users collection

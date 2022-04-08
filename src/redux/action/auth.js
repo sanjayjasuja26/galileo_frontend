@@ -65,6 +65,7 @@ export const login = (body) => async (dispatch) => {
         toast.success('User login success')
         return true;
     } catch (error) {    
+      console.log(error);
       dispatch({ type: AUTH_ERROR })
       if(error.code === 'auth/user-not-found'){
         toast.error('Invalid credentials') 
