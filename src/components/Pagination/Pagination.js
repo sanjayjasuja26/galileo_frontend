@@ -8,7 +8,7 @@ const NumericPagination = () => {
   const limit = CASE_LIMIT;
 
   const dispatch = useDispatch();
-  const { cases: { page, total: totalRecords, paginationIndex }} = useSelector(state => state.cases);
+  const { cases: { page, total: totalRecords }} = useSelector(state => state.cases);
 
   const [maxPageNumberLimit, setmaxPageNumberLimit] = useState(limit);
   const [minPageNumberLimit, setminPageNumberLimit] = useState(0);

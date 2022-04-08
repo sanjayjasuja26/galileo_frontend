@@ -8,10 +8,9 @@ const CaseAccess = () => {
 
   const { cases, loading, error } = useSelector(state => state.cases);
 
-  // if(loading){
-  //   return <div className="text-center"><Loader /></div> 
-  // } else 
-  if(cases?.data?.length > 0){
+  if(loading){
+    return <div className="text-center"><Loader /></div> 
+  } else if(cases?.data?.length > 0){
     return <>
     <AllCasesTable cases={cases.data} />
       {
