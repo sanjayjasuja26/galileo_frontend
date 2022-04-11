@@ -39,7 +39,7 @@ export const setCasesPaginationIndex = ({page, access}) => async (dispatch) => {
         });
         if(perPageData){
             dispatch({
-                type: SET_PAGINATION,
+                type: SET_PAGINATION,     
                 payload: perPageData
             })
         }
