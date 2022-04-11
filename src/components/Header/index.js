@@ -1,25 +1,32 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { ProfileIconSVG } from '../../assets/svgComponents';
 import { logOut } from '../../redux/action/auth';
 import Logo from '../../assets/images/logo.svg';
+import useOutsideClick from '../../hooks/useOutsideClick';
 
-const Header = () => {
+const Header = () => {    
+
+    const ref = useRef(null);
 
     const dispatch = useDispatch();
     const { user } = useSelector(state => state.auth);
-    const [showDropDown, setShowDropDown] = useState(false);
+    const [showPopUp, setShowPopUp] = useState(false);
+
+    useOutsideClick(ref, () => {
+        setShowPopUp(!showPopUp)
+    })
 
   return (
     <section className="head">
         <div className="container">
-        <div className="row">
-        <header>
+        <div className="row">  
+        <header>   
             <div className="outer d-flex justify-content-between">
             <Link to="/"> <img src={Logo} alt="" /></Link>
                 <div className="dropdown">  
-                    <button onClick={() => setShowDropDown(!showDropDown)} className="d-flex align-items-center justify-content-center btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1">
+                    <button onClick={() => setShowPopUp(!showPopUp)} className="d-flex align-items-center justify-content-center btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1">
                         {
                             user.image    
                             ?
@@ -34,9 +41,9 @@ const Header = () => {
                         </p>
                     </button>
                     {
-                        showDropDown 
+                        (showPopUp) 
                         ?
-                        <ul className="dropdown-menu shadow-sm">
+                        <ul className="dropdown-menu shadow-sm" ref={ref}>
                             <li>
                                 <Link to="/profile">Profile</Link>
                             </li>

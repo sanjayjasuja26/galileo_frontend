@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import Logo from "../../assets/images/logo.svg";
@@ -14,6 +14,7 @@ import SignUpForm from "../Form/SignUp";
 const RightSection = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { user } = useSelector(state => state.auth)
 
   const [search] = useSearchParams();
   const mode = search.get("mode");       
@@ -58,21 +59,25 @@ const RightSection = () => {
         <p className="text-center">
           <EnvelopeIconSVG />
           Please wait. We are verifying your email.
-        </p>
+        </p>        
       );
 
       const varified = await varifyEmailLink({ code });
       if (varified) {
-        const isUpdated = await updateUserDocument({
-          verify: true,
-        });                            
-
-        if (isUpdated) {
-          dispatch(updateUser({ verify: true }));
-          toast.success("Email varified success");
-          navigate("/");
-        }     
-      }
+          const isUpdated = await updateUserDocument({
+            verify: true,
+          });                            
+  
+          if(isUpdated) {
+            toast.success("Email varified success");
+            if(user) {
+              dispatch(updateUser({ verify: true }));
+              navigate("/");
+            } else {
+              navigate("/auth");
+            }
+          }       
+      }                   
     }
 
     if (isForgetPwd) {

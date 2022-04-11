@@ -16,7 +16,7 @@ const PartialAccessVerify = () => {
       <p className="other-info">
         Your email “user email” needs to be verified to grant you full access.
         Please check your email for the verification link.{" "}
-      </p>
+      </p>     
       <div className="verification d-flex my-4">
         {/* <strong>Verification Code:</strong> */}
         {/* <div className="v-code d-flex">

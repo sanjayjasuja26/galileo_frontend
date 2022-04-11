@@ -63,7 +63,6 @@ const EditProfile = () => {
                         placeholder={user.user_email ? `${user.user_email}` : "Johndoe@gmail.com" }               
                         className="form-control"
                         label="Institutional Email"
-                        handleChange={handleChange}
                         icon={<EmailIconSVG />}
                     />                   
                 <button type="submit" className="btn btn-primary">

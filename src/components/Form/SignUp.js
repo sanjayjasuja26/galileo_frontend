@@ -7,7 +7,7 @@ import {
 } from "../../assets/svgComponents";
 import { signUpFormSchema } from "../../utils/validation";
 import InputElement from "./components/InputElement";
-import { signUp } from "../../redux/action/auth";
+import { signUp, varifyEmail } from "../../redux/action/auth";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from '../../assets/loading.gif'
 
@@ -32,10 +32,11 @@ const SignUpForm = ({ setIsLogin }) => {
                 const signupSuccess = await dispatch(signUp(values));        
                 
                 if(signupSuccess){
+                    await dispatch(varifyEmail());       
                     resetForm();
-                    setIsLogin(true)       
-                } 
-            }
+                    setIsLogin(true);
+                }     
+            }    
         }}     
     >            
     {({ errors, values, touched, handleChange, handleSubmit }) => (
@@ -103,7 +104,7 @@ const SignUpForm = ({ setIsLogin }) => {
 
         <button type="submit" className="btn btn-primary">
             {authLoading ? <img src={Loading} height="20" width="50" alt="" /> : 'Signup'}        
-        </button>
+        </button>                              
         <p>
             Already have an account?{" "}
             <span className="pointer text-decoration-underline" onClick={() => setIsLogin(true)}>Login</span>
@@ -119,7 +120,7 @@ const SignUpForm = ({ setIsLogin }) => {
             </ul>
         </div>
         </Form>
-    )}
+    )}       
     </Formik>
   );
 };

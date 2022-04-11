@@ -22,7 +22,7 @@ export const setCasesAccess = (body) => {
         type: SET_CASE_ACCESS,
         payload: body
     }
-}
+}    
 
 export const setCasesPaginationIndex = ({page, access}) => async (dispatch) => {
     try {
@@ -49,7 +49,7 @@ export const setCasesPaginationIndex = ({page, access}) => async (dispatch) => {
             payload: error.code
         }) 
     }
-}
+}       
 
 export const fetchCases = ({page, access, startAt, loading}) => async (dispatch) => {
     if(loading) dispatch({ type: FETCH_CASES_LOADING })
@@ -84,4 +84,4 @@ export const fetchCases = ({page, access, startAt, loading}) => async (dispatch)
             payload: error.code
         })                                                      
     }
-}
+}     

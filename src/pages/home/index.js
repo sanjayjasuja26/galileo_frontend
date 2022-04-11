@@ -35,9 +35,11 @@ const Home = () => {
 
     if(access === 'P' || (access === 'Y' && !user.verify)){
       setCaseAccess = 'Y'         
-    } else if(access === 'Y' && user.verify){
-      setCaseAccess = 'N'
-    } else {                                 
+    } 
+    // else if(access === 'Y' && user.verify){
+    //   setCaseAccess = 'N'
+    // } 
+    else {                                 
       setCaseAccess = ''
     }
 
@@ -99,7 +101,7 @@ const Home = () => {
 
       dispatch(fetchCases(body));
     }
-  }, [cases.page, cases.paginationIndex, cases.data, caseAccess, dispatch])
+  }, [cases.page, cases.paginationIndex, caseAccess, dispatch])
 
   return (          
     <>

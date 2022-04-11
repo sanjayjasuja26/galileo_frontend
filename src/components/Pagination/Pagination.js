@@ -61,13 +61,13 @@ const NumericPagination = () => {
 
   let pageIncrementBtn = null;
   if (pages.length > maxPageNumberLimit) {
-    pageIncrementBtn = (
+    pageIncrementBtn = (     
         <button 
             onClick={e => {
-                e.preventDefault();    
-                handleNextbtn();          
+                e.preventDefault();   
                 if(page < pages[pages.length - 1]) handleNextbtn()
-            }}
+                handleNextbtn();          
+            }}      
         > 
             &hellip;
         </button>
@@ -80,8 +80,8 @@ const NumericPagination = () => {
       <button 
         onClick={e => {
           e.preventDefault();   
-          handleNextbtn()           
           if(page > pages[0]) handlePrevbtn()
+          handlePrevbtn()           
         }}
       > 
         &hellip;

@@ -24,12 +24,12 @@ const LoginForm = ({ setIsLogin, setIsForgetPwd }) => {
     setSavedData({ 
       ...savedData, 
       email: email ? email : ''
-    });
+    });           
     email && setSave(true)
   }, [])
                  
   const handleRememberMe = value => {
-    setSave(value)     
+    setSave(value)            
     if(!value){                        
       localStorage.removeItem('cred');
     }
@@ -59,7 +59,7 @@ const LoginForm = ({ setIsLogin, setIsForgetPwd }) => {
       {({ errors, touched, values, handleChange, handleSubmit }) => (
         <Form className="form" onSubmit={handleSubmit}>
           <InputElement
-            name="email"
+            name="email"                 
             type="email"                  
             value={values.email}
             placeholder="Johndoe@gmail.com"
@@ -107,7 +107,7 @@ const LoginForm = ({ setIsLogin, setIsForgetPwd }) => {
             <span className="pointer text-decoration-underline" onClick={() => setIsLogin(false)}>Signup</span>
           </p>                 
           <div className="bottom-text important-link">
-            <ul>                                        
+            <ul>                                                        
               <li>                                  
                 <a href="#">About us</a>
               </li>                 

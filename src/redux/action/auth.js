@@ -16,11 +16,10 @@ export const signUp = (body) => async (dispatch) => {
     dispatch({ type: AUTH_LOADING })
     try {
         const userCred = await createUserWithEmailAndPassword(auth, body.email, body.password);
-        const userCreated = await checkDomainAndHandleCases(body, userCred.user.uid)     
+        const userCreated = await checkDomainAndHandleCases(body, userCred.user.uid);     
     
-        if(userCreated){     
-            toast.success('User SignUp success')
-            dispatch({ type: AUTH_SUCCESS })
+        if(userCreated){  
+            dispatch({ type: AUTH_SUCCESS });
             return true;
         } else {           
             dispatch({ type: AUTH_ERROR })
@@ -128,24 +127,22 @@ export const varifyResetPasswordLink = (body) => async (dispatch) => {
   }
 }
 
-export const varifyEmail = () => async (dispatch) => {
-  try {
-    await sendEmailVerification(auth.currentUser);
+export const varifyEmail = (user =  null) => async (dispatch) => {
+  try {         
+    const currentUser = user ? user : auth.currentUser;
+    await sendEmailVerification(currentUser);
     toast.success('Please check your email');
-    return true;
+    return true;                                    
   } catch (error) {
     toast.error('Oops!! Link has expired')
-    return false;
-  }
+    return false;    
+  }             
 } 
 
 export const varifyEmailLink = async (body) => {
     const data = await validateFirebaseLink(body);
     if(data.requestType === "VERIFY_EMAIL"){
       return true;
-    } else {
-      toast.error('Oops!! Link has expired')
-      return false;
     }
 }
 
@@ -173,6 +170,7 @@ export const editUserProfile = (body) => async (dispatch) => {
         toast.success('Profile updated success');
     } else {
         toast.error('Something went wrong')
+        dispatch({ type: AUTH_ERROR })
     }
   } catch (error) {
     dispatch({ type: AUTH_ERROR })

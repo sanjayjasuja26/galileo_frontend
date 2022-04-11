@@ -22,8 +22,8 @@ export const checkDomainAndHandleCases = async (values, id) => {
     const querySnapshot = await getDocs(collection(db, "domains"));
     querySnapshot.forEach((doc) => {
       if (doc.data().domain === domain) {
-        matchedDomain = doc.data();
-      }
+        matchedDomain = doc.data();   
+      }    
     });
 
     if (!matchedDomain) {
@@ -96,8 +96,6 @@ export const getUserDoc = async (userCredential) => {
   if(cred.user || cred.currentUser){
     authId = cred.user ? cred.user.uid : cred.currentUser.uid;
   }
-
-  console.log('auth', authId);
   
   // Get User from users collection
   const userQuery = query(
@@ -241,8 +239,8 @@ export const validateFirebaseLink = async (body) => {
         newPassword: body.password,
       }
     } else {
-      body = {
-        oobCode: body.code,
+      body = {  
+        oobCode: body.code,  
       }
     }
 
@@ -271,7 +269,6 @@ export const updateUserDocument = async (body) => {
     return true;
   } catch (error) {
     console.log(error);
-    toast.error('Something went wrong');
     return false;
   }
 }
@@ -315,13 +312,22 @@ export const getDataFromCollection = async (coll, filter = null) => {
     const count = await getCollectionDocCounts(coll, filter);
 
     if(filter){
+      if(filter.value !== ''){
         Query = query(                
           collection(db, coll),  
           where(filter.key, "==", filter.value),
           orderBy(filter.orderBy),                         
           startAt(filter.startAt),
           limit(CASE_LIMIT),       
-        );                          
+        ); 
+      } else {
+        Query = query(                
+          collection(db, coll),  
+          orderBy(filter.orderBy),                         
+          startAt(filter.startAt),
+          limit(CASE_LIMIT),       
+        ); 
+      }                      
     } else {                      
       Query = query(
         collection(db, coll)
@@ -350,14 +356,23 @@ export const calculatePagination = async (coll, filter) => {
 
     let snap;
       for(let i = 1; i <= pages; i++){
-        snap = await getDocs(query( 
-          collection(db, coll),       
-          where(filter.key, "==", filter.value),
-          orderBy(filter.orderBy),                               
-          startAfter(perPageData.length > 0 ? perPageData[perPageData.length - 1].end : ''),         
-          limit(CASE_LIMIT),                       
-        ));
-
+        if(filter.value !== ''){
+          snap = await getDocs(query( 
+            collection(db, coll),       
+            where(filter.key, "==", filter.value),
+            orderBy(filter.orderBy),                               
+            startAfter(perPageData.length > 0 ? perPageData[perPageData.length - 1].end : ''),         
+            limit(CASE_LIMIT),                       
+          ));
+        } else {
+          snap = await getDocs(query( 
+            collection(db, coll),       
+            orderBy(filter.orderBy),                               
+            startAfter(perPageData.length > 0 ? perPageData[perPageData.length - 1].end : ''),         
+            limit(CASE_LIMIT),                       
+          ));
+        }
+      
         let d = [];
         snap.forEach((doc) => {
           d.push(doc.data())          
@@ -380,14 +395,16 @@ export const getCollectionDocCounts = async (coll, filter = null) => {
   try {
     let Query;
 
-    if(filter) {
+    if(filter.value !== ''){
       Query = query(
         collection(db, coll), 
         where(filter.key, "==", filter.value)
       );
     } else {
-      Query = query(collection(db, coll))
-    }    
+      Query = query(
+        collection(db, coll), 
+      );
+    }  
 
     const count = (await getDocs(Query)).size;
     return count;
