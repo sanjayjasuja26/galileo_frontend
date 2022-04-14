@@ -8,6 +8,10 @@
     border-right: 1px dashed #dddddd;
     margin: 4px;
   }
+  .highlight {
+    border: 1px solid #FF992B !important;
+    background-color: #FFEAD5;
+  }
   @media (max-width: 991px) {
     .findings .inner-cover {
       border-right: unset;

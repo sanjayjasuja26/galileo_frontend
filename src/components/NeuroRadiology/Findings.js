@@ -1,127 +1,48 @@
-import React from "react";
+import React, { useState } from "react";
+import { findings, location } from "../../data";
 
 const Findings = () => {
+
+  const [findingValues, setFindingValues] = useState(null);
+  const [locationValues, setLocationValues] = useState(null);
+
+  const checkValues = () => {
+    console.log(findingValues, locationValues);
+  }
+
   return (
     <div className="findings row">
       <div className="col-lg-6">
         <div className="inner-cover">
-          <div>
+          <div>      
             <h5>Findings</h5>
-          </div>
-          <div className="types d-flex">
-            <div className="w-25">
-              <strong>flair</strong>
-            </div>
-            <div className="w-75 d-flex">
-              <div className="cat">
-                <span>Increased</span>
+          </div>                                      
+          {             
+            findings.map(obj => (
+            <div className="types d-flex">
+              <div className="w-25">
+                <strong>{obj.title} </strong>
               </div>
-              <div className="cat">
-                <span>Normal</span>
-              </div>
-              <div className="cat">
-                <span>Decreased</span>
-              </div>
-              <div className="cat">
-                <span>N/A</span>
-              </div>
-            </div>
-          </div>
-          <div className="types d-flex">
-            <div className="w-25">
-              <strong>T2</strong>
-            </div>
-            <div className="w-75 d-flex">
-              <div className="cat">
-                <span>Increased</span>
-              </div>
-              <div className="cat">
-                <span>Normal</span>
-              </div>
-              <div className="cat">
-                <span>Decreased</span>
-              </div>
-              <div className="cat">
-                <span>N/A</span>
+              <div className="w-75 d-flex">
+                {                   
+                  obj.options.map(opt => (
+                  <div className={findingValues?.[obj.value] === opt.value ? "cat highlight" : "cat"} onClick={() => {
+                    setFindingValues(prev => ({
+                      ...prev,                                                
+                      [obj.value]: opt.value
+                    }))          
+                  }}>             
+                    <span>{opt.text}</span>
+                  </div>     
+                  ))                       
+                }      
               </div>
             </div>
-          </div>
-          <div className="types d-flex">
-            <div className="w-25">
-              <strong>T1</strong>
-            </div>
-            <div className="w-75 d-flex">
-              <div className="cat">
-                <span>Increased</span>
-              </div>
-              <div className="cat">
-                <span>Normal</span>
-              </div>
-              <div className="cat">
-                <span>Decreased</span>
-              </div>
-              <div className="cat">
-                <span>N/A</span>
-              </div>
-            </div>
-          </div>
-          <div className="types d-flex">
-            <div className="w-25">
-              <strong>Contrast Enhancement </strong>
-            </div>
-            <div className="w-75 d-flex">
-              <div className="cat">
-                <span>Yes</span>
-              </div>
-              <div className="cat">
-                <span>No</span>
-              </div>
-
-              <div className="cat">
-                <span>N/A</span>
-              </div>
-            </div>
-          </div>
-          <div className="types d-flex">
-            <div className="w-25">
-              <strong>Susceptibility Artifact </strong>
-            </div>
-            <div className="w-75 d-flex">
-              <div className="cat">
-                <span>Yes</span>
-              </div>
-              <div className="cat">
-                <span>No</span>
-              </div>
-
-              <div className="cat">
-                <span>N/A</span>
-              </div>
-            </div>
-          </div>
-          <div className="types d-flex">
-            <div className="w-25">
-              <strong>Diffusion </strong>
-            </div>
-            <div className="w-75 d-flex">
-              <div className="cat">
-                <span>Restricted</span>
-              </div>
-              <div className="cat">
-                <span>Normal</span>
-              </div>
-
-              <div className="cat">
-                <span>Facilitated</span>
-              </div>
-              <div className="cat">
-                <span>N/A</span>
-              </div>
-            </div>
-          </div>
+            ))
+          }               
         </div>
       </div>
-      <div className="col-lg-6">
+      {/* <div className="col-lg-6">
         <div className="right-cover">
           <div>
             <h5>Findings</h5>
@@ -131,35 +52,75 @@ const Findings = () => {
               <strong>Size </strong>
             </div>
             <div className="w-75 d-flex">
-              <div className="cat">
-                <span>1 cm</span>
+              <div className="cat" onClick={() => {
+                setSelectedValues(prev => ({
+                  ...prev,
+                  size: '1 cm'
+                }))       
+              }}>
+                <span>&#60; 1 cm</span>
               </div>
-              <div className="cat">
+              <div className="cat" onClick={() => {
+                setSelectedValues(prev => ({
+                  ...prev,
+                  size: '1 - 3 cm'
+                }))
+              }}>
                 <span>1 - 3 cm</span>
               </div>
-              <div className="cat">
-                <span> 3 cm</span>
+              <div className="cat" onClick={() => {
+                setSelectedValues(prev => ({
+                  ...prev,
+                  size: '3 cm'
+                }))
+              }}>            
+                <span>&#62; 3 cm</span>
               </div>
-              <div className="cat">
+              <div className="cat" onClick={() => {
+                setSelectedValues(prev => ({
+                  ...prev,
+                  size: 'NA'
+                }))
+              }}>
                 <span>N/A</span>
               </div>
             </div>
-          </div>
+          </div>                  
           <div className="types d-flex">
             <div className="w-25">
               <strong>Mass effect </strong>
             </div>
             <div className="w-75 d-flex">
-              <div className="cat">
+              <div className="cat" onClick={() => {
+                setSelectedValues(prev => ({
+                  ...prev,
+                  mass_effecte: 'positive'
+                }))
+              }}>
                 <span>Positive</span>
               </div>
-              <div className="cat">
+              <div className="cat" onClick={() => {
+                setSelectedValues(prev => ({
+                  ...prev,
+                  mass_effect: 'none'
+                }))
+              }}>
                 <span>None</span>
               </div>
-              <div className="cat">
+              <div className="cat" onClick={() => {
+                setSelectedValues(prev => ({
+                  ...prev,
+                  mass_effect: 'negtive'
+                }))
+              }}>
                 <span>Negtive (atrophy)</span>
               </div>
-              <div className="cat">
+              <div className="cat" onClick={() => {
+                setSelectedValues(prev => ({
+                  ...prev,
+                  mass_effect: 'NA'
+                }))                
+              }}>
                 <span>N/A</span>
               </div>
             </div>
@@ -169,13 +130,28 @@ const Findings = () => {
               <strong>Number of Lesions </strong>
             </div>
             <div className="w-75 d-flex">
-              <div className="cat">
+              <div className="cat" onClick={() => {
+                setSelectedValues(prev => ({
+                  ...prev,
+                  number_of_lesions: 'single'
+                }))
+              }}>
                 <span>Single</span>
               </div>               
-              <div className="cat">
+              <div className="cat" onClick={() => {
+                setSelectedValues(prev => ({
+                  ...prev,
+                  number_of_lesions: 'multiple'
+                }))
+              }}>
                 <span>Multiple</span>
               </div>             
-              <div className="cat">
+              <div className="cat" onClick={() => {
+                setSelectedValues(prev => ({
+                  ...prev,
+                  number_of_lesions: 'NA'
+                }))
+              }}>
                 <span>N/A</span>
               </div>
             </div>
@@ -185,16 +161,36 @@ const Findings = () => {
               <strong>Dominant Pattern </strong>
             </div>
             <div className="w-75 d-flex">
-              <div className="cat">
+              <div className="cat" onClick={() => {
+                setSelectedValues(prev => ({
+                  ...prev,
+                  dominant_pattern: 'homogeneous'
+                }))
+              }}>
                 <span>Homogeneous </span>
               </div>
-              <div className="cat">
+              <div className="cat" onClick={() => {
+                setSelectedValues(prev => ({
+                  ...prev,
+                  dominant_pattern: 'ring'
+                }))
+              }}>
                 <span>Ring</span>
               </div>
-              <div className="cat">
+              <div className="cat" onClick={() => {
+                setSelectedValues(prev => ({
+                  ...prev,
+                  dominant_pattern: 'heterogeneous'
+                }))
+              }}>
                 <span>Heterogeneous </span>
               </div>
-              <div className="cat">
+              <div className="cat" onClick={() => {
+                setSelectedValues(prev => ({
+                  ...prev,
+                  dominant_pattern: 'NA'
+                }))
+              }}>
                 <span>N/A</span>
               </div>
             </div>
@@ -204,74 +200,75 @@ const Findings = () => {
               <strong>Side </strong>
             </div>
             <div className="w-75 d-flex">
-              <div className="cat">
+              <div className="cat" onClick={() => {
+                setSelectedValues(prev => ({
+                  ...prev,
+                  side: 'left'
+                }))
+              }}>
                 <span>Left</span>
               </div>
-              <div className="cat">
+              <div className="cat" onClick={() => {
+                setSelectedValues(prev => ({
+                  ...prev,
+                  side: 'right'
+                }))
+              }}>
                 <span>Right</span>
               </div>  
-              <div className="cat">
+              <div className="cat" onClick={() => {
+                setSelectedValues(prev => ({
+                  ...prev,
+                  side: 'bilateral symmetric'
+                }))
+              }}>
                 <span>Bilateral Symmetric</span>
               </div> 
-              <div className="cat">
+              <div className="cat" onClick={() => {
+                setSelectedValues(prev => ({
+                  ...prev,
+                  side: 'bilateral asymmetric'
+                }))
+              }}>
                 <span>Bilateral Asymmetric</span>
               </div>
-              <div className="cat">
+              <div className="cat" onClick={() => {
+                setSelectedValues(prev => ({
+                  ...prev,
+                  side: 'NA'
+                }))
+              }}>
                 <span>N/A</span>
               </div>
             </div>
           </div>
-          {/* <div className="types d-flex">
-            <div className="w-25">
-              <strong>Diffusion </strong>
-            </div>
-            <div className="w-75 d-flex">
-              <div className="cat">
-                <span>Restricted</span>
-              </div>
-              <div className="cat">
-                <span>Normal</span>
-              </div>
-
-              <div className="cat">
-                <span>Facilitated</span>
-              </div>
-              <div className="cat">
-                <span>N/A</span>
-              </div>
-            </div>
-          </div> */}
         </div>
-      </div>
+      </div> */}
       <div className="col-lg-12 types d-flex location">
         <div className="w-25">
           <strong>Location</strong>
         </div>
         <div className="w-75 d-flex">
-          <div className="cat">
-            <span>Cortical Gray Matter</span>
-          </div>
-          <div className="cat">
-            <span>Cerebral White Matter</span>
-          </div>
-          <div className="cat">
-            <span>Deep Gray White Matter</span>
-          </div>
-          <div className="cat">
-            <span>Brain Stem</span>
-          </div>
-          <div className="cat">
-            <span>Intraventricular</span>
-          </div>
-          <div className="cat">
-            <span>Extracerebral</span>
-          </div>
-          <div className="cat">
-            <span>N/A</span>
-          </div>
+          {
+            location.map(obj => (              
+              <div className="cat">
+                <span>{obj.title}</span>
+                <div className="d-flex">
+                  {     
+                    obj.options.map(op => (
+                      <spna onClick={() => setLocationValues(prev => ({
+                        ...prev,
+                        [obj.value]: op.value
+                      }))}>{op.text},</spna>
+                    ))
+                  }        
+                </div>
+              </div>
+            ))
+          }
         </div>
       </div>
-    </div>
+    </div>                        
   );
 };
 

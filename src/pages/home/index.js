@@ -91,8 +91,8 @@ const Home = () => {
       if(paginationIndex.length > 0){
         paginationIndex.filter(rec => {
           if(rec.index === page){
-            body = {
-              ...body, 
+            body = {                          
+              ...body,                           
               startAt: rec.start
             }
           }
@@ -111,9 +111,9 @@ const Home = () => {
           <div className="row">
             <div className="inner-wrap">
               <div className="heading">
-                <p>
+                <p> 
                   Neuroradiology Module : <Link to="/neuro-radiology">Brain Pathologies</Link>
-                </p>
+                </p>        
               </div>
               {renderSection()}
             </div>

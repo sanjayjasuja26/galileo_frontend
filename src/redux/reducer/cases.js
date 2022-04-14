@@ -17,7 +17,7 @@ const INITIAL_STATE = {
         data: [],
         paginationIndex: [] 
     },
-    case: null,
+    singleCase: null,
     caseAccess: ''
 }
 
@@ -33,13 +33,6 @@ const reducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 loading: true,
                 error: '',
-            }
-        case FETCH_CASE_SUCCESS:
-            return {
-                ...state,
-                loading: false,
-                case: action.payload,
-                error: '',
             }          
         case FETCH_CASES_SUCCESS:
             return {
@@ -48,8 +41,13 @@ const reducer = (state = INITIAL_STATE, action) => {
                 cases: { ...state.cases, ...action.payload},
                 error: '',
             }
-        case UPDATE_CASE_PAGE: 
+        case FETCH_CASE_SUCCESS:
             return {
+                ...state,
+                singleCase: state.cases.data.filter(c => c.case_id === action.payload)[0]
+            }
+        case UPDATE_CASE_PAGE: 
+            return {                    
                 ...state,           
                 cases: {              
                     ...state.cases, 

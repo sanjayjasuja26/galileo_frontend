@@ -1,10 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import './neuro-radiology.css'
 import Header from "../../components/Header";
 import Findings from "../../components/NeuroRadiology/Findings";
 import Impressions from "../../components/NeuroRadiology/Impressions";
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getCase } from "../../redux/action/cases";
 
-const index = () => {
+const NeuroRadiology = () => {
+
+  const { caseId } = useParams();
+
+  const dispatch = useDispatch();
+  const { singleCase } = useSelector(state => state.cases)
+
+  useEffect(() => {            
+    caseId && dispatch(getCase(caseId))
+  }, [dispatch, caseId])                
+
+  console.log(singleCase);
+
   return (
     <>
       <Header />
@@ -13,17 +28,17 @@ const index = () => {
           <div className="row">
             <div className="inner-wrap">
               <div className="heading d-flex justify-content-between">
-                <p>
-                  {" "}
-                  Brain Pathologies : <a href="/">Study ID : 001041</a>
+                <p>      
+                  {" "} 
+                  Brain Pathologies : <a href="/">Study ID : {caseId}</a>
                 </p>
                 <p>
                   {" "}
                   Patient Age :<a href="/">45</a>
-                </p>
+                </p>   
               </div>
-              <Findings />
-              <Impressions />
+              <Findings />     
+              <Impressions />        
             </div>
           </div>
         </div>
@@ -32,4 +47,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default NeuroRadiology;

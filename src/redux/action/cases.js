@@ -24,6 +24,13 @@ export const setCasesAccess = (body) => {
     }
 }    
 
+export const getCase = (body) => {
+    return {
+        type: FETCH_CASE_SUCCESS,
+        payload: body
+    }
+}
+
 export const setCasesPaginationIndex = ({page, access}) => async (dispatch) => {
     try {
         const collCount = await getCollectionDocCounts("cases_neuro", {

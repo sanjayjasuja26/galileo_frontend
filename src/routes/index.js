@@ -19,14 +19,14 @@ const AppRoutes = () => {
         path: "/auth",
         element: (user !== null && user.verify) ? <Navigate to="/" /> : <Auth />
       },
-      {
-        path: "/neuro-radiology",
+      {                             
+        path: "/neuro-radiology/:caseId",                   
         element: user === null ? <Navigate to="/auth" /> : <NeuroRadiology />
       },
       {     
         path: "/profile",
         element: user === null ? <Navigate to="/auth" /> : <Profile />
-      }
+      }                    
   ])
 }
 

@@ -309,6 +309,7 @@ export const getDataFromCollection = async (coll, filter = null) => {
 
     let Query; 
 
+    console.log('Data');
     const count = await getCollectionDocCounts(coll, filter);
 
     if(filter){
@@ -351,6 +352,7 @@ export const calculatePagination = async (coll, filter) => {
   try {
     
     const perPageData = [];
+    console.log('Pagination');
 
     const pages = Math.ceil(filter.count / CASE_LIMIT);
 
@@ -411,4 +413,4 @@ export const getCollectionDocCounts = async (coll, filter = null) => {
   } catch (error) {  
     console.log(error);    
   }
-}                        
+}                             
