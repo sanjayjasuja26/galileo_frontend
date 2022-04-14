@@ -53,14 +53,14 @@ export const setCasesPaginationIndex = ({page, access}) => async (dispatch) => {
 
 export const fetchCases = ({page, access, startAt, loading}) => async (dispatch) => {
     if(loading) dispatch({ type: FETCH_CASES_LOADING })
-    try {                                      
+    try {                                          
         
         const obj = await getDataFromCollection("cases_neuro", {
             key: "partial_access",
-            value: access,
+            value: access,    
             orderBy: "case_id",
-            page,
-            startAt
+            page,    
+            startAt  
         });                 
     
         if(obj.data){                

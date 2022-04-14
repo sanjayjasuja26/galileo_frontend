@@ -6,17 +6,17 @@ const PartialAccessVerify = () => {
 
   const dispatch = useDispatch();
 
-  return (
+  return (   
     <div className="email-confirmation">
-      <p className="mb-0 alert">Partial Access: Please confirm your email id.</p>
-      <p className="other-info">
+      <p className="mb-0 alert">Partial Access: Please confirm your email id.</p>     
+      <p className="other-info">   
         Galileo Radiology Education is available only to partner academic
         medical institutions and hospitals.{" "}
       </p>
-      <p className="other-info">
+      <p className="other-info">     
         Your email “user email” needs to be verified to grant you full access.
         Please check your email for the verification link.{" "}
-      </p>     
+      </p>        
       <div className="verification d-flex my-4">
         {/* <strong>Verification Code:</strong> */}
         {/* <div className="v-code d-flex">
