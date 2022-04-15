@@ -15,7 +15,7 @@ const Location = ({ locationValues, setLocationValues }) => {
                   <div>{obj.title}</div>                    
                   {     
                     obj.options.map((op, index) => (
-                      <span key={index} onSelect={() => setLocationValues(prev => ({
+                      <span key={index} onClick={() => setLocationValues(prev => ({
                         ...prev,              
                         [obj.value]: op.value
                       }))}>{op.text}</span>
