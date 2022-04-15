@@ -5,13 +5,22 @@ import {
     FETCH_CASES_ERROR,
     UPDATE_CASE_PAGE,
     SET_PAGINATION,
-    SET_CASE_ACCESS
+    SET_CASE_ACCESS,
+    FETCH_DISEASES_LOADING,
+    FETCH_DISEASES_SUCCESS,
+    FETCH_DISEASES_ERROR
 } from '../types';
 
 const INITIAL_STATE = {
     loading: false,
     error: '',
     cases: {
+        page: 1,
+        total: 0,
+        data: [],
+        paginationIndex: [] 
+    },
+    diseases: {
         page: 1,
         total: 0,
         data: [],
@@ -44,7 +53,7 @@ const reducer = (state = INITIAL_STATE, action) => {
         case FETCH_CASE_SUCCESS:
             return {
                 ...state,
-                singleCase: state.cases.data.filter(c => c.case_id === action.payload)[0]
+                singleCase: action.payload
             }
         case UPDATE_CASE_PAGE: 
             return {                    
@@ -67,7 +76,26 @@ const reducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 loading: false,
                 error: action.payload,
-            }                               
+            }  
+        case FETCH_DISEASES_LOADING:
+            return {
+                ...state,
+                loading: true,
+                error: '',
+            }          
+        case FETCH_DISEASES_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                diseases: { ...state.diseases, ...action.payload},
+                error: '',
+            }     
+        case FETCH_DISEASES_ERROR: 
+            return {
+                ...state,
+                loading: false,
+                error: action.payload,
+            }                         
         default: return state;
     }
 }
