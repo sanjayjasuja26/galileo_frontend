@@ -9,7 +9,7 @@ const Findings = ({ findingValues, setFindingValues, showChecks }) => {
 
   const findings1 = findings.slice(0, findings.length/2 + 1);
   const findings2 = findings.slice(findings.length/2 + 1);
-
+  
   return (
     <>
     <div>      
@@ -57,7 +57,7 @@ const Findings = ({ findingValues, setFindingValues, showChecks }) => {
       </div>             
     </div> 
     <div className="col-lg-6">
-      <div className="right-cover">                              
+      <div className="right-cover">                                
         {             
           findings2.map((obj, index) => {
             return (

@@ -238,7 +238,7 @@ export const findings  = [
 export const location = [
     {
         title: "Cortical Gray Matter",
-        value: "cortical_gray_matter",
+        value: "cortical gray",
         options: [
             {
                 text: "Frontal",
@@ -260,7 +260,7 @@ export const location = [
     },
     {
         title: "Cerebral White Matter",
-        value: "cerebral_white_matter",
+        value: "cerebral white",
         options: [
             {
                 text: "Frontal",
@@ -282,7 +282,7 @@ export const location = [
     },
     {
         title: "Deep Gray White Matter",
-        value: "deep_gray_white_matter",
+        value: "deep gray white",
         options: [
             {
                 text: "Caudate",
@@ -308,7 +308,7 @@ export const location = [
     },
     {
         title: "Brain Stem",
-        value: "brain_stem",
+        value: "brain stem",
         options: [
             {
                 text: "Mesencephalon",

@@ -26,17 +26,16 @@ const NeuroRadiology = () => {
     caseId && dispatch(fetchCase({ page: 1, id: caseId, startAt: '', loading: true }))                                                                    
   }, [dispatch, caseId]   )                                                                           
                   
-  const handleNext = () => {    
-    console.log(findingValues);
-    console.log(findings.length, Object.keys(findingValues).length);      
-    if(findings.length !== Object.keys(findingValues).length) return; 
+  const handleNext = () => {         
+    if(findings.length === Object.keys(findingValues).length && locationValues){
 
-    setShowChecks(true);
+      setShowChecks(true);
 
-    console.log("findingValues", findingValues);
-    console.log("impressions", impressions);
-    console.log("locationValues", locationValues);
-    console.log("singleCase", singleCase);
+      console.log("findingValues", findingValues);
+      console.log("impressions", impressions);
+      console.log("locationValues", locationValues);
+      console.log("singleCase", singleCase);
+    } 
 
   }                         
 
@@ -61,7 +60,7 @@ const NeuroRadiology = () => {
                 <Findings findingValues={findingValues} setFindingValues={setFindingValues} showChecks={showChecks} /> 
                 <Location locationValues={locationValues} setLocationValues={setLocationValues} showChecks={showChecks} />       
               </div>                                             
-              <Impressions impressions={impressions} setImpressions={setImpressions} />                   
+              <Impressions impressions={impressions} setImpressions={setImpressions} showChecks={showChecks} />                   
             </div>  
             <div className="next d-flex justify-content-end mt-3 mb-5">
                 <button type="button" className="btn btn-primary" onClick={handleNext}>Next</button>
