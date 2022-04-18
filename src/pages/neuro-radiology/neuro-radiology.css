@@ -89,6 +89,8 @@
   border: 1px solid #ccc;
   border-radius: 3px;
   padding: 10px;
+  height: 150px;
+    overflow-y: scroll;
 }
 .serach-result div {
   margin-bottom: 4px;
