@@ -25,7 +25,7 @@ const Impressions = ({ impressions, setImpressions }) => {
                 }}
               />
               {
-                (singleCase && impressions.first) &&
+                (singleCase && impressions?.first) &&
                 <small>
                   { 
                     singleCase.known_ddx === impressions.first ?
