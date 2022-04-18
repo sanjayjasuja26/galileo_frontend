@@ -5,6 +5,7 @@ import { GreenCheckIconSVG, RedCheckIconSVG, YellowCheckIconSVG } from "../../as
 const Impressions = ({ impressions, setImpressions }) => {
   
   const { diseases, singleCase } = useSelector((state) => state.cases);
+  const [filteredData, setFilteredData] = useState([]);
 
   return (
     <div className="impression row">
@@ -22,19 +23,20 @@ const Impressions = ({ impressions, setImpressions }) => {
                     ...prev,            
                     first: e.target.value,
                   }))
+                  setFilteredData(diseases.data.filter(dis => (dis.disease_name.toLowerCase()).includes(e.target.value)))
                 }}
               />
               {
                 (singleCase && impressions?.first) &&
                 <small>
                   { 
-                    singleCase.known_ddx === impressions.first ?
+                    singleCase.known_ddx.toLowerCase() === impressions.first.toLowerCase() ?
                     <GreenCheckIconSVG />
                     :
                     (
-                      singleCase.acceptable_diagnosis1 === impressions.first ||
-                      singleCase.acceptable_diagnosis2 === impressions.first ||
-                      singleCase.acceptable_diagnosis3 === impressions.first 
+                      singleCase.acceptable_diagnosis1.toLowerCase() === impressions.first.toLowerCase() ||
+                      singleCase.acceptable_diagnosis2.toLowerCase() === impressions.first.toLowerCase() ||
+                      singleCase.acceptable_diagnosis3.toLowerCase() === impressions.first.toLowerCase() 
                     )
                     ?
                     <YellowCheckIconSVG />
@@ -46,7 +48,7 @@ const Impressions = ({ impressions, setImpressions }) => {
             <div>
               {
                 (impressions?.first) &&
-                diseases.data.map((dis) => {
+                filteredData.map((dis) => {
                     return(
                       <div key={dis.disease_id}>
                         {dis.disease_name}

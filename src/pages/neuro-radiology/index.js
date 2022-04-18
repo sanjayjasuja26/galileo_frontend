@@ -26,14 +26,18 @@ const NeuroRadiology = () => {
     caseId && dispatch(fetchCase({ page: 1, id: caseId, startAt: '', loading: true }))                                                                    
   }, [dispatch, caseId]   )                                                                           
                   
-  const handleNext = () => {          
-    if(findings.length !== Object.keys(findingValues).length) return;                     
+  const handleNext = () => {    
+    console.log(findingValues);
+    console.log(findings.length, Object.keys(findingValues).length);      
+    if(findings.length !== Object.keys(findingValues).length) return; 
+
+    setShowChecks(true);
+
     console.log("findingValues", findingValues);
     console.log("impressions", impressions);
     console.log("locationValues", locationValues);
     console.log("singleCase", singleCase);
 
-    setShowChecks(true);
   }                         
 
   return (
