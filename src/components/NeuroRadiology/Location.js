@@ -1,4 +1,5 @@
 import React from 'react'
+import { GreenCheckIconSVG } from '../../assets/svgComponents';
 import { location } from '../../data';
 
 const Location = ({ locationValues, setLocationValues }) => {
@@ -13,6 +14,12 @@ const Location = ({ locationValues, setLocationValues }) => {
             location.map((obj, index) => (              
               <div key={index} className="common_nav">    
                   <div className="cat">{obj.title}</div>
+                  <small>
+                     
+                            
+                            <GreenCheckIconSVG />
+                       
+                        </small> 
                 <div className="drop-down-select">
 
                 {     
@@ -20,7 +27,8 @@ const Location = ({ locationValues, setLocationValues }) => {
                       <p key={index} onClick={() => setLocationValues(prev => ({
                         ...prev,              
                         [obj.value]: op.value
-                      }))}>{op.text}</p>
+                      }))}>{op.text}
+                      </p>
                     ))  
                   }    
                 </div>

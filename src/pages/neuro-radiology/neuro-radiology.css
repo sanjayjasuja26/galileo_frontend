@@ -15,16 +15,30 @@
 /* 18 apr 2022 */
 .common_nav{
   position: relative;
+  margin-top: 11px;
 }
 .drop-down-select{
   display: block;
+}
+.diagnosis input {
+  padding-right: 13px !important;
+}
+.cat.highlight{
+  position: relative;
+}
+.common_nav small {
+  position: absolute;
+  top: -11px;
+  right: -9px;
+  z-index: 1;
 }
 .loc{
   margin-right: 45px;
 }
 .drop-down-select {
   display: block;
-  max-width: 200px;
+  background-color: #fff;
+  max-width: 170px;
   width: 100%;
 }
 .findings .types .cat{
@@ -32,17 +46,55 @@
 }
 .common_nav {
   position: relative;
-  max-width: 300px;
+  max-width: 170px;
   width: 100%;
 }
 .drop-down-select p{
   margin-bottom: 0;
   border: 1px solid #d9d9d9;
   border-radius: 2px;
-  /* max-width: 400px; */
-  /* width: 100%; */
-  padding: 7px 14px;
+  max-width: 400px;
+  width: 100%;
+  padding: 7px 30px 7px 13px;
+  font-size: 14px;
 }
+.w-85.d-flex {
+  flex-wrap: wrap;
+}
+.findings .types .common_nav .cat{
+  font-size: 14px;
+  padding: 7px 6px;
+}
+.cat.highlight small {
+  position: absolute;
+  top: -12px;
+  right: -9px;
+}
+.diagnosis .form-select {
+  background-image: unset;
+}
+.diagnosis small {
+  position: absolute;
+  top: 21px;
+  right: -10px;
+}
+.diagnosis {
+  position: relative;
+}
+.serach-result div {
+  margin-bottom: 4px;
+}
+
+.serach-result {
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 10px;
+}
+.serach-result div {
+  margin-bottom: 4px;
+}
+
+
   @media (max-width: 991px) {
     .findings .inner-cover {
       border-right: unset;
@@ -61,7 +113,6 @@
   }
   .findings .types {
     margin-bottom: 20px;
-    justify-content: center;
     align-items: baseline;
   }
   @media (max-width: 425px) {
@@ -99,7 +150,7 @@
     border-radius: 2px;
     margin-bottom: 0px;
     cursor: pointer;
-    font-size: 15px;
+    font-size: 14px;
   }
   .findings .types .cat span {
     color: #002a4a;
