@@ -56,12 +56,12 @@ const NumericPagination = () => {
     if ((page - 1) % limit == 0) {
       setmaxPageNumberLimit(maxPageNumberLimit - limit);
       setminPageNumberLimit(minPageNumberLimit - limit);
-    }
+    }              
   };
 
   let pageIncrementBtn = null;
   if (pages.length > maxPageNumberLimit) {
-    pageIncrementBtn = (     
+    pageIncrementBtn = (             
         <button 
             onClick={e => {
                 e.preventDefault();   
@@ -77,19 +77,19 @@ const NumericPagination = () => {
   let pageDecrementBtn = null;
   if (minPageNumberLimit >= 1) {
     pageDecrementBtn = (
-      <button 
-        onClick={e => {
+      <button               
+        onClick={e => {                    
           e.preventDefault();   
           if(page > pages[0]) handlePrevbtn()
           handlePrevbtn()           
         }}
       > 
-        &hellip;
+        &hellip;   
       </button>
-    );
+    );   
   }
 
-  return(
+  return(   
     <div className="pagination">
             <button 
                 className="prev_arrow"
@@ -104,18 +104,18 @@ const NumericPagination = () => {
             {pageDecrementBtn}
             {renderPageNumbers}
             {pageIncrementBtn}
-
+                            
             <button
                 className="next_arrow"
                 onClick={e => 
-                    {
+                    {  
                         e.preventDefault();
                         if(page < pages[pages.length - 1]) handleNextbtn()
                     }
                 }
             >
                 <i className="bi bi-chevron-right"></i>   
-            </button>
+            </button>                                       
     </div>
   )
 }

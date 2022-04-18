@@ -129,15 +129,15 @@ export const findings  = [
         options: [
             {
                 text: "< 1 cm",
-                value: "< 1 cm"
+                value: "small"
             },
             {
                 text: "1 - 3 cm",
-                value: "1 - 3 cm"
+                value: "medium"
             },
             {
                 text: "> 3 cm",
-                value: "> 3 cm"
+                value: "large"
             },
             {
                 text: "N/A",
@@ -169,7 +169,7 @@ export const findings  = [
     },
     {
         title: "Number of Lesions",
-        value: "number_of_lesions",
+        value: "num_lesion",
         options: [
             {
                 text: "Single",

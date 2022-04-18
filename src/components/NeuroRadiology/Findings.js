@@ -1,7 +1,11 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import { GreenCheckIconSVG, RedCheckIconSVG } from "../../assets/svgComponents";
 import { findings } from "../../data";
 
-const Findings = ({ findingValues, setFindingValues }) => {
+const Findings = ({ findingValues, setFindingValues, showChecks }) => {
+
+  const { singleCase } = useSelector(state => state.cases);
 
   return (
     <div className="col-lg-6">
@@ -20,12 +24,24 @@ const Findings = ({ findingValues, setFindingValues }) => {
                   {                   
                     obj.options.map((opt, index) => (
                     <div key={index} className={findingValues?.[obj.value] === opt.value ? "cat highlight" : "cat"} onClick={() => {
+                      if(showChecks){
+                        return;
+                      }
                       setFindingValues(prev => ({
                         ...prev,                                                
                         [obj.value]: opt.value
-                      }))          
-                    }}>                         
+                      }))            
+                    }}>                        
                       <span>{opt.text}</span>
+                      {
+                        (showChecks && singleCase && (findingValues?.[obj.value] === opt.value)) &&
+                        <small>
+                          {
+                            (singleCase[obj.value] === opt.value)
+                            ? <GreenCheckIconSVG /> : <RedCheckIconSVG />
+                          }
+                        </small> 
+                      }            
                     </div>     
                     ))                       
                   }      
@@ -34,9 +50,9 @@ const Findings = ({ findingValues, setFindingValues }) => {
             )
           })
         }               
-      </div>    
-    </div>
+      </div>             
+    </div>                 
   );
-};
+};                   
 
-export default Findings;
+export default Findings;             

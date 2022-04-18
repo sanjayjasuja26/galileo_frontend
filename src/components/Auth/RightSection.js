@@ -32,9 +32,9 @@ const RightSection = () => {
   const displaySection = async (isLogin, isForgetPwd, mode) => {
     if (isLogin && !mode) {              
       setHeading("Login your account");
-      setSection(
+      setSection(               
         <LoginForm setIsForgetPwd={setIsForgetPwd} setIsLogin={setIsLogin} />
-      );
+      );                              
     } else {
       setHeading("SignUp your account");
       setSection(
@@ -46,7 +46,7 @@ const RightSection = () => {
       setHeading("Reset Password");
       setSection( 
         <ResetPassword
-          code={code}
+          code={code}    
           setIsLogin={setIsLogin}
           setIsForgetPwd={setIsForgetPwd}
         />                 
@@ -55,25 +55,25 @@ const RightSection = () => {
 
     if (mode === "verifyEmail") {  
       setHeading("Email Verification");
-      setSection(   
+      setSection(                           
         <p className="text-center">
-          <EnvelopeIconSVG />
+          <EnvelopeIconSVG />                          
           Please wait. We are verifying your email.
-        </p>        
+        </p>                       
       );
 
       const varified = await varifyEmailLink({ code });
       if (varified) {
           const isUpdated = await updateUserDocument({
-            verify: true,
-          });                            
+            verify: true,              
+          });                                             
   
           if(isUpdated) {
             toast.success("Email varified success");
-            if(user) {
+            if(user) {               
               dispatch(updateUser({ verify: true }));
               navigate("/");
-            } else {
+            } else {                               
               navigate("/auth");
             }
           }       
@@ -96,8 +96,8 @@ const RightSection = () => {
       <div className="login">
         <div className="logo text-center">
           <img src={Logo} alt="" />
-          <h3>{heading}</h3>
-        </div>
+          <h3>{heading}</h3>    
+        </div>             
         {section}   
       </div>
     </div>

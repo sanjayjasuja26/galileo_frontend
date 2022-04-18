@@ -132,7 +132,6 @@ export const fetchDiseases = () => async (dispatch) => {
         
         const obj = await getDataFromCollection("diseases_neuro");                 
             
-
         if(obj.data){                
             dispatch({
                 type: FETCH_DISEASES_SUCCESS,

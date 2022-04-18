@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCase, fetchDiseases } from "../../redux/action/cases";
 import Location from "../../components/NeuroRadiology/Location";
+import { findings } from "../../data";
 
 const NeuroRadiology = () => {
 
@@ -15,19 +16,24 @@ const NeuroRadiology = () => {
   const dispatch = useDispatch();   
   const { singleCase } = useSelector(state => state.cases)
 
-  const [findingValues, setFindingValues] = useState(null);
+  const [findingValues, setFindingValues] = useState({});
   const [impressions, setImpressions] = useState(null);
   const [locationValues, setLocationValues] = useState(null);
+  const [showChecks, setShowChecks] = useState(false);
 
   useEffect(() => {                    
     dispatch(fetchDiseases());         
-    caseId && dispatch(fetchCase({ page: 1, id: caseId, startAt: '', loading: true }))                    
+    caseId && dispatch(fetchCase({ page: 1, id: caseId, startAt: '', loading: true }))                                                                    
   }, [dispatch, caseId]   )                                                                           
                   
-  const handleNext = () => {                                 
+  const handleNext = () => {          
+    if(findings.length !== Object.keys(findingValues).length) return;                     
     console.log("findingValues", findingValues);
     console.log("impressions", impressions);
     console.log("locationValues", locationValues);
+    console.log("singleCase", singleCase);
+
+    setShowChecks(true);
   }                         
 
   return (
@@ -38,8 +44,8 @@ const NeuroRadiology = () => {
           <div className="row">
             <div className="inner-wrap">
               <div className="heading d-flex justify-content-between">
-                <p>                                   
-                  {" "}         
+                <p>                                                 
+                  {" "}                            
                   Brain Pathologies : <a href="/">Study ID : {caseId}</a>
                 </p>        
                 <p> 
@@ -48,9 +54,9 @@ const NeuroRadiology = () => {
                 </p>    
               </div>                                         
               <div className="findings row">
-                <Findings findingValues={findingValues} setFindingValues={setFindingValues} /> 
-                <Location locationValues={locationValues} setLocationValues={setLocationValues} />       
-              </div>                                    
+                <Findings findingValues={findingValues} setFindingValues={setFindingValues} showChecks={showChecks} /> 
+                <Location locationValues={locationValues} setLocationValues={setLocationValues} showChecks={showChecks} />       
+              </div>                                             
               <Impressions impressions={impressions} setImpressions={setImpressions} />                   
             </div>  
             <div className="next d-flex justify-content-end mt-3 mb-5">

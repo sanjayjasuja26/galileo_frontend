@@ -9,7 +9,7 @@ const Location = ({ locationValues, setLocationValues }) => {
           <strong>Location</strong>
         </div>
         <div className="w-75 d-flex">
-          {         
+          {                    
             location.map((obj, index) => (              
               <div key={index} className="cat">    
                   <div>{obj.title}</div>                    
@@ -18,15 +18,15 @@ const Location = ({ locationValues, setLocationValues }) => {
                       <span key={index} onClick={() => setLocationValues(prev => ({
                         ...prev,              
                         [obj.value]: op.value
-                      }))}>{op.text}</span>
+                      }))}>{op.text},</span>
                     ))  
                   }                
               </div>
             ))
-            }
+          }
         </div>
     </div>
   )
 }
 
-export default Location
+export default Location;

@@ -1,14 +1,14 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
 
-const AllCasesTable = ({ cases }) => {
+const AllCasesTable = ({ cases }) => {     
   
   const navigate = useNavigate();
 
   return (
     <div className="study-table table-responsive">
         <table className="table table-bordered table-striped">
-          <thead>                 
+          <thead>                                   
             <tr>                                                       
               <th scope="col">Study ID</th>
               <th scope="col">Modality</th>
@@ -17,11 +17,11 @@ const AllCasesTable = ({ cases }) => {
               <th scope="col">Observation Performance</th>
               <th scope="col">Diagnosis Performance</th>
             </tr>                 
-          </thead>
+          </thead>                
           <tbody>              
               {    
                 cases.map(c => (
-                  <tr key={c.case_id} onClick={() => navigate(`/neuro-radiology/${c.case_id}`)}>
+                  <tr key={c.case_id} onClick={() => navigate(`/neuro-radiology/${c.case_id}`)}>      
                       <th scope="row">{c.case_id}</th>
                       <td>{c.modality}</td>
                       <td>To be done</td>
