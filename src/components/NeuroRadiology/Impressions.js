@@ -43,7 +43,8 @@ const Impressions = ({ impressions, setImpressions }) => {
                   } 
                 </small>
               }
-            <div>
+          
+            <div className="serach-result"> 
               {
                 (impressions?.first) &&
                 diseases.data.map((dis) => {
@@ -56,6 +57,7 @@ const Impressions = ({ impressions, setImpressions }) => {
                 )
               }  
             </div>  
+            
         </div>    
       </div>   
       <div className="col-lg-4 col-sm-6">
