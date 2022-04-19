@@ -17,41 +17,48 @@ const NeuroRadiology = () => {
   const { singleCase } = useSelector(state => state.cases)
 
   const [findingValues, setFindingValues] = useState({});
-  const [impressions, setImpressions] = useState(null);
+  const [impressions, setImpressions] = useState({
+    first: { value: '', link: '' },
+    second: { value: '', link: '' },     
+    third: { value: '', link: '' }
+  });
   const [locationValues, setLocationValues] = useState(null);
   const [showChecks, setShowChecks] = useState(false);
 
   useEffect(() => {                    
-    dispatch(fetchDiseases());         
-    caseId && dispatch(fetchCase({ page: 1, id: caseId, startAt: '', loading: true }))                                                                    
-  }, [dispatch, caseId]   )                                                                           
+    dispatch(fetchDiseases());                 
+    caseId && dispatch(fetchCase({ page: 1, id: caseId, startAt: '', loading: true })    )                                                                          
+  }, [dispatch, caseId]        )                                                                           
                   
   const handleNext = () => {         
-    if(findings.length === Object.keys(findingValues).length && locationValues){
+    if(
+      findings.length === Object.keys(findingValues).length && 
+      (impressions.first.value !== '' && impressions.second.value !== '' && impressions.third.value !== '') &&
+      locationValues
+    ){
 
-      setShowChecks(true);
+      setShowChecks(true);   
 
       console.log("findingValues", findingValues);
       console.log("impressions", impressions);
       console.log("locationValues", locationValues);
       console.log("singleCase", singleCase);
     } 
-
   }                         
 
   return (
     <>
       <Header />
-      <section className="body">
+      <section className="body">            
         <div className="container">
-          <div className="row">
+          <div className="row">                           
             <div className="inner-wrap">
               <div className="heading d-flex justify-content-between">
                 <p>                                                 
-                  {" "}                            
+                  {" "}                                         
                   Brain Pathologies : <a href="/">Study ID : {caseId}</a>
                 </p>        
-                <p> 
+                <p>       
                   {" "}  
                   Patient Age :<a href="/">45</a>
                 </p>    
@@ -68,10 +75,10 @@ const NeuroRadiology = () => {
           </div>                
         </div>                                  
       </section>
-    </>
-  );
-};
-
+    </>  
+  );      
+};   
+   
 export default NeuroRadiology;
 
 
