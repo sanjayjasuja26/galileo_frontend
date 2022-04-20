@@ -24,6 +24,29 @@ const InputField = ({ impressions, setImpressions, filteredData, setFilteredData
         }
     }, [showChecks])
     
+    const checkDiagnosis = (forIcon, sec = null) => {
+
+      const value = forIcon ? impressions[section].value : sec;
+
+      const val = singleCase.known_ddx.toLowerCase() ===
+        value.toLowerCase() 
+        ? 
+          (forIcon ? <GreenCheckIconSVG /> : 'correct')
+        : 
+        (singleCase.acceptable_diagnosis1.toLowerCase() ===
+            value.toLowerCase() ||
+          singleCase.acceptable_diagnosis2.toLowerCase() ===
+            value.toLowerCase() ||
+          singleCase.acceptable_diagnosis3.toLowerCase() ===
+            value.toLowerCase()) 
+        ? 
+          (forIcon ? <YellowCheckIconSVG /> : 'acceptable')
+        : 
+          (forIcon ? <RedCheckIconSVG /> : 'incorrect')
+
+      return val;
+    }
+
   return (
     <div className="col-lg-4 col-sm-6 px-2" ref={ref}>
         <div className="diagnosis"> 
@@ -51,7 +74,8 @@ const InputField = ({ impressions, setImpressions, filteredData, setFilteredData
                 [section]: {
                     value: e.target.value,
                     link: diseases.data.filter((dis) =>
-                    dis.disease_name.toLowerCase().includes(e.target.value))[0]?.disease_reference
+                    dis.disease_name.toLowerCase().includes(e.target.value))[0]?.disease_reference,
+                    result: checkDiagnosis(false, e.target.value)
                 },
               }));
               setFilteredData({
@@ -64,21 +88,8 @@ const InputField = ({ impressions, setImpressions, filteredData, setFilteredData
           />
           {showChecks && singleCase && impressions[section].value && (
             <small>
-              {singleCase.known_ddx.toLowerCase() ===
-              impressions[section].value.toLowerCase() 
-              ? 
-                <GreenCheckIconSVG />
-              : 
-              (singleCase.acceptable_diagnosis1.toLowerCase() ===
-                  impressions[section].value.toLowerCase() ||
-                singleCase.acceptable_diagnosis2.toLowerCase() ===
-                  impressions[section].value.toLowerCase() ||
-                singleCase.acceptable_diagnosis3.toLowerCase() ===
-                  impressions[section].value.toLowerCase()) 
-              ? 
-                <YellowCheckIconSVG />
-              : 
-                <RedCheckIconSVG />
+              {
+                checkDiagnosis(true)
               }
             </small>
           )}
@@ -91,7 +102,8 @@ const InputField = ({ impressions, setImpressions, filteredData, setFilteredData
                     ...prev,
                     [section]: {
                         value: dis.disease_name,
-                        link: dis.disease_reference ? dis.disease_reference : ''
+                        link: dis.disease_reference ? dis.disease_reference : '',
+                        result: checkDiagnosis(false, dis.disease_name)
                     },
                   }))
                 }}>{dis.disease_name}</div>;

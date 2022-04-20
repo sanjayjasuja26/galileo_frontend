@@ -24,7 +24,7 @@ const AllCasesTable = ({ cases }) => {
                   <tr key={c.case_id} onClick={() => navigate(`/neuro-radiology/${c.case_id}`)}>      
                       <th scope="row">{c.case_id}</th>
                       <td>{c.modality}</td>
-                      <td>To be done</td>
+                      <td>{c.attempted ? 'Completed' : 'To be done'}</td>
                       <td></td> 
                       <td></td>                         
                       <td></td>

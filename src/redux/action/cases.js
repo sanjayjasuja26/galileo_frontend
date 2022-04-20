@@ -1,4 +1,4 @@
-import { calculatePagination, getCollectionDocCounts, getDataFromCollection } from '../../utils/helper';
+import { calculatePagination, createStudentLog, getAttemptedCaseDoc, getCollectionDocCounts, getDataFromCollection } from '../../utils/helper';
 import {
     FETCH_CASES_LOADING,
     FETCH_CASE_SUCCESS,
@@ -8,7 +8,13 @@ import {
     SET_PAGINATION,
     SET_CASE_ACCESS,
     FETCH_DISEASES_SUCCESS,
-    FETCH_DISEASES_ERROR
+    FETCH_DISEASES_ERROR,
+    ATTEMPT_CASE_ERROR,
+    ATTEMPT_CASE_LOADING,
+    ATTEMPT_CASE_SUCCESS,
+    GET_ATTEMPTED_CASE_LOADING,
+    GET_ATTEMPTED_CASE_ERROR,
+    GET_ATTEMPTED_CASE_SUCCESS
 } from '../types';
 
 
@@ -18,6 +24,13 @@ export const updatePage = (body) => {
         payload: body
     }
 }       
+
+export const initialAttemptCase = () => {
+    return {
+        type: GET_ATTEMPTED_CASE_SUCCESS,
+        payload: null
+    }
+}
 
 export const setCasesAccess = (body) => {
     return {
@@ -60,7 +73,7 @@ export const setCasesPaginationIndex = ({page, access}) => async (dispatch) => {
     }
 }       
 
-export const fetchCases = ({page, access, startAt, loading}) => async (dispatch) => {
+export const fetchCases = ({page, access, startAt, loading, user}) => async (dispatch) => {
     if(loading) dispatch({ type: FETCH_CASES_LOADING })
     try {                                          
         
@@ -69,7 +82,8 @@ export const fetchCases = ({page, access, startAt, loading}) => async (dispatch)
             value: access,    
             orderBy: "case_id",
             page,    
-            startAt  
+            startAt, 
+            user  
         });                 
     
         if(obj.data){                
@@ -152,5 +166,51 @@ export const fetchDiseases = () => async (dispatch) => {
             type: FETCH_DISEASES_ERROR,
             payload: error.code
         })                                                      
+    }
+}
+
+export const attemptCase = (body) => async (dispatch) => {
+    dispatch({ type: ATTEMPT_CASE_LOADING })
+    try {
+        const allreadyAttempted = await getAttemptedCaseDoc({ id: body.case_id, user: body.user_id });
+
+        if(allreadyAttempted){
+            return false;
+        }
+
+        const caseAttempt = await createStudentLog(body);
+
+        if(caseAttempt){
+            dispatch({
+                type: ATTEMPT_CASE_SUCCESS,
+            })
+            return true;
+        } else {
+            return false;
+        }
+
+    } catch (error) {
+        dispatch({
+            type: ATTEMPT_CASE_ERROR,
+            payload: error.code
+        })
+        return false;
+    }
+}
+
+export const getAttemptedCase = (body) => async (dispatch) => {
+    dispatch({ type: GET_ATTEMPTED_CASE_LOADING })
+    try {
+        const attemptedCase = await getAttemptedCaseDoc(body);
+
+        dispatch({
+            type: GET_ATTEMPTED_CASE_SUCCESS,
+            payload: attemptedCase
+        })
+    } catch (error) {
+        dispatch({
+            type: GET_ATTEMPTED_CASE_ERROR,
+            payload: error.code
+        })
     }
 }

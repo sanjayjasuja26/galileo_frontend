@@ -2,14 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import "./home.css";                 
-import Pagination from '../../components/Pagination/Pagination';
 import NoAccess from "../../components/Access/NoAccess";
 import PartialAccess from "../../components/Access/PartialAccess";
 import PartialAccessVerify from "../../components/Access/PartialAccessVerify";
 import Header from "../../components/Header";
 import { HomePageAccess } from "../../constants";
 import CaseAccess from "../../components/Access/CaseAccess";
-import { fetchCases, setCasesAccess, setCasesPaginationIndex, updatePage } from "../../redux/action/cases";
+import { fetchCases, initialAttemptCase, setCasesAccess, setCasesPaginationIndex, updatePage } from "../../redux/action/cases";
 
 const Home = () => {
 
@@ -35,11 +34,7 @@ const Home = () => {
 
     if(access === 'P' || (access === 'Y' && !user.verify)){
       setCaseAccess = 'Y'         
-    } 
-    // else if(access === 'Y' && user.verify){
-    //   setCaseAccess = 'N'
-    // } 
-    else {                                 
+    } else {                                 
       setCaseAccess = ''
     }
 
@@ -47,8 +42,42 @@ const Home = () => {
   }, [access, user, dispatch]);                       
 
   useEffect(() => {
-    dispatch(updatePage({ page: 1 }))
+    dispatch(updatePage({ page: cases.page }))
+  }, [dispatch, cases.page])
+
+  useEffect(() => {
+    dispatch(initialAttemptCase())
   }, [dispatch])
+  
+  useEffect(() => {
+    dispatch(setCasesPaginationIndex({ page: cases.page, access: caseAccess }));
+  }, [dispatch, caseAccess, cases.page])     
+
+  useEffect(() => {
+    const paginationIndex = cases.paginationIndex;
+    const page = cases.page;
+    const firstTimeDataFetch = cases.data.length > 0 ? false : true;
+
+    if(paginationIndex && page){
+
+      let body = { page: page, user: user.user_email, access: caseAccess, loading: firstTimeDataFetch };
+
+      if(paginationIndex.length > 0){
+        paginationIndex.filter(rec => {
+          if(rec.index === page){
+            body = {                          
+              ...body,                           
+              startAt: rec.start
+            }
+          }
+        })
+
+        dispatch(fetchCases(body));
+
+      }
+
+    }
+  }, [cases.page, cases.paginationIndex, caseAccess, dispatch])
 
   const renderSection = () => {
     switch (section) {              
@@ -74,34 +103,6 @@ const Home = () => {
         return ''; 
     }
   };
-
-  useEffect(() => {
-    dispatch(setCasesPaginationIndex({ page: cases.page, access: caseAccess }));
-  }, [dispatch, caseAccess, cases.page])     
-
-  useEffect(() => {
-    const paginationIndex = cases.paginationIndex;
-    const page = cases.page;
-    const firstTimeDataFetch = cases.data.length > 0 ? false : true;
-
-    if(paginationIndex && page){
-
-      let body = { page: page, access: caseAccess, loading: firstTimeDataFetch };
-
-      if(paginationIndex.length > 0){
-        paginationIndex.filter(rec => {
-          if(rec.index === page){
-            body = {                          
-              ...body,                           
-              startAt: rec.start
-            }
-          }
-        })
-      }
-
-      dispatch(fetchCases(body));
-    }
-  }, [cases.page, cases.paginationIndex, caseAccess, dispatch])
 
   return (          
     <>

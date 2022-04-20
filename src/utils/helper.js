@@ -336,9 +336,18 @@ export const getDataFromCollection = async (coll, filter = null) => {
     
     const querySnapshot = await getDocs(Query);
 
+    // let attemptedCase;
     const data = [];                                 
     querySnapshot.forEach((doc) => {
-      data.push(doc.data());       
+      // attemptedCase = getAttemptedCaseDoc({ id: doc.data().case_id, user: filter.user });      
+      
+      // if(attemptedCase){
+      //   doc = { ...doc.data(), attempted: true }
+      // } else {
+      //   doc = doc.data();
+      // }
+
+      data.push(doc.data())
     });                        
 
     return { data, count };                                        
@@ -412,3 +421,70 @@ export const getCollectionDocCounts = async (coll, filter = null) => {
     console.log(error);    
   }
 }                             
+
+export const createStudentLog = async (data) => {
+  try {
+    const created = await addDoc(collection(db, "student_log"), data);
+    return created ? true :  false;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const getAttemptedCaseDoc = async (data) => {
+  try {
+    let existingCase = null;
+
+    let Query = query(
+      collection(db, "student_log"), 
+      where("case_id", "==", data.id),
+      where("user_id", "==", data.user),
+    )
+
+    const snap = await getDocs(Query);
+    snap.forEach(async doc => {
+      existingCase = doc.data();
+    })
+
+    return existingCase;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const setInitialCaseValues = (body) => {
+  const { attemptedC, setFindingValues, setLocationValues, setImpressions, diseases } = body;
+
+  for(let key in attemptedC){
+    if(key.includes("_entered")){
+      if(key.split("_entered")[0] === 'location'){
+        setLocationValues(attemptedC[key])
+        delete attemptedC[key];
+      } else if(key.split("_entered")[0].startsWith("acceptable_diagnosis")) {
+        setImpressionsValues(key.split("_entered")[0], attemptedC[key], setImpressions, diseases, attemptedC)
+        delete attemptedC[key];
+      } else {
+        setFindingValues(prev => ({
+          ...prev,
+          [key.split("_entered")[0]]: attemptedC[key]
+        }))
+      }
+    }
+  }
+}
+
+const setImpressionsValues = (key, value, setImpressions, diseases, attemptedC) => {
+  let localKey = key === "acceptable_diagnosis1" ? "first" : key === "acceptable_diagnosis2" ? "second" : "third"
+
+  let link = diseases.data.filter((dis) =>
+  dis.disease_name.toLowerCase() === (value.toLowerCase()))[0]?.disease_reference;
+
+  setImpressions(prev => ({
+    ...prev,
+    [localKey]: {
+      value, 
+      link: link ? link : '',
+      result: attemptedC[`${key}_eval`]
+    }
+  }))
+}

@@ -8,26 +8,44 @@ import {
     SET_CASE_ACCESS,
     FETCH_DISEASES_LOADING,
     FETCH_DISEASES_SUCCESS,
-    FETCH_DISEASES_ERROR
+    FETCH_DISEASES_ERROR,
+    ATTEMPT_CASE_LOADING,
+    ATTEMPT_CASE_SUCCESS,
+    ATTEMPT_CASE_ERROR,
+    GET_ATTEMPTED_CASE_LOADING,
+    GET_ATTEMPTED_CASE_SUCCESS,
+    GET_ATTEMPTED_CASE_ERROR
 } from '../types';
 
 const INITIAL_STATE = {
-    loading: false,
-    error: '',
     cases: {
+        loading: true,
+        error: '',
         page: 1,
         total: 0,
         data: [],
         paginationIndex: [] 
     },
     diseases: {
+        loading: true,
+        error: '',
         page: 1,
         total: 0,
         data: [],
         paginationIndex: [] 
     },
     singleCase: null,
-    caseAccess: ''
+    caseAccess: '',
+    caseAttempt: {
+        loading: true,
+        success: false,
+        error: ''
+    },
+    attemptedCase: {
+        loading: true,
+        attemptedC: null,
+        error: ''
+    }
 }
 
 const reducer = (state = INITIAL_STATE, action) => {
@@ -40,15 +58,21 @@ const reducer = (state = INITIAL_STATE, action) => {
         case FETCH_CASES_LOADING:
             return {
                 ...state,
-                loading: true,
-                error: '',
+                cases: {
+                    ...state.cases,
+                    loading: true,
+                    error: '',
+                }
             }          
         case FETCH_CASES_SUCCESS:
             return {
                 ...state,
-                loading: false,
-                cases: { ...state.cases, ...action.payload},
-                error: '',
+                cases: { 
+                    ...state.cases, 
+                    ...action.payload,
+                    loading: false,
+                    error: '',
+                },
             }
         case FETCH_CASE_SUCCESS:
             return {
@@ -74,28 +98,94 @@ const reducer = (state = INITIAL_STATE, action) => {
         case FETCH_CASES_ERROR: 
             return {
                 ...state,
-                loading: false,
-                error: action.payload,
+                cases: {
+                    ...state.cases,
+                    loading: false,
+                    error: action.payload,
+                }
             }  
         case FETCH_DISEASES_LOADING:
             return {
                 ...state,
-                loading: true,
-                error: '',
+                diseases: {
+                    ...state.diseases,
+                    loading: true,
+                    error: '',
+                },
             }          
         case FETCH_DISEASES_SUCCESS:
             return {
                 ...state,
-                loading: false,
-                diseases: { ...state.diseases, ...action.payload},
-                error: '',
+                diseases: { 
+                    ...state.diseases, 
+                    ...action.payload,
+                    loading: false,
+                    error: '',
+                },
             }     
         case FETCH_DISEASES_ERROR: 
             return {
                 ...state,
-                loading: false,
-                error: action.payload,
-            }                         
+                diseases: { 
+                    ...state.diseases,
+                    loading: false,
+                    error: action.payload,
+                }
+            }   
+        case ATTEMPT_CASE_LOADING:
+            return {
+                ...state,
+                caseAttempt: {
+                    loading: true,
+                    success: false,
+                    error: ''
+                }
+            }  
+        case ATTEMPT_CASE_SUCCESS:
+            return {
+                ...state,
+                caseAttempt: {
+                    loading: false,
+                    success: true,
+                    error: ''
+                }
+            }   
+        case ATTEMPT_CASE_ERROR: 
+            return {
+                ...state,
+                caseAttempt: {
+                    loading: false,
+                    success: false,
+                    error: action.payload
+                }
+            }    
+        case GET_ATTEMPTED_CASE_LOADING:
+            return {
+                ...state,
+                attemptedCase: {
+                    loading: true,
+                    attemptedC: null,
+                    error: ''
+                }
+            } 
+        case GET_ATTEMPTED_CASE_SUCCESS:
+            return {
+                ...state,
+                attemptedCase: {
+                    loading: false,
+                    attemptedC: action.payload,
+                    error: ''
+                }
+            } 
+        case GET_ATTEMPTED_CASE_ERROR:
+            return {
+                ...state,
+                attemptedCase: {
+                    loading: false,
+                    attemptedC: null,
+                    error: action.payload
+                }
+            }        
         default: return state;
     }
 }

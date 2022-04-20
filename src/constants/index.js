@@ -6,3 +6,8 @@ export const HomePageAccess = {
 }
 
 export const CASE_LIMIT = 2;
+
+export const CASE_STATUS = {
+    COMPLETED: 'completed',
+    PENDING: 'tbd'
+}

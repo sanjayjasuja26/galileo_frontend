@@ -6,15 +6,15 @@ import AllCasesTable from "../Tables/AllCasesTable";
 
 const CaseAccess = () => {
 
-  const { cases, loading, error } = useSelector(state => state.cases);
+  const { cases: { loading, error, data, total }} = useSelector(state => state.cases);
 
   if(loading){
     return <div className="text-center"><Loader /></div> 
-  } else if(cases?.data?.length > 0){
+  } else if(data?.length > 0){
     return <>   
-    <AllCasesTable cases={cases.data} />
+    <AllCasesTable cases={data} />
       {
-        (cases.total > 0) &&
+        (total > 0) &&
         <NumericPagination />
       }
     </>

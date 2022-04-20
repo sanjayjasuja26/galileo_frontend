@@ -17,7 +17,7 @@ export const findings  = [
             },
             {
                 text: "N/A",
-                value: "NA"
+                value: "na"
             }
         ]
     },
@@ -39,7 +39,7 @@ export const findings  = [
             },
             {
                 text: "N/A",
-                value: "NA"
+                value: "na"
             }
         ]
     },
@@ -61,7 +61,7 @@ export const findings  = [
             },
             {
                 text: "N/A",
-                value: "NA"
+                value: "na"
             }
         ]
     },
@@ -79,7 +79,7 @@ export const findings  = [
             },
             {
                 text: "N/A",
-                value: "NA"
+                value: "na"
             }
         ]
     },
@@ -97,7 +97,7 @@ export const findings  = [
             },
             {
                 text: "N/A",
-                value: "NA"
+                value: "na"
             }
         ]
     },
@@ -119,7 +119,7 @@ export const findings  = [
             },
             {
                 text: "N/A",
-                value: "NA"
+                value: "na"
             },
         ]
     },
@@ -141,7 +141,7 @@ export const findings  = [
             },
             {
                 text: "N/A",
-                value: "NA"
+                value: "na"
             }
         ]
     },
@@ -163,7 +163,7 @@ export const findings  = [
             },
             {
                 text: "N/A",
-                value: "NA"
+                value: "na"
             },
         ]
     },
@@ -181,7 +181,7 @@ export const findings  = [
             },
             {
                 text: "N/A",
-                value: "NA"
+                value: "na"
             }
         ]
     },
@@ -203,7 +203,7 @@ export const findings  = [
             },
             {
                 text: "N/A",
-                value: "NA"
+                value: "na"
             }
         ]
     },
@@ -229,7 +229,7 @@ export const findings  = [
             },
             {
                 text: "N/A",
-                value: "NA"
+                value: "na"
             }
         ]
     }
@@ -380,7 +380,7 @@ export const location = [
     },
     {
         title: 'N/A',
-        value: "NA",
+        value: "na",
         options: []
     }
 ]
