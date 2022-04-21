@@ -12,34 +12,16 @@ const NumericPagination = () => {
 
   const [maxPageNumberLimit, setmaxPageNumberLimit] = useState(limit);
   const [minPageNumberLimit, setminPageNumberLimit] = useState(0);
-  
+
   const pages = [];
   for (let i = 1; i <= Math.ceil(totalRecords / limit); i++) {
     pages.push(i);
   }
     
   const handleClick = (num) => { 
+    console.log(num);
     dispatch(updatePage({ page: num }));
   };
-  
-  const renderPageNumbers = pages.map((number) => {    
-    if (number < maxPageNumberLimit + 1 && number > minPageNumberLimit) {      
-      return (
-        <button
-          key={number}
-          onClick={e => {
-            e.preventDefault();              
-            handleClick(number)
-          }}
-          className={`${page === number && "active"}`}
-        >
-          {number}
-        </button>
-      );
-    } else {
-      return null;
-    }
-  });
 
   const handleNextbtn = () => {
     dispatch(updatePage({page: page + 1}));
@@ -58,6 +40,27 @@ const NumericPagination = () => {
       setminPageNumberLimit(minPageNumberLimit - limit);
     }              
   };
+
+  const renderPageNumbers = pages.map((number) => { 
+    if (number < maxPageNumberLimit + 1 && number > minPageNumberLimit) { 
+      let displayPage = page <= maxPageNumberLimit ? number : number + maxPageNumberLimit;  
+         
+      return (
+        <button
+          key={number}          
+          onClick={e => {
+            e.preventDefault();                 
+            handleClick(displayPage);       
+          }}        
+          className={`${displayPage === page && "active"}`}
+        >
+          {displayPage}
+        </button>
+      );
+    } else {
+      return null;
+    }
+  });
 
   let pageIncrementBtn = null;
   if (pages.length > maxPageNumberLimit) {

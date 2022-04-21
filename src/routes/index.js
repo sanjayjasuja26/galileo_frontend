@@ -1,5 +1,5 @@
-import React from 'react'
-import { Navigate, useRoutes } from 'react-router-dom'
+import React from 'react';
+import { Navigate, useRoutes } from 'react-router-dom';
 import Home from '../pages/home';
 import Auth from '../pages/auth';
 import Profile from '../pages/profile';

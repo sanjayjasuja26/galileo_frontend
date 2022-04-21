@@ -39,8 +39,8 @@ const NeuroRadiology = () => {
 
   useEffect(() => {                    
     dispatch(fetchDiseases());                 
-    caseId && dispatch(fetchCase({ page: 1, id: caseId, startAt: '', loading: true })    )                                                                          
-  }, [dispatch, caseId]        )                                                                           
+    caseId && dispatch(fetchCase({ page: 1, id: caseId, startAt: '', loading: true, user: user.user_email })    )                                                                          
+  }, [dispatch, caseId, user]        )                                                                           
     
   useEffect(() => {
     if(attemptedC && diseases.data.length > 0){
@@ -58,7 +58,7 @@ const NeuroRadiology = () => {
     ){
 
       setShowChecks(true);   
-
+  
       const obj = {
         case_id: singleCase.case_id,
         modality: singleCase.modality,
@@ -68,7 +68,7 @@ const NeuroRadiology = () => {
         flair_eval: findingValues.flair === singleCase.flair ? 'correct' : 'incorrect',
         t1_entered: findingValues.t1,
         t1_eval: findingValues.t1 === singleCase.t1 ? 'correct' : 'incorrect',
-        t2_entered: findingValues.t2,
+        t2_entered: findingValues.t2, 
         t2_eval: findingValues.t2 === singleCase.t2 ? 'correct' : 'incorrect',
         contrast_enhancement_entered: findingValues.contrast_enhancement,
         contrast_enhancement_eval: findingValues.contrast_enhancement === singleCase.contrast_enhancement ? 'correct' : 'incorrect',
@@ -100,9 +100,9 @@ const NeuroRadiology = () => {
 
       if(isSubmit){
         toast.success('Case Attempt Success');
-        setHasSubmitted(true);
+        !hasSubmitted && setHasSubmitted(true);
       } else {
-        toast.error('Something went wrong')
+        toast.error('Something went wrong');
       }
     } else {
       toast.error('Please fill the complete form')
@@ -119,11 +119,11 @@ const NeuroRadiology = () => {
               <div className="text-center mt-4">
                 <Loader />
               </div>       
-              :
+              :    
               <div className="row">                           
                 <div className="inner-wrap">
                   <div className="heading d-flex justify-content-between">
-                    <p>                                                 
+                    <p>                                                      
                       {" "}                                         
                       Brain Pathologies : <a href="/">Study ID : {caseId}</a>
                     </p>        

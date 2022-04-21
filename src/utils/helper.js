@@ -3,7 +3,7 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { addDoc, collection, doc, getDocs, query, Timestamp, updateDoc, where, limit, startAt, orderBy, startAfter } from "firebase/firestore";
 import { toast } from "react-toastify";         
 import { db, auth, storage } from "../firebase";
-import { CASE_LIMIT } from "../constants";                  
+import { CASE_LIMIT, PARTIAL_CASE_LIMIT } from "../constants";                  
               
 export const getIPAddress = async () => {
   try {
@@ -318,7 +318,7 @@ export const getDataFromCollection = async (coll, filter = null) => {
           where(filter.key, "==", filter.value),
           orderBy(filter.orderBy),                         
           startAt(filter.startAt),
-          limit(CASE_LIMIT),       
+          limit(filter.value === 'Y' ? PARTIAL_CASE_LIMIT : CASE_LIMIT),       
         ); 
       } else {
         Query = query(                
@@ -336,19 +336,24 @@ export const getDataFromCollection = async (coll, filter = null) => {
     
     const querySnapshot = await getDocs(Query);
 
-    // let attemptedCase;
-    const data = [];                                 
-    querySnapshot.forEach((doc) => {
-      // attemptedCase = getAttemptedCaseDoc({ id: doc.data().case_id, user: filter.user });      
-      
-      // if(attemptedCase){
-      //   doc = { ...doc.data(), attempted: true }
-      // } else {
-      //   doc = doc.data();
-      // }
-
-      data.push(doc.data())
+    let data = [];
+    querySnapshot.forEach((doc) => {      
+      data.push(doc.data());   
     });                        
+    
+    let attemptedCase;
+
+    if(filter && filter.user){
+      data = await Promise.all(data.map(async (d) => {
+        attemptedCase = await getAttemptedCaseDoc({ id: d.case_id, user: filter.user });   
+  
+        if(attemptedCase){
+          d = { ...d, attempted: true }
+        }    
+  
+        return d;
+      }))
+    }
 
     return { data, count };                                        
   } catch (error) {    
@@ -371,7 +376,7 @@ export const calculatePagination = async (coll, filter) => {
             where(filter.key, "==", filter.value),
             orderBy(filter.orderBy),                               
             startAfter(perPageData.length > 0 ? perPageData[perPageData.length - 1].end : ''),         
-            limit(CASE_LIMIT),                       
+            limit(filter.value === 'Y' ? PARTIAL_CASE_LIMIT : CASE_LIMIT),                       
           ));
         } else {
           snap = await getDocs(query( 
@@ -387,11 +392,13 @@ export const calculatePagination = async (coll, filter) => {
           d.push(doc.data())          
         });
 
-        perPageData.push({
-          index: i,                
-          start: d[0].case_id,
-          end: d[d.length - 1].case_id
-        });
+        if(d.length){
+          perPageData.push({
+            index: i,                
+            start: d[0].case_id,
+            end: d[d.length - 1].case_id
+          });
+        }
       }
 
       return perPageData;
@@ -405,10 +412,18 @@ export const getCollectionDocCounts = async (coll, filter = null) => {
     let Query;
 
     if(filter && filter.value !== ''){
-      Query = query(
-        collection(db, coll), 
-        where(filter.key, "==", filter.value)
-      );
+      if(filter.value === 'Y'){
+        Query = query(
+          collection(db, coll), 
+          where(filter.key, "==", filter.value),
+          limit(PARTIAL_CASE_LIMIT)
+        );
+      } else {
+        Query = query(
+          collection(db, coll), 
+          where(filter.key, "==", filter.value)
+        );
+      }
     } else {
       Query = query(
         collection(db, coll), 

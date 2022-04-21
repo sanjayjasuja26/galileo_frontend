@@ -56,7 +56,8 @@ const Profile = () => {
                 <div className="text-center">
                   <input    
                     type="file" 
-                    ref={imgRef} 
+                    ref={imgRef}
+                    accept="image/*" 
                     className="d-none" 
                     onChange={e => {
                       setFile(e.target.files[0])

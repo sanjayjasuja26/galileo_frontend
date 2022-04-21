@@ -109,7 +109,7 @@ export const fetchCases = ({page, access, startAt, loading, user}) => async (dis
     }
 }     
 
-export const fetchCase = ({page, id, startAt, loading}) => async (dispatch) => {
+export const fetchCase = ({page, id, startAt, loading, user}) => async (dispatch) => {
     if(loading) dispatch({ type: FETCH_CASES_LOADING })
     try {                                          
         
@@ -118,7 +118,8 @@ export const fetchCase = ({page, id, startAt, loading}) => async (dispatch) => {
             value: id,    
             orderBy: "partial_access",
             page,    
-            startAt  
+            startAt,
+            user  
         });                 
     
         if(obj.data){                
@@ -175,7 +176,7 @@ export const attemptCase = (body) => async (dispatch) => {
         const allreadyAttempted = await getAttemptedCaseDoc({ id: body.case_id, user: body.user_id });
 
         if(allreadyAttempted){
-            return false;
+            return true;
         }
 
         const caseAttempt = await createStudentLog(body);
