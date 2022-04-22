@@ -8,7 +8,7 @@ import Findings from "../../components/NeuroRadiology/Findings";
 import Impressions from "../../components/NeuroRadiology/Impressions";
 import { attemptCase, fetchCase, fetchDiseases, getAttemptedCase } from "../../redux/action/cases";
 import Location from "../../components/NeuroRadiology/Location";
-import { findings } from "../../data";
+import { findings } from "../../data";                    
 import { CASE_STATUS } from "../../constants";
 import Loader from "../../components/Common/Loader";
 import { setInitialCaseValues } from "../../utils/helper";
@@ -24,8 +24,8 @@ const NeuroRadiology = () => {
   const [impressions, setImpressions] = useState({
     first: { value: '', link: '', result: '' },
     second: { value: '', link: '', result: '' },     
-    third: { value: '', link: '', result: '' }
-  });
+    third: { value: '', link: '', result: '' }   
+  });              
   const [findingValues, setFindingValues] = useState({});
   const [locationValues, setLocationValues] = useState(null);
   const [showChecks, setShowChecks] = useState(false);
