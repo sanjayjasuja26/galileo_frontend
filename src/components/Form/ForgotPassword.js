@@ -20,7 +20,7 @@ const ForgotPassword = ({ setIsForgetPwd, setIsLogin }) => {
         validateOnChange={true}
         validationSchema={emailFormValidation}
         onSubmit={async (values, { resetForm }) => {
-            const isEmailSend = await dispatch(sendResetPasswordEmail(values.email));
+            const isEmailSend = dispatch(sendResetPasswordEmail(values.email));
             if(isEmailSend){
               resetForm();
             }
@@ -41,7 +41,7 @@ const ForgotPassword = ({ setIsForgetPwd, setIsLogin }) => {
                     error={errors.email}
                     touched={touched.email}
                 />
-                 <button type="submit" className="btn btn-primary">
+                 <button disabled={authLoading ? true : false} type="submit" className="btn btn-primary">
                     {authLoading ? <img src={Loading} height="20" width="50" alt="" /> : 'Send Email'}
                 </button>
                 <div className='d-flex justify-content-center mt-3'>
@@ -54,10 +54,10 @@ const ForgotPassword = ({ setIsForgetPwd, setIsLogin }) => {
                 <div className="bottom-text important-link">
                     <ul>                                    
                     <li>                                  
-                        <a href="#">About us</a>
+                        <a href="/">About us</a>
                     </li>                 
                     <li>   
-                        <a href="#">Support</a>
+                        <a href="/">Support</a>
                     </li>
                     </ul>
                 </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -12,6 +12,7 @@ import ResetPassword from "../Form/ResetPassword";
 import SignUpForm from "../Form/SignUp";
 
 const RightSection = () => {
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useSelector(state => state.auth)
@@ -23,13 +24,9 @@ const RightSection = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [isForgetPwd, setIsForgetPwd] = useState(false);
   const [heading, setHeading] = useState("");  
-  const [section, setSection] = useState("");   
-
-  useEffect(() => {        
-    displaySection(isLogin, isForgetPwd, mode);
-  }, [isLogin, isForgetPwd, mode]);    
-
-  const displaySection = async (isLogin, isForgetPwd, mode) => {
+  const [section, setSection] = useState("");            
+    
+  const displaySection = useCallback(async (isLogin, isForgetPwd, mode) => {
     if (isLogin && !mode) {              
       setHeading("Login your account");
       setSection(               
@@ -89,7 +86,11 @@ const RightSection = () => {
         />
       );                         
     }   
-  };
+  }, [code, user, navigate, dispatch]);
+
+  useEffect(() => {        
+    displaySection(isLogin, isForgetPwd, mode);
+  }, [isLogin, isForgetPwd, mode, displaySection]);   
 
   return (
     <div className="col-lg-7 loginn signup">

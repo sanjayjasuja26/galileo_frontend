@@ -48,7 +48,7 @@ const LoginForm = ({ setIsLogin, setIsForgetPwd }) => {
               email: values.email
             }))      
           }
-          const loginSuccess = await dispatch(login(values));
+          const loginSuccess = dispatch(login(values));
           if(loginSuccess){
             resetForm();      
             history('/');                    
@@ -99,7 +99,7 @@ const LoginForm = ({ setIsLogin, setIsForgetPwd }) => {
             </div>
             <small className="pointer text-muted" onClick={() => setIsForgetPwd(true)}>Forgot password</small>
           </div>
-          <button type="submit" className="btn btn-primary">
+          <button disabled={authLoading ? true : false} type="submit" className="btn btn-primary">
             {authLoading ? <img src={Loading} height="15" width="70" alt="" /> : 'Login'}       
           </button>    
           <p>           
@@ -109,10 +109,10 @@ const LoginForm = ({ setIsLogin, setIsForgetPwd }) => {
           <div className="bottom-text important-link">
             <ul>                                                        
               <li>                                  
-                <a href="#">About us</a>
+                <a href="/">About us</a>
               </li>                 
               <li>   
-                <a href="#">Support</a>
+                <a href="/">Support</a>
               </li>
             </ul>                                    
           </div>

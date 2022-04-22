@@ -15,11 +15,11 @@ const CustomPagination = () => {
 
   return (
     <div>
-        <Pagination
-          activePage={page}
+        <Pagination              
+          activePage={page}     
           itemsCountPerPage={CASE_LIMIT}
           totalItemsCount={totalRecords}
-          pageRangeDisplayed={4}
+          pageRangeDisplayed={4}   
           onChange={handlePageChange}
         />
     </div>  

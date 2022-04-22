@@ -1,7 +1,7 @@
 import axios from "axios";
+import { toast } from "react-toastify";         
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { addDoc, collection, doc, getDocs, query, Timestamp, updateDoc, where, limit, startAt, orderBy, startAfter } from "firebase/firestore";
-import { toast } from "react-toastify";         
 import { db, auth, storage } from "../firebase";
 import { CASE_LIMIT, PARTIAL_CASE_LIMIT } from "../constants";                  
               
@@ -226,7 +226,7 @@ export const verifyAccess = ({ allowed, date_start, date_end }, user, fromDomain
     }
   }
   return access;
-};              
+};                
 
 export const validateFirebaseLink = async (body) => {
   try {
@@ -308,7 +308,7 @@ export const getDataFromCollection = async (coll, filter = null) => {
   try {
 
     let Query; 
-
+    
     const count = await getCollectionDocCounts(coll, filter);
 
     if(filter){
@@ -359,7 +359,7 @@ export const getDataFromCollection = async (coll, filter = null) => {
   } catch (error) {    
     console.log(error);
   }
-}
+}     
 
 export const calculatePagination = async (coll, filter) => {
   try {
@@ -465,7 +465,7 @@ export const getAttemptedCaseDoc = async (data) => {
   } catch (error) {
     console.log(error);
   }
-}
+}  
 
 export const setInitialCaseValues = (body) => {
   const { attemptedC, setFindingValues, setLocationValues, setImpressions, diseases } = body;
@@ -486,7 +486,7 @@ export const setInitialCaseValues = (body) => {
       }
     }
   }
-}
+}  
 
 const setImpressionsValues = (key, value, setImpressions, diseases, attemptedC) => {
   let localKey = key === "acceptable_diagnosis1" ? "first" : key === "acceptable_diagnosis2" ? "second" : "third"
@@ -502,4 +502,4 @@ const setImpressionsValues = (key, value, setImpressions, diseases, attemptedC) 
       result: attemptedC[`${key}_eval`]
     }
   }))
-}
+}     

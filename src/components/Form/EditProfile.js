@@ -1,11 +1,11 @@
 import React from 'react'
 import { Formik, Form } from "formik";
-import InputElement from './components/InputElement'
+import { useDispatch, useSelector } from 'react-redux';
+import InputElement from './components/InputElement';
+import Loading from '../../assets/loading.gif';
 import { EmailIconSVG, UserIconSVG } from '../../assets/svgComponents';
 import { editProfileValidation } from '../../utils/validation';
-import { useDispatch, useSelector } from 'react-redux';
 import { editUserProfile } from '../../redux/action/auth';
-import Loading from '../../assets/loading.gif';
 
 const EditProfile = () => {
 
@@ -65,7 +65,7 @@ const EditProfile = () => {
                         label="Institutional Email"
                         icon={<EmailIconSVG />}
                     />                   
-                <button type="submit" className="btn btn-primary">
+                <button disabled={authLoading ? true : false} type="submit" className="btn btn-primary">
                     {
                         authLoading ? <img src={Loading} height="15" width="70" alt="" /> : 'Update'
                     }       

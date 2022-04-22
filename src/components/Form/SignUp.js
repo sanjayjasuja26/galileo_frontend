@@ -29,10 +29,10 @@ const SignUpForm = ({ setIsLogin }) => {
         validationSchema={signUpFormSchema}
         onSubmit={async (values, { resetForm }) => {
             if(values) { 
-                const signupSuccess = await dispatch(signUp(values));        
+                const signupSuccess = dispatch(signUp(values));        
                 
                 if(signupSuccess){
-                    await dispatch(varifyEmail());       
+                    dispatch(varifyEmail());       
                     resetForm();
                     setIsLogin(true);
                 }     
@@ -102,7 +102,7 @@ const SignUpForm = ({ setIsLogin }) => {
                 touched={touched.confirmPassword}
             />    
 
-        <button type="submit" className="btn btn-primary">
+        <button disabled={authLoading ? true : false} type="submit" className="btn btn-primary">
             {authLoading ? <img src={Loading} height="20" width="50" alt="" /> : 'Signup'}        
         </button>                              
         <p>
@@ -112,10 +112,10 @@ const SignUpForm = ({ setIsLogin }) => {
         <div className="bottom-text important-link">
             <ul>
             <li>
-                <a href="#">About us</a>
+                <a href="/">About us</a>
             </li>
             <li>
-                <a href="#">Support</a>
+                <a href="/">Support</a>
             </li>
             </ul>
         </div>

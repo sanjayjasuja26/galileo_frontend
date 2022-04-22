@@ -14,8 +14,8 @@ const LeftContent = () => {
        </div>
        <div className="bottom-text">
            <ul>
-               <li><a href="#">About us</a></li>
-               <li><a href="#">Support</a></li>
+              <li><a href="/">About us</a></li>
+              <li><a href="/">Support</a></li>
            </ul>
        </div>
     </div>

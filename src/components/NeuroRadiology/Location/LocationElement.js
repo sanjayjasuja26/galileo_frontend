@@ -8,7 +8,7 @@ import useOutsideClick from "../../../hooks/useOutsideClick";
 
 const LocationElement = ({ obj, locationValues, setLocationValues, showChecks }) => {
 
-    const ref = useRef(null);
+    const ref = useRef(null);          
 
   const { singleCase } = useSelector(state => state.cases)
   const [showOptions, setShowOptions] = useState(false);
@@ -25,7 +25,7 @@ const LocationElement = ({ obj, locationValues, setLocationValues, showChecks })
           if (showChecks) {
             return;
           }
-          setLocationValues(obj.value);
+          setLocationValues(obj.value);         
           setShowOptions(!showOptions);
         }}
       >
@@ -44,9 +44,9 @@ const LocationElement = ({ obj, locationValues, setLocationValues, showChecks })
         showOptions && 
         <div className="drop-down-select">
             {obj.options.map((op, index) => (
-            <p key={index}>{op.text}</p>
+              <p key={index}>{op.text}</p>
             ))}
-        </div>
+        </div>              
       }
     </div>
   );

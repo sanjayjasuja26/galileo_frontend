@@ -24,7 +24,7 @@ const ResetPassword = ({ code, setIsLogin, setIsForgetPwd }) => {
       validationSchema={resetPasswordValidation}
       onSubmit={async (values, { resetForm }) => {
         if (values && code) {
-         const success = await dispatch(varifyResetPasswordLink({ code, password: values.password }));
+         const success = dispatch(varifyResetPasswordLink({ code, password: values.password }));
 
          if(success){
            resetForm();
@@ -79,16 +79,16 @@ const ResetPassword = ({ code, setIsLogin, setIsForgetPwd }) => {
               Back to Login
             </small>
           </div>
-          <button type="submit" className="btn btn-primary">
+          <button disabled={authLoading ? true : false} type="submit" className="btn btn-primary">
             {authLoading ? <img src={Loading} height="20" width="50" alt="" /> : 'Reset Password'}
           </button>
           <div className="bottom-text important-link">
             <ul>
               <li>
-                <a href="#">About us</a>
+                <a href="/">About us</a>
               </li>
               <li>
-                <a href="#">Support</a>
+                <a href="/">Support</a>
               </li>
             </ul>
           </div>

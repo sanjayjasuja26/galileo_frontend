@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import './neuro-radiology.css';
 import Header from "../../components/Header";
 import Findings from "../../components/NeuroRadiology/Findings";
 import Impressions from "../../components/NeuroRadiology/Impressions";
-import { useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import { attemptCase, fetchCase, fetchDiseases, getAttemptedCase } from "../../redux/action/cases";
 import Location from "../../components/NeuroRadiology/Location";
 import { findings } from "../../data";
 import { CASE_STATUS } from "../../constants";
-import { toast } from "react-toastify";
 import Loader from "../../components/Common/Loader";
 import { setInitialCaseValues } from "../../utils/helper";
 
@@ -34,7 +34,7 @@ const NeuroRadiology = () => {
   useEffect(() => {
     if(caseId && user){
       dispatch(getAttemptedCase({ id: caseId, user: user.user_email, }))
-    }
+    }      
   }, [caseId, user, dispatch])
 
   useEffect(() => {                    
@@ -45,10 +45,10 @@ const NeuroRadiology = () => {
   useEffect(() => {
     if(attemptedC && diseases.data.length > 0){
       setShowChecks(true);
-      setHasSubmitted(true);
+      setHasSubmitted(true);                      
       setInitialCaseValues({attemptedC, setFindingValues, setLocationValues, setImpressions, diseases})
     }        
-  }, [attemptedC, diseases])
+  }, [attemptedC, diseases])  
   
   const handleNext = async () => {         
     if(
@@ -118,19 +118,19 @@ const NeuroRadiology = () => {
               loading ?
               <div className="text-center mt-4">
                 <Loader />
-              </div>       
+              </div>                           
               :    
-              <div className="row">                           
+              <div className="row">                                  
                 <div className="inner-wrap">
                   <div className="heading d-flex justify-content-between">
                     <p>                                                      
                       {" "}                                         
                       Brain Pathologies : <a href="/">Study ID : {caseId}</a>
-                    </p>        
-                    <p>       
-                      {" "}  
+                    </p>                                 
+                    <p>                               
+                      {" "}                                 
                       Patient Age :<a href="/">45</a>
-                    </p>    
+                    </p>      
                   </div>                                         
                   <div className="findings row">
                     <Findings findingValues={findingValues} setFindingValues={setFindingValues} showChecks={showChecks} /> 

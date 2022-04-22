@@ -10,7 +10,7 @@ import { HomePageAccess } from "../../constants";
 import CaseAccess from "../../components/Access/CaseAccess";
 import { fetchCases, initialAttemptCase, setCasesAccess, setCasesPaginationIndex, updatePage } from "../../redux/action/cases";
 
-const Home = () => {
+const Home = () => {    
 
   const dispatch = useDispatch();
 
@@ -58,7 +58,7 @@ const Home = () => {
     const page = cases.page;
     const firstTimeDataFetch = cases.data.length > 0 ? false : true;
 
-    if(paginationIndex && page){
+    if(paginationIndex && page){     
 
       let body = { page: page, user: user.user_email, access: caseAccess, loading: firstTimeDataFetch };
 
@@ -70,7 +70,7 @@ const Home = () => {
               startAt: rec.start
             }
           }
-        })
+        })   
 
         dispatch(fetchCases(body));
       }
@@ -94,7 +94,7 @@ const Home = () => {
           <>
             <CaseAccess />
             <PartialAccessVerify />
-          </>
+          </>              
         );
       case HomePageAccess.FULL_ACCESS:
         return <CaseAccess />;

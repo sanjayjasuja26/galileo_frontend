@@ -54,7 +54,7 @@ const InputField = ({ impressions, setImpressions, filteredData, setFilteredData
               if(showChecks) return;
               setShowOptions(true)
               setFilteredData({  
-                ...filteredData,
+                ...filteredData,  
                 [section]: impressions[section].value ?  diseases.data.filter((dis) =>
                   dis.disease_name.toLowerCase().includes(impressions[section].value)
                 ) : diseases.data,
