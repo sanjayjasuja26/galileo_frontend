@@ -11,7 +11,7 @@ const CaseAccess = () => {
 
   if(loading){   
     return <div className="text-center"><Loader /></div> 
-  } else if(data?.length > 0){
+  } else if(data?.length > 0){  
     return <>         
     <AllCasesTable cases={data} />
       {
