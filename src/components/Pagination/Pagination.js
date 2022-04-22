@@ -23,9 +23,9 @@ const NumericPagination = () => {
     dispatch(updatePage({ page: num }));
   };
 
-  const handleNextbtn = (jump = false) => {
+  const handleNextbtn = () => {
 
-    let skip = jump ? 4 : 1;
+    let skip = 1;
     dispatch(updatePage({page: page + skip}));
 
     if (page + 1 > maxPageNumberLimit) {
@@ -34,9 +34,9 @@ const NumericPagination = () => {
     }
   };
 
-  const handlePrevbtn = (jump = false) => {
+  const handlePrevbtn = () => {
 
-    let skip = jump ? 4 : 1;
+    let skip = 1;
     dispatch(updatePage({page: page - skip}));
 
     if ((page - 1) % limit === 0) {
@@ -47,7 +47,6 @@ const NumericPagination = () => {
 
   const renderPageNumbers = pages.map((number) => { 
     if (number < maxPageNumberLimit + 1 && number > minPageNumberLimit) { 
-      // let displayPage = page <= maxPageNumberLimit ? number : number + maxPageNumberLimit;  
          
       return (
         <button       
@@ -72,8 +71,8 @@ const NumericPagination = () => {
         <button 
             onClick={e => {
                 e.preventDefault();   
-                if(page < pages[pages.length - 1]) handleNextbtn(true)
-                handleNextbtn(true);          
+                if(page < pages[pages.length - 1]) handleNextbtn()
+                handleNextbtn();          
             }}      
         > 
           &hellip;
@@ -87,8 +86,8 @@ const NumericPagination = () => {
       <button               
         onClick={e => {                    
           e.preventDefault();   
-          if(page > pages[0]) handlePrevbtn(true)
-          handlePrevbtn(true)           
+          if(page > pages[0]) handlePrevbtn()
+          handlePrevbtn()           
         }}
       > 
         &hellip;   

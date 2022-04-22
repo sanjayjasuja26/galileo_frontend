@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import Loader from "../Common/Loader";
-import NumericPagination from "../Pagination/Pagination";
+// import NumericPagination from "../Pagination/Pagination";
 import CustomPagination from "../Pagination/CustomPagination";
 import AllCasesTable from "../Tables/AllCasesTable";
 
