@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import {
     GreenCheckIconSVG,
@@ -17,12 +17,6 @@ const InputField = ({ impressions, setImpressions, filteredData, setFilteredData
     useOutsideClick(ref, () => {
         setShowOptions(false)
     });
-    
-    useEffect(() => {
-        if(showChecks){
-            
-        }
-    }, [showChecks])
     
     const checkDiagnosis = (forIcon, sec = null) => {
 

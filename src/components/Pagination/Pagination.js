@@ -10,51 +10,55 @@ const NumericPagination = () => {
   const dispatch = useDispatch();
   const { cases: { page, total: totalRecords }} = useSelector(state => state.cases);
 
-  const [maxPageNumberLimit, setmaxPageNumberLimit] = useState(limit);
+  const [maxPageNumberLimit, setmaxPageNumberLimit] = useState(4);
   const [minPageNumberLimit, setminPageNumberLimit] = useState(0);
 
   const pages = [];
   for (let i = 1; i <= Math.ceil(totalRecords / limit); i++) {
     pages.push(i);
   }
-    
+  
+  console.log(page);
   const handleClick = (num) => { 
-    console.log(num);
     dispatch(updatePage({ page: num }));
   };
 
-  const handleNextbtn = () => {
-    dispatch(updatePage({page: page + 1}));
+  const handleNextbtn = (jump = false) => {
+
+    let skip = jump ? 4 : 1;
+    dispatch(updatePage({page: page + skip}));
 
     if (page + 1 > maxPageNumberLimit) {
-      setmaxPageNumberLimit(maxPageNumberLimit + limit);
-      setminPageNumberLimit(minPageNumberLimit + limit);
+      setmaxPageNumberLimit(maxPageNumberLimit + skip);
+      setminPageNumberLimit(minPageNumberLimit + skip);
     }
   };
 
-  const handlePrevbtn = () => {
-    dispatch(updatePage({page: page - 1}));
+  const handlePrevbtn = (jump = false) => {
 
-    if ((page - 1) % limit == 0) {
-      setmaxPageNumberLimit(maxPageNumberLimit - limit);
-      setminPageNumberLimit(minPageNumberLimit - limit);
+    let skip = jump ? 4 : 1;
+    dispatch(updatePage({page: page - skip}));
+
+    if ((page - 1) % limit === 0) {
+      setmaxPageNumberLimit(maxPageNumberLimit - skip);
+      setminPageNumberLimit(minPageNumberLimit - skip);
     }              
   };
 
   const renderPageNumbers = pages.map((number) => { 
     if (number < maxPageNumberLimit + 1 && number > minPageNumberLimit) { 
-      let displayPage = page <= maxPageNumberLimit ? number : number + maxPageNumberLimit;  
+      // let displayPage = page <= maxPageNumberLimit ? number : number + maxPageNumberLimit;  
          
       return (
-        <button
-          key={number}          
-          onClick={e => {
+        <button       
+          key={number}             
+          onClick={e => {    
             e.preventDefault();                 
-            handleClick(displayPage);       
-          }}        
-          className={`${displayPage === page && "active"}`}
+            handleClick(number);       
+          }}              
+          className={`${number === page && "active"}`}
         >
-          {displayPage}
+          {number}
         </button>
       );
     } else {
@@ -68,11 +72,11 @@ const NumericPagination = () => {
         <button 
             onClick={e => {
                 e.preventDefault();   
-                if(page < pages[pages.length - 1]) handleNextbtn()
-                handleNextbtn();          
+                if(page < pages[pages.length - 1]) handleNextbtn(true)
+                handleNextbtn(true);          
             }}      
         > 
-            &hellip;
+          &hellip;
         </button>
     );
   }
@@ -83,8 +87,8 @@ const NumericPagination = () => {
       <button               
         onClick={e => {                    
           e.preventDefault();   
-          if(page > pages[0]) handlePrevbtn()
-          handlePrevbtn()           
+          if(page > pages[0]) handlePrevbtn(true)
+          handlePrevbtn(true)           
         }}
       > 
         &hellip;   
@@ -93,32 +97,32 @@ const NumericPagination = () => {
   }
 
   return(   
-    <div className="pagination">
-            <button 
-                className="prev_arrow"
-                onClick={e => {
-                  e.preventDefault()
-                  if(page > pages[0]) handlePrevbtn()
-                }}
-            >
-                <i className="bi bi-chevron-left"></i>
-            </button>
+    <div className="pagination">         
+      <button 
+          className="prev_arrow"
+          onClick={e => {
+            e.preventDefault()
+            if(page > pages[0]) handlePrevbtn()
+          }}
+      >
+          <i className="bi bi-chevron-left"></i>
+      </button>
 
-            {pageDecrementBtn}
-            {renderPageNumbers}
-            {pageIncrementBtn}
-                            
-            <button
-                className="next_arrow"
-                onClick={e => 
-                    {  
-                        e.preventDefault();
-                        if(page < pages[pages.length - 1]) handleNextbtn()
-                    }
-                }
-            >
-                <i className="bi bi-chevron-right"></i>   
-            </button>                                       
+      {pageDecrementBtn}
+      {renderPageNumbers}
+      {pageIncrementBtn}
+                      
+      <button     
+          className="next_arrow"
+          onClick={e => 
+              {  
+                  e.preventDefault();
+                  if(page < pages[pages.length - 1]) handleNextbtn()
+              }
+          }
+      >
+          <i className="bi bi-chevron-right"></i>   
+      </button>                                       
     </div>
   )
 }

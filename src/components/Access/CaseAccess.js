@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import Loader from "../Common/Loader";
 import NumericPagination from "../Pagination/Pagination";
+import CustomPagination from "../Pagination/CustomPagination";
 import AllCasesTable from "../Tables/AllCasesTable";
 
 const CaseAccess = () => {
@@ -14,10 +15,12 @@ const CaseAccess = () => {
   } else if(data?.length > 0){
     return <>   
     <AllCasesTable cases={data} />
-      {/* {
+      {
         (total === 0 || access === 'P' || (access === 'Y' && !user.verify)) 
-        ? null : <NumericPagination />
-      } */}
+        ? null : 
+        // <NumericPagination />
+        <CustomPagination />
+      }
     </>
   } else if(error){
     return <p className="text-center">{error}</p>

@@ -4,7 +4,7 @@ import InputField from "./InputField";
 const Impressions = ({ impressions, setImpressions, showChecks }) => {
   const [filteredData, setFilteredData] = useState({
     first: [],
-    second: [],
+    second: [],   
     third: []
   });
   
@@ -26,13 +26,13 @@ const Impressions = ({ impressions, setImpressions, showChecks }) => {
         impressions={impressions}
         filteredData={filteredData}
         setImpressions={setImpressions}
-        setFilteredData={setFilteredData}
+        setFilteredData={setFilteredData}      
         showChecks={showChecks}
         section="second"
-      />
+      />                
       <InputField 
         impressions={impressions}
-        filteredData={filteredData}
+        filteredData={filteredData}     
         setImpressions={setImpressions}
         setFilteredData={setFilteredData}
         showChecks={showChecks}
