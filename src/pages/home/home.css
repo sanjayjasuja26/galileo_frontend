@@ -5,6 +5,26 @@
     justify-content: end;
     margin-top: 20px;
   }
+  ul.pagination li:last-child {
+    display: none;
+}
+ul.pagination li a {
+  text-decoration: none;
+  padding: 0 8px;
+  color: #000;
+}
+ul.pagination li {
+  padding: 3px;
+}
+
+ul.pagination .active {
+  background-color: #f6992d;
+  border-radius: 21px;
+  padding: 3px;
+}
+ul.pagination li:first-child {
+    display: none;
+}
   @media (max-width: 425px) {
     .inner-wrap .heading {
       flex-direction: column;
