@@ -6,24 +6,24 @@ import { updatePage } from '../../redux/action/cases';
 
 const CustomPagination = () => {
 
-    const dispatch = useDispatch();
-    const { cases: { page, total: totalRecords }} = useSelector(state => state.cases);
+    const dispatch = useDispatch();           
+    const { cases: { page, total: totalRecords }} = useSelector(state => state.cases);                       
 
     const handlePageChange = (page) => {
-        dispatch(updatePage({ page }));
+      dispatch(updatePage({ page }));
     }
 
-  return (
-    <div>
-        <Pagination              
+  return (  
+    <div>              
+        <Pagination                                                             
           activePage={page}     
           itemsCountPerPage={CASE_LIMIT}
           totalItemsCount={totalRecords}
-          pageRangeDisplayed={4}   
+          pageRangeDisplayed={4}                                        
           onChange={handlePageChange}
-        />
+        />                                 
     </div>  
   )
-}
+}                               
 
-export default CustomPagination
+export default CustomPagination;
