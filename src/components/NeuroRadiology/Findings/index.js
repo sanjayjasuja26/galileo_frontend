@@ -37,6 +37,9 @@ const Findings = ({ findingValues, setFindingValues, showChecks }) => {
               <FindingElement 
                 key={index}
                 obj={obj}
+                showChecks={showChecks}
+                findingValues={findingValues}
+                setFindingValues={setFindingValues}
               />
             )
           })

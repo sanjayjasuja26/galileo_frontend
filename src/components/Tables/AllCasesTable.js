@@ -25,9 +25,9 @@ const AllCasesTable = ({ cases }) => {
                       <th scope="row">{c.case_id}</th>
                       <td>{c.modality}</td>
                       <td>{c.attempted ? 'Completed' : 'To be done'}</td>
-                      <td></td> 
-                      <td></td>                         
-                      <td></td>
+                      <td>{c.attempted && c.known_ddx}</td> 
+                      <td>{c?.observation_score}</td>                         
+                      <td className='text-capitalize'>{c?.inference_score}</td>
                   </tr>              
                 ))                            
               }     

@@ -98,7 +98,7 @@ const Home = () => {
         );
       case HomePageAccess.FULL_ACCESS:
         return <CaseAccess />;
-      default:                  
+      default:                                     
         return ''; 
     }
   };
