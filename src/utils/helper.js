@@ -338,17 +338,22 @@ export const getDataFromCollection = async (coll, filter = null) => {
 
     let data = [];
     querySnapshot.forEach((doc) => {      
-      data.push(doc.data());   
+      data.push(doc.data());              
     });                        
     
-    let attemptedCase;
+    let attemptedCase;   
 
     if(filter && filter.user){
       data = await Promise.all(data.map(async (d) => {
         attemptedCase = await getAttemptedCaseDoc({ id: d.case_id, user: filter.user });   
   
         if(attemptedCase){
-          d = { ...d, attempted: true }
+          d = { 
+            ...d, 
+            attempted: true,                              
+            observation_score: attemptedCase.observation_score,
+            inference_score: attemptedCase.inference_score 
+          }
         }    
   
         return d;

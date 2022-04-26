@@ -44,7 +44,7 @@ const InputField = ({ impressions, setImpressions, filteredData, setFilteredData
   return (
     <div className="col-lg-4 col-sm-6 px-2" ref={ref}>
         <div className="diagnosis"> 
-          <p>1st Clinical Diagnosis {showChecks && impressions[section].link !== '' && <a href={impressions[section].link} target="_blank" rel="noreferrer">Reference</a>}</p> 
+          <p>1st Clinical Diagnosis {showChecks && impressions[section].link !== '' && <a href={impressions[section].link} target="_blank" rel="noreferrer" className='text-decoration-underline mx-2'>Reference</a>}</p> 
           <input   
             type="search"
             disabled={showChecks ? true : false}
@@ -109,4 +109,4 @@ const InputField = ({ impressions, setImpressions, filteredData, setFilteredData
   )
 }
 
-export default InputField
+export default InputField;
