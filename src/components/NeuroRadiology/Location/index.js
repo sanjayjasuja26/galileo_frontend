@@ -16,9 +16,9 @@ const Location = ({ locationValues, setLocationValues, showChecks }) => {
                 <LocationElement 
                   key={index}
                   obj={obj}
+                  showChecks={showChecks}
                   locationValues={locationValues}
                   setLocationValues={setLocationValues}
-                  showChecks={showChecks}
                 />
               )
             })

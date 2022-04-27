@@ -84,11 +84,35 @@ const NeuroRadiology = () => {
     }
   }
 
-  const handleNext = async () => {                            
+  const getLocationValue = () => {
+    let str = '';
+    locationValues.map(l => {
+      str += `${l.parent} ${l.child.map(c => c)}; `
+    })
+
+    return str;
+  }
+
+  const compareLocation = () => {
+    return singleCase.location.map(el => {
+      let elem = locationValues.filter(e => e.parent === el.parent)[0];
+
+      el = { ...el, parentValue: el.parent === elem.parent ? 'correct' : 'incorrect' }   
+
+      el.child.map(c => {
+        let child = elem.child.filter(e => e === c)[0];
+        return { el: c, val: child.length ? 'correct' : 'incorrect' }
+      })
+
+      return el;
+    })
+  }
+
+  const handleNext = async () => {  
     if(
       findings.length === Object.keys(findingValues).length && 
       (impressions.first.value !== '' && impressions.second.value !== '' && impressions.third.value !== '') &&
-      locationValues && singleCase                                
+      locationValues.length && singleCase                                
     ){                   
 
       setShowChecks(true);   
@@ -121,8 +145,10 @@ const NeuroRadiology = () => {
           dominant_pattern_eval: findingValues.dominant_pattern === singleCase.dominant_pattern ? 'correct' : 'incorrect',
           side_entered: findingValues.side,
           side_eval: findingValues.side === singleCase.side ? 'correct' : 'incorrect',       
-          location_entered: locationValues,
+          location_entered: getLocationValue(), 
           location_eval: locationValues === singleCase.location ? 'correct' : 'incorrect',
+          // location_entered: locationValues,
+          // location_eval: compareLocation(),
           acceptable_diagnosis1_entered: impressions.first.value,
           acceptable_diagnosis1_eval: impressions.first.result,
           acceptable_diagnosis2_entered: impressions.second.value,

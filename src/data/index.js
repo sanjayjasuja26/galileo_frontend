@@ -17,7 +17,7 @@ export const findings  = [
             },
             {
                 text: "N/A",
-                value: "na"
+                value: "NA"
             }
         ]
     },
@@ -39,7 +39,7 @@ export const findings  = [
             },
             {
                 text: "N/A",
-                value: "na"
+                value: "NA"
             }
         ]
     },
@@ -61,7 +61,7 @@ export const findings  = [
             },
             {
                 text: "N/A",
-                value: "na"
+                value: "NA"
             }
         ]
     },
@@ -79,7 +79,7 @@ export const findings  = [
             },
             {
                 text: "N/A",
-                value: "na"
+                value: "NA"
             }
         ]
     },
@@ -97,7 +97,7 @@ export const findings  = [
             },
             {
                 text: "N/A",
-                value: "na"
+                value: "NA"
             }
         ]
     },
@@ -119,7 +119,7 @@ export const findings  = [
             },
             {
                 text: "N/A",
-                value: "na"
+                value: "NA"
             },
         ]
     },
@@ -141,7 +141,7 @@ export const findings  = [
             },
             {
                 text: "N/A",
-                value: "na"
+                value: "NA"
             }
         ]
     },
@@ -163,7 +163,7 @@ export const findings  = [
             },
             {
                 text: "N/A",
-                value: "na"
+                value: "NA"
             },
         ]
     },
@@ -181,7 +181,7 @@ export const findings  = [
             },
             {
                 text: "N/A",
-                value: "na"
+                value: "NA"
             }
         ]
     },
@@ -203,7 +203,7 @@ export const findings  = [
             },
             {
                 text: "N/A",
-                value: "na"
+                value: "NA"
             }
         ]
     },
@@ -229,7 +229,7 @@ export const findings  = [
             },
             {
                 text: "N/A",
-                value: "na"
+                value: "NA"
             }
         ]
     }
@@ -238,113 +238,113 @@ export const findings  = [
 export const location = [
     {
         title: "Cortical Gray Matter",
-        value: "cortical gray",
+        value: "Cortical Gray",
         options: [
             {
                 text: "Frontal",
-                value: "frontal"
+                value: "Frontal"
             },
             {
                 text: "Parietal",
-                value: "parietal"
+                value: "Parietal"
             },
             {
                 text: "Occipital",
-                value: "occipital"
+                value: "Occipital"
             },
             {
                 text: "Temporal",
-                value: "temporal"
+                value: "Temporal"
             }
         ]
     },
     {
         title: "Cerebral White Matter",
-        value: "cerebral white",
+        value: "Cerebral White Matter",
         options: [
             {
                 text: "Frontal",
-                value: "frontal"
+                value: "Frontal"
             },
             {
                 text: "Parietal",
-                value: "parietal"
+                value: "Parietal"
             },
             {
                 text: "Occipital",
-                value: "occipital"
+                value: "Occipital"
             },
             {
                 text: "Temporal",
-                value: "temporal"
+                value: "Temporal"
             }
         ]
     },
     {
         title: "Deep Gray White Matter",
-        value: "deep gray white",
+        value: "Deep Gray White",
         options: [
             {
                 text: "Caudate",
-                value: "caudate"
+                value: "Caudate"
             },
             {
                 text: "Putamen",
-                value: "putamen"
+                value: "Putamen"
             },
             {
                 text: "Global Pallidus",
-                value: "global_pallidus"
+                value: "Global Pallidus"
             },
             {
                 text: "Thalamus",
-                value: "thalamus"
+                value: "Thalamus"
             },
             {
                 text: "Internal Capsule",
-                value: "internal_capsule"
+                value: "Internal Capsule"
             }
         ]
     },
     {
         title: "Brain Stem",
-        value: "brain stem",
+        value: "Brain Stem",
         options: [
             {
                 text: "Mesencephalon",
-                value: "mesencephalon"
+                value: "Mesencephalon"
             },
             {
                 text: "Pons",
-                value: "pons"
+                value: "Pons"
             },
             {
                 text: "Medulla",
-                value: "medulla"
+                value: "Medulla"
             },
         ]
     },
     {
         title: "Cerebellum",
-        value: "cerebellum",
+        value: "Cerebellum",
         options: [
             {
                 text: "Hemisphere",
-                value: "hemisphere"
+                value: "Hemisphere"
             },
             {
                 text: "Vermis",
-                value: "vermis"
+                value: "Vermis"
             },
             {
                 text: "Tonsil",
-                value: "tonsil"
+                value: "Tonsil"
             },
         ]
     },
     {
         title: "Intraventricular",
-        value: "intraventricular",
+        value: "Intraventricular",
         options: [
             {
                 text: "LAT",
@@ -362,25 +362,25 @@ export const location = [
     },
     {
         title: "Extracerebral",
-        value: "extracerebral",
+        value: "Extracerebral",
         options: [
             {
                 text: "Epidural",
-                value: "epidural"
+                value: "Epidural"
             },   
             {
                 text: "Subdural",
-                value: "subdural"
+                value: "Subdural"
             },
             {
                 text: "Subarachnoid",
-                value: "subarachnoid"
+                value: "Subarachnoid"
             }
         ]
     },
     {
         title: 'N/A',
-        value: "na",
+        value: "NA",
         options: []
     }
 ]

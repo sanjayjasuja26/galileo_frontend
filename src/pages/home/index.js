@@ -53,9 +53,9 @@ const Home = () => {
     dispatch(setCasesPaginationIndex({ page: cases.page, access: caseAccess }));
   }, [dispatch, caseAccess, cases.page])     
 
-  useEffect(() => {
+  useEffect(() => {    
     const paginationIndex = cases.paginationIndex;
-    const page = cases.page;
+    const page = cases.page;        
     const firstTimeDataFetch = cases.data.length > 0 ? false : true;
 
     if(paginationIndex && page){     
