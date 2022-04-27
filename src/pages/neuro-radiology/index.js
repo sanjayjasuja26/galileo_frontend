@@ -87,7 +87,7 @@ const NeuroRadiology = () => {
   const getLocationValue = () => {
     let str = '';
     locationValues.map(l => {
-      str += `${l.parent} ${l.child.map(c => c)}; `
+      str += `${l.parent} ${l.child.map(c => c)};`
     })
 
     return str;

@@ -479,7 +479,6 @@ export const setInitialCaseValues = (body) => {
     if(key.includes("_entered")){
       if(key.split("_entered")[0] === 'location'){
         setLocationValues(attemptedC[key])
-        delete attemptedC[key];
       } else if(key.split("_entered")[0].startsWith("acceptable_diagnosis")) {
         setImpressionsValues(key.split("_entered")[0], attemptedC[key], setImpressions, diseases, attemptedC)
         delete attemptedC[key];

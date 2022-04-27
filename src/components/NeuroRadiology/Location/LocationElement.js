@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import {
   GreenCheckIconSVG,  
@@ -7,16 +7,18 @@ import {
 
 const LocationElement = ({ obj, locationValues, setLocationValues, showChecks }) => {             
 
-  const { singleCase } = useSelector(state => state.cases)
+  const { attemptedCase: { attemptedC }, singleCase } = useSelector(state => state.cases)
   const [showOptions, setShowOptions] = useState(false);
  
-  const matchValues = () => {
-    if(showChecks && singleCase?.location){
-      const arr = singleCase.location.split(';');
+  const matchValues = (forHighLight) => {
+    if(showChecks && attemptedC?.location_entered && singleCase?.location){
+      const attemptArr = attemptedC.location_entered.split(';');
+      const answerArr = singleCase.location.split(';');
 
+      const arr = forHighLight ? attemptArr : answerArr;
       if(arr.length){
         for(let el in arr){
-          if(arr[el].includes(obj.value) || arr[el] === obj.value){
+          if(arr[el].includes(obj.value) || arr[el].split('').includes(obj.value) || arr[el] === obj.value){
             return true;
           }
         }
@@ -24,22 +26,20 @@ const LocationElement = ({ obj, locationValues, setLocationValues, showChecks })
     }
   }
 
-  const matchChild = (value) => {
-    if(singleCase?.location){
-      const arr = singleCase.location.split(';');
+  const matchChild = (value, forHighLight) => {
+    if(showChecks && attemptedC?.location_entered && singleCase?.location){
+      const attemptArr = attemptedC.location_entered.split(';');
+      const answerArr = singleCase.location.split(';');
 
+      const arr = forHighLight ? attemptArr : answerArr;
       if(arr.length){
         for(let el in arr){
          let values = (arr[el].split(' '));
-         console.log(values);
-        //  for(let v in values){
-          // console.log(values[v], value);
-
-          //  if(values[v] === value){
-          //    return true;
-          //  }
-           
-        //  }
+         for(let v in values){
+           if(values[v] === value){
+             return true;
+           }
+         }
         }
       }
     }
@@ -48,7 +48,7 @@ const LocationElement = ({ obj, locationValues, setLocationValues, showChecks })
   return (
     <div className="common_nav">
       <div    
-        className={(showOptions || matchValues()) ? "cat highlight" : "cat"}
+        className={(showOptions || matchValues(true)) ? "cat highlight" : "cat"}
         onClick={(e) => { 
           if (showChecks) {       
             return; 
@@ -68,10 +68,10 @@ const LocationElement = ({ obj, locationValues, setLocationValues, showChecks })
       >
         {obj.title}  
       </div>                      
-      {showChecks && singleCase && matchValues() && (
+      {showChecks && attemptedC && matchValues(true) && (
         <small>        
           {
-            matchValues() ? (
+            matchValues(false) ? (
               <GreenCheckIconSVG />   
             ) : (
               <RedCheckIconSVG />
@@ -80,15 +80,14 @@ const LocationElement = ({ obj, locationValues, setLocationValues, showChecks })
         </small>                 
       )}                        
       {
-        (showOptions || matchValues()) &&  
+        (showOptions || matchValues(true)) &&  
         <div className="drop-down-select">      
             {obj.options.map((op, index) => ( 
-              <>
-                <p 
-                  key={index} 
-                  className={(matchChild(op.value) && matchValues()) ? "pointer highlight" : "pointer"} 
+              <div key={index} className="position-relative">
+                <p  
+                  className={(matchChild(op.value, true) && matchValues(true)) ? "pointer highlight" : "pointer"} 
                   onClick={(e) => {
-                    e.target.classList.toggle('highlight');
+                    !showChecks && e.target.classList.toggle('highlight');
 
                     if(e.target.classList.contains('highlight')){
                       const elm = locationValues.filter(l => l.parent === obj.value)
@@ -111,10 +110,10 @@ const LocationElement = ({ obj, locationValues, setLocationValues, showChecks })
                       }
                     }
                 }}>{op.text}</p>
-                {showChecks && singleCase && matchValues() && (
+                {showChecks && attemptedC && matchValues(true) && matchChild(op.value, true) && (
                   <small>        
                     {
-                      matchChild(op.value) ? (
+                      matchChild(op.value, false) ? (
                         <GreenCheckIconSVG />   
                       ) : (
                         <RedCheckIconSVG />
@@ -122,7 +121,7 @@ const LocationElement = ({ obj, locationValues, setLocationValues, showChecks })
                     }
                   </small>                 
                 )} 
-              </>                  
+              </div>                  
             ))}                                            
         </div>                                  
       }                
