@@ -1,3 +1,7 @@
+.container-fluid{
+  overflow-x: hidden;
+}
+
 .leftside {
   background-color: #002a4a;
   padding: 3rem;
