@@ -127,12 +127,16 @@ export const varifyResetPasswordLink = (body) => async (dispatch) => {
   }
 }
 
-export const varifyEmail = (user =  null) => async (dispatch) => {
-  try {         
-    const currentUser = user ? user : auth.currentUser;
-    await sendEmailVerification(currentUser);
-    toast.success('Please check your email');
-    return true;                                    
+export const varifyEmail = (user =  null) => async () => {
+  try {       
+    const currentUser = await (user ? user : auth.currentUser);
+    if(currentUser){
+      sendEmailVerification(currentUser)
+        .then(() => {
+          toast.success('Please check your email');
+          return true;
+        }) 
+    }
   } catch (error) {
     toast.error('Oops!! Link has expired')
     return false;    

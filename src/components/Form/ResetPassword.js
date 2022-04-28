@@ -24,7 +24,7 @@ const ResetPassword = ({ code, setIsLogin, setIsForgetPwd }) => {
       validationSchema={resetPasswordValidation}
       onSubmit={async (values, { resetForm }) => {
         if (values && code) {
-         const success = dispatch(varifyResetPasswordLink({ code, password: values.password }));
+         const success = await dispatch(varifyResetPasswordLink({ code, password: values.password }));
 
          if(success){
            resetForm();

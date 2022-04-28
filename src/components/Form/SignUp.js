@@ -29,7 +29,7 @@ const SignUpForm = ({ setIsLogin }) => {
         validationSchema={signUpFormSchema}
         onSubmit={async (values, { resetForm }) => {
             if(values) { 
-                const signupSuccess = dispatch(signUp(values));        
+                const signupSuccess = await dispatch(signUp(values));        
                 
                 if(signupSuccess){
                     dispatch(varifyEmail());       

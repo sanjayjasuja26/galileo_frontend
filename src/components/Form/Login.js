@@ -48,7 +48,7 @@ const LoginForm = ({ setIsLogin, setIsForgetPwd }) => {
               email: values.email
             }))      
           }
-          const loginSuccess = dispatch(login(values));
+          const loginSuccess = await dispatch(login(values));
           if(loginSuccess){
             resetForm();      
             history('/');                    

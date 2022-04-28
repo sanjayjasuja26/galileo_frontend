@@ -20,7 +20,7 @@ const ForgotPassword = ({ setIsForgetPwd, setIsLogin }) => {
         validateOnChange={true}
         validationSchema={emailFormValidation}
         onSubmit={async (values, { resetForm }) => {
-            const isEmailSend = dispatch(sendResetPasswordEmail(values.email));
+            const isEmailSend = await dispatch(sendResetPasswordEmail(values.email));
             if(isEmailSend){
               resetForm();
             }
