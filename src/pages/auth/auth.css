@@ -106,10 +106,10 @@
 }
 .loginn .login .form .username input {
   border: 0px !important;
-}
-.loginn .login .form .username input:focus {
   box-shadow: unset;
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
 }
+
 .loginn .login .form label {
   font-weight: 300;
   font-size: 15px;
@@ -150,7 +150,8 @@
   color: red;
 }
 .loginn .login .form .username input:focus{
-  background-color: transparent;
+  background-color: transparent !important;
+  box-shadow: unset;
 }
 
 .loginn .login form {

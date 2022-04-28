@@ -2,7 +2,7 @@ import React from 'react'
 import { location } from '../../../data';
 import LocationElement from './LocationElement';
 
-const Location = ({ locationValues, setLocationValues, showChecks }) => {
+const Location = ({ locationValues, setLocationValues, showChecks, compareLocation }) => {
 
   return (                     
     <div className="col-lg-12 types d-flex location">
@@ -19,6 +19,7 @@ const Location = ({ locationValues, setLocationValues, showChecks }) => {
                   showChecks={showChecks}
                   locationValues={locationValues}
                   setLocationValues={setLocationValues}
+                  compareLocation={compareLocation}
                 />
               )
             })

@@ -23,7 +23,7 @@ ul.pagination li:nth-child(2) a{
 ul.pagination li:nth-child(7) a{
   display: none;
 }
-li:nth-child(7)::after {
+ul.pagination li:nth-child(7)::after {
   content: "";
   border: solid black;
   border-width: 0 2px 2px 0;
@@ -33,7 +33,7 @@ li:nth-child(7)::after {
   -webkit-transform: rotate(-45deg);
   margin-left: 10px;
 }
-li:nth-child(2)::after {
+ul.pagination li:nth-child(2)::after {
   content: "";
   border: solid black;
   border-width: 0 2px 2px 0;

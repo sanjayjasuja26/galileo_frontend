@@ -8,7 +8,6 @@ const Impressions = ({ impressions, setImpressions, showChecks }) => {
     third: []
   });
   
-
   return (
     <div className="impression row">
       <div>

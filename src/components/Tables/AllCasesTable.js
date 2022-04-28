@@ -21,7 +21,7 @@ const AllCasesTable = ({ cases }) => {
           <tbody>              
               {    
                 cases.map(c => (
-                  <tr key={c.case_id} onClick={() => navigate(`/neuro-radiology/${c.case_id}`)}>      
+                  <tr key={c.case_id} className="pointer" onClick={() => navigate(`/neuro-radiology/${c.case_id}`)}>      
                       <th scope="row">{c.case_id}</th>
                       <td>{c.modality}</td>
                       <td>{c.attempted ? 'Completed' : 'To be done'}</td>

@@ -63,18 +63,18 @@ const Profile = () => {
                       setFile(e.target.files[0])
                     }}                                    
                   />         
-                  <div onClick={handleImage}>
+                  <div>
                     {                      
                       preview              
                       ?  
-                      <div className="user_img">
+                      <div className="user_img" onClick={handleImage}>
                         <img src={preview} alt="" className="rounded rounded-circle" height={80} width={80} />
                         <div className="edit_userimg">
                         <EditIconSVG />                      
                         </div>                      
                       </div>                   
                       :
-                      <div className="user_img">
+                      <div className="user_img" onClick={handleImage}>
                         <EditProfileIconSVG />
                         <div className="edit_userimg">
                         <EditIconSVG />                      

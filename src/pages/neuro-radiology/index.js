@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -16,7 +16,7 @@ import { setInitialCaseValues } from "../../utils/helper";
 const NeuroRadiology = () => {
 
   const { caseId } = useParams();
-
+     
   const dispatch = useDispatch();   
   const { user } = useSelector(state => state.auth);
   const { diseases, singleCase, attemptedCase: { loading, attemptedC } } = useSelector(state => state.cases);         
@@ -40,7 +40,7 @@ const NeuroRadiology = () => {
   useEffect(() => {                    
     dispatch(fetchDiseases());                 
     caseId && dispatch(fetchCase({ page: 1, id: caseId, startAt: '', loading: true, user: user.user_email })    )                                                                          
-  }, [dispatch, caseId, user]        )                                                                             
+  }, [dispatch, caseId, user]                      )                                                                             
     
   useEffect(() => {  
     if(attemptedC && diseases.data.length > 0){
@@ -59,7 +59,8 @@ const NeuroRadiology = () => {
         }
       }
 
-      if(locationValues === singleCase.location){
+      const elm = compareLocation();
+      if(elm && elm.filter(el => el?.parentValue === 'correct').length){
         score++;
       }
     }
@@ -84,31 +85,27 @@ const NeuroRadiology = () => {
     }
   }
 
-  const getLocationValue = () => {
-    let str = '';
-    locationValues.map(l => {
-      str += `${l.parent} ${l.child.map(c => c)};`
-    })
+  const compareLocation = useCallback(() => {
+    if(locationValues.length && singleCase){
+      return singleCase.location.map(el => {
+        let elem = locationValues.filter(e => e.parent === el.parent)[0];
 
-    return str;
-  }
+        if(elem){
+          el = { ...el, parentValue: el.parent === elem.parent ? 'correct' : 'incorrect' }   
 
-  const compareLocation = () => {
-    return singleCase.location.map(el => {
-      let elem = locationValues.filter(e => e.parent === el.parent)[0];
+          el.child = el.child.map(c => {
+            let ch = elem.child.filter(e => e === c)[0];
+            return { el: c, val: ch ? 'correct' : 'incorrect' }
+          })
 
-      el = { ...el, parentValue: el.parent === elem.parent ? 'correct' : 'incorrect' }   
+        } 
 
-      el.child.map(c => {
-        let child = elem.child.filter(e => e === c)[0];
-        return { el: c, val: child.length ? 'correct' : 'incorrect' }
+        return el;
       })
+    }
+  }, [singleCase, locationValues])
 
-      return el;
-    })
-  }
-
-  const handleNext = async () => {  
+  const handleSubmit = async () => {  
     if(
       findings.length === Object.keys(findingValues).length && 
       (impressions.first.value !== '' && impressions.second.value !== '' && impressions.third.value !== '') &&
@@ -145,10 +142,8 @@ const NeuroRadiology = () => {
           dominant_pattern_eval: findingValues.dominant_pattern === singleCase.dominant_pattern ? 'correct' : 'incorrect',
           side_entered: findingValues.side,
           side_eval: findingValues.side === singleCase.side ? 'correct' : 'incorrect',       
-          location_entered: getLocationValue(), 
-          location_eval: locationValues === singleCase.location ? 'correct' : 'incorrect',
-          // location_entered: locationValues,
-          // location_eval: compareLocation(),
+          location_entered: locationValues,
+          location_eval: compareLocation(),
           acceptable_diagnosis1_entered: impressions.first.value,
           acceptable_diagnosis1_eval: impressions.first.result,
           acceptable_diagnosis2_entered: impressions.second.value,
@@ -176,7 +171,7 @@ const NeuroRadiology = () => {
   }                         
 
   return (
-    <>
+    <>                          
       <Header />
         <section className="body">            
           <div className="container">
@@ -196,14 +191,14 @@ const NeuroRadiology = () => {
                     {
                       singleCase?.age &&
                       <p>                               
-                        {" "}                                 
+                        {" "}                                           
                         Patient Age :<a href="/"> {singleCase.age}</a>
                       </p>   
-                    }                                
+                    }           
                   </div>                                         
                   <div className="findings row">
                     <Findings findingValues={findingValues} setFindingValues={setFindingValues} showChecks={showChecks} /> 
-                    <Location locationValues={locationValues} setLocationValues={setLocationValues} showChecks={showChecks} />       
+                    <Location locationValues={locationValues} setLocationValues={setLocationValues} showChecks={showChecks} compareLocation={compareLocation} />       
                   </div>                                               
                   <Impressions impressions={impressions} setImpressions={setImpressions} showChecks={showChecks} />                   
                 </div>             
@@ -211,7 +206,7 @@ const NeuroRadiology = () => {
                   {
                     (!hasSubmitted) &&
                     <button type="button" className="btn btn-primary" onClick={() => {
-                        handleNext()
+                        handleSubmit()
                     }}>Next</button>
                   }                     
                 </div>   

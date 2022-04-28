@@ -1,54 +1,80 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import {
   GreenCheckIconSVG,  
   RedCheckIconSVG,
 } from "../../../assets/svgComponents";
 
-const LocationElement = ({ obj, locationValues, setLocationValues, showChecks }) => {             
+const LocationElement = ({ obj, locationValues, setLocationValues, showChecks, compareLocation }) => {             
 
-  const { attemptedCase: { attemptedC }, singleCase } = useSelector(state => state.cases)
+  const { attemptedCase: { attemptedC } } = useSelector(state => state.cases)
   const [showOptions, setShowOptions] = useState(false);
- 
-  const matchValues = (forHighLight) => {
-    if(showChecks && attemptedC?.location_entered && singleCase?.location){
-      const attemptArr = attemptedC.location_entered.split(';');
-      const answerArr = singleCase.location.split(';');
+  const [comparedValues, setComparedValues] = useState(null);
 
-      const arr = forHighLight ? attemptArr : answerArr;
-      if(arr.length){
-        for(let el in arr){
-          if(arr[el].includes(obj.value) || arr[el].split('').includes(obj.value) || arr[el] === obj.value){
-            return true;
-          }
+  const matchParent = (forChecks) => {
+    if(comparedValues){
+      if(forChecks){
+        const elm = comparedValues.location_eval.filter(el => el.parent === obj.value)[0];
+        return elm ? (elm.parentValue === 'correct' ? true : false) : false
+      } else {
+        return comparedValues.location_entered.filter(el => el.parent === obj.value)[0] ? true : false
+      }
+    }
+  }
+
+  const matchChild = (forChecks, val) => {
+    if(comparedValues){
+      let elm;
+
+      if(forChecks){
+        elm = comparedValues.location_eval.filter(el => el.parent === obj.value)[0];
+
+        if(elm){
+          let child = elm.child.filter(c => c.el === val)[0];
+          return child?.val === 'correct' ? true : false;
+        }
+      } else {
+        elm = comparedValues.location_entered.filter(el => el.parent === obj.value)[0];
+
+        if(elm){
+          return elm.child.filter(c => c === val)[0] ? true : false;
         }
       }
     }
   }
 
-  const matchChild = (value, forHighLight) => {
-    if(showChecks && attemptedC?.location_entered && singleCase?.location){
-      const attemptArr = attemptedC.location_entered.split(';');
-      const answerArr = singleCase.location.split(';');
+  const showChild = useCallback(() => {
+    if(comparedValues){
+      const elm = comparedValues.location_entered.filter(el => el.parent === obj.value)[0];
 
-      const arr = forHighLight ? attemptArr : answerArr;
-      if(arr.length){
-        for(let el in arr){
-         let values = (arr[el].split(' '));
-         for(let v in values){
-           if(values[v] === value){
-             return true;
-           }
-         }
-        }
+      if(elm){
+        return elm.child.length > 0 ? setShowOptions(true) : setShowOptions(false);
       }
     }
-  }
+  }, [comparedValues, obj.value])
+
+  useEffect(() => {
+    showChild();
+  }, [showChild])
+
+  useEffect(() => {
+    if(showChecks){
+      if(attemptedC){
+        setComparedValues(attemptedC);
+      } else {
+        let compVal = compareLocation();
+        compVal && setComparedValues({
+          location_eval: compVal,
+          location_entered: locationValues
+        });
+      }
+    }
+  }, [showChecks, compareLocation, obj.value, attemptedC, locationValues])
 
   return (
     <div className="common_nav">
       <div    
-        className={(showOptions || matchValues(true)) ? "cat highlight" : "cat"}
+        className={(showOptions || matchParent(false)) ? "cat highlight" : "cat"}
         onClick={(e) => { 
           if (showChecks) {       
             return; 
@@ -56,7 +82,7 @@ const LocationElement = ({ obj, locationValues, setLocationValues, showChecks })
           setShowOptions(!showOptions);
           const elm = locationValues.filter(l => l.parent === obj.value);
           if(!elm.length){
-            setLocationValues([
+            setLocationValues([ 
               ...locationValues,   
               {
                 parent: obj.value,
@@ -68,10 +94,10 @@ const LocationElement = ({ obj, locationValues, setLocationValues, showChecks })
       >
         {obj.title}  
       </div>                      
-      {showChecks && attemptedC && matchValues(true) && (
+      {showChecks && matchParent(false) && (
         <small>        
           {
-            matchValues(false) ? (
+            matchParent(true) ? (
               <GreenCheckIconSVG />   
             ) : (
               <RedCheckIconSVG />
@@ -80,12 +106,12 @@ const LocationElement = ({ obj, locationValues, setLocationValues, showChecks })
         </small>                 
       )}                        
       {
-        (showOptions || matchValues(true)) &&  
+        (showOptions) &&  
         <div className="drop-down-select">      
             {obj.options.map((op, index) => ( 
               <div key={index} className="position-relative">
                 <p  
-                  className={(matchChild(op.value, true) && matchValues(true)) ? "pointer highlight" : "pointer"} 
+                  className={matchChild(false, op.value) ? "pointer highlight" : "pointer"} 
                   onClick={(e) => {
                     !showChecks && e.target.classList.toggle('highlight');
 
@@ -110,10 +136,10 @@ const LocationElement = ({ obj, locationValues, setLocationValues, showChecks })
                       }
                     }
                 }}>{op.text}</p>
-                {showChecks && attemptedC && matchValues(true) && matchChild(op.value, true) && (
+                {showChecks && matchChild(false, op.value) && (
                   <small>        
                     {
-                      matchChild(op.value, false) ? (
+                      matchChild(true, op.value) ? (
                         <GreenCheckIconSVG />   
                       ) : (
                         <RedCheckIconSVG />
@@ -130,3 +156,4 @@ const LocationElement = ({ obj, locationValues, setLocationValues, showChecks })
 };                                     
 
 export default LocationElement;
+
