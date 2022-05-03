@@ -67,7 +67,7 @@ const ResetPassword = ({ code, setIsLogin, setIsForgetPwd }) => {
                 setIsForgetPwd(true);
               }}
             >
-              Resend Link
+              Resend Link                    
             </small>
             <small
               className="pointer text-muted"
@@ -83,7 +83,7 @@ const ResetPassword = ({ code, setIsLogin, setIsForgetPwd }) => {
             {authLoading ? <img src={Loading} height="20" width="50" alt="" /> : 'Reset Password'}
           </button>
           <div className="bottom-text important-link">
-            <ul>
+            <ul>                   
               <li>
                 <a href="/">About us</a>
               </li>

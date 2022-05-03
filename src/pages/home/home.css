@@ -1,5 +1,6 @@
 .inner-wrap .heading {
     padding: 35px 0;
+    padding-bottom: 21px;
   }
   .pagination{
     justify-content: end;
@@ -32,8 +33,9 @@ ul.pagination li:nth-child(7)::after {
   transform: rotate(-45deg);
   -webkit-transform: rotate(-45deg);
   margin-left: 10px;
+  cursor: pointer;
 }
-ul.pagination li:nth-child(2)::after {
+ul.pagination   li:nth-child(2)::after {
   content: "";
   border: solid black;
   border-width: 0 2px 2px 0;
@@ -42,6 +44,7 @@ ul.pagination li:nth-child(2)::after {
   transform: rotate(135deg);
   -webkit-transform: rotate(135deg);
   margin-right: 10px;
+  cursor: pointer;
 }
 ul.pagination .active {
   background-color: #f6992d;
@@ -59,6 +62,8 @@ ul.pagination li:first-child {
   }
   .inner-wrap .heading p {
     color: #002a4a;
+    font-weight: 500;
+    font-size: 18px;
   }
   .inner-wrap .heading p a {
     color: #000;

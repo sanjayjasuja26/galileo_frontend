@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import './neuro-radiology.css';
@@ -15,6 +15,7 @@ import { setInitialCaseValues } from "../../utils/helper";
 
 const NeuroRadiology = () => {
 
+  const navigate = useNavigate();      
   const { caseId } = useParams();
      
   const dispatch = useDispatch();   
@@ -24,8 +25,8 @@ const NeuroRadiology = () => {
   const [impressions, setImpressions] = useState({
     first: { value: '', link: '', result: '' },
     second: { value: '', link: '', result: '' },     
-    third: { value: '', link: '', result: '' }   
-  });              
+    third: { value: '', link: '', result: '' }               
+  });                       
   const [findingValues, setFindingValues] = useState({});
   const [locationValues, setLocationValues] = useState([]);
   const [showChecks, setShowChecks] = useState(false);
@@ -36,7 +37,7 @@ const NeuroRadiology = () => {
       dispatch(getAttemptedCase({ id: caseId, user: user.user_email, }))
     }                   
   }, [caseId, user, dispatch])
-
+               
   useEffect(() => {                    
     dispatch(fetchDiseases());                 
     caseId && dispatch(fetchCase({ page: 1, id: caseId, startAt: '', loading: true, user: user.user_email })    )                                                                          
@@ -46,7 +47,7 @@ const NeuroRadiology = () => {
     if(attemptedC && diseases.data.length > 0){
       setShowChecks(true);                        
       setHasSubmitted(true);                        
-      setInitialCaseValues({attemptedC, setFindingValues, setLocationValues, setImpressions, diseases})
+      setInitialCaseValues({attemptedC, setFindingValues, setLocationValues, setImpressions, diseases});
     }               
   }, [attemptedC, diseases])  
   
@@ -66,7 +67,7 @@ const NeuroRadiology = () => {
     }
 
     return score;
-  }
+  }              
 
   const calcInferenceScore = () => {
     if(impressions){
@@ -90,7 +91,7 @@ const NeuroRadiology = () => {
       return singleCase.location.map(el => {
         let elem = locationValues.filter(e => e.parent === el.parent)[0];
 
-        if(elem){
+        if(elem){            
           el = { ...el, parentValue: el.parent === elem.parent ? 'correct' : 'incorrect' }   
 
           el.child = el.child.map(c => {
@@ -170,7 +171,7 @@ const NeuroRadiology = () => {
     }                              
   }                         
 
-  return (
+  return (                
     <>                          
       <Header />
         <section className="body">            
@@ -203,19 +204,20 @@ const NeuroRadiology = () => {
                   <Impressions impressions={impressions} setImpressions={setImpressions} showChecks={showChecks} />                   
                 </div>             
                 <div className="next d-flex justify-content-end mt-3 mb-5">
-                  {
-                    (!hasSubmitted) &&
                     <button type="button" className="btn btn-primary" onClick={() => {
-                        handleSubmit()
-                    }}>Next</button>
-                  }                     
+                      if(hasSubmitted){
+                        navigate('/')
+                      } else {
+                        handleSubmit();
+                      }  
+                    }}>{hasSubmitted ? 'Back' : 'Next'}</button>
                 </div>   
-              </div>  
+              </div>                
             }           
           </div>                                  
         </section>
     </>  
-  );      
+  );                         
 };   
    
 export default NeuroRadiology;

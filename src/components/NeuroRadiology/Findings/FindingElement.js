@@ -1,8 +1,8 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { GreenCheckIconSVG, RedCheckIconSVG } from "../../../assets/svgComponents";
+import { GreenCheckIconSVG, RedCheckIconSVG } from "../../../assets/svgComponents";   
 
-const FindingElement = ({ obj, findingValues, showChecks, setFindingValues }) => {
+const FindingElement = ({ obj, findingValues, showChecks, setFindingValues }) => {               
 
   const { singleCase } = useSelector(state => state.cases);
 
@@ -23,13 +23,13 @@ const FindingElement = ({ obj, findingValues, showChecks, setFindingValues }) =>
                 return;
               }
               setFindingValues((prev) => ({
-                ...prev,
+                ...prev,                  
                 [obj.value]: opt.value,
               }));
             }}
           >
             <span>{opt.text}</span>
-            {showChecks &&
+            {showChecks &&                        
               singleCase &&
               findingValues?.[obj.value] === opt.value && (
                 <small>

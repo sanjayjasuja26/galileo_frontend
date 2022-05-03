@@ -11,10 +11,10 @@ import LoginForm from "../Form/Login";
 import ResetPassword from "../Form/ResetPassword";
 import SignUpForm from "../Form/SignUp";
 
-const RightSection = () => {
+const RightSection = () => {   
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch();                       
   const { user } = useSelector(state => state.auth)
 
   const [search] = useSearchParams();
@@ -32,16 +32,16 @@ const RightSection = () => {
       setSection(               
         <LoginForm setIsForgetPwd={setIsForgetPwd} setIsLogin={setIsLogin} />
       );                              
-    } else {
+    } else {                                                   
       setHeading("SignUp your account");
       setSection(
         <SignUpForm setIsForgetPwd={setIsForgetPwd} setIsLogin={setIsLogin} />
       );
-    }
+    }              
 
     if (mode === "resetPassword") {
       setHeading("Reset Password");
-      setSection( 
+      setSection(    
         <ResetPassword
           code={code}    
           setIsLogin={setIsLogin}
@@ -56,28 +56,28 @@ const RightSection = () => {
         <p className="text-center">
           <EnvelopeIconSVG />                          
           Please wait. We are verifying your email.
-        </p>                       
+        </p>                           
       );
 
       const varified = await varifyEmailLink({ code });
       if (varified) {
-          const isUpdated = await updateUserDocument({
+          const isUpdated = await updateUserDocument({       
             verify: true,              
-          });                                             
+          });                                               
   
           if(isUpdated) {
             toast.success("Email varified success");
-            if(user) {               
+            if(user) {                      
               dispatch(updateUser({ verify: true }));
               navigate("/");
-            } else {                               
+            } else {                                 
               navigate("/auth");
             }
           }       
       }                   
     }
-
-    if (isForgetPwd) {
+                      
+    if (isForgetPwd) {                 
       setHeading("Forgot Password");
       setSection(               
         <ForgotPassword
@@ -86,19 +86,19 @@ const RightSection = () => {
         />
       );                         
     }   
-  }, [code, user, navigate, dispatch]);
+  }, [code, user, navigate, dispatch]);      
 
-  useEffect(() => {        
+  useEffect(() => {                     
     displaySection(isLogin, isForgetPwd, mode);
-  }, [isLogin, isForgetPwd, mode, displaySection]);   
+  }, [isLogin, isForgetPwd, mode, displaySection]);     
 
   return (
-    <div className="col-lg-7 loginn signup">
+    <div className="col-lg-7 loginn signup">  
       <div className="login">
         <div className="logo text-center">
           <img src={Logo} alt="" />
-          <h3>{heading}</h3>    
-        </div>             
+          <h3>{heading}</h3>                     
+        </div>                 
         {section}   
       </div>
     </div>

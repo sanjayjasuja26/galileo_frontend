@@ -36,7 +36,7 @@ const Profile = () => {
     if(user.image){                            
       setPreview(user.image);
     }
-  }, [user])
+  }, [user])       
   
   useEffect(() => {     
     if(file){                         

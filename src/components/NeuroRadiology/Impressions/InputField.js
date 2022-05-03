@@ -1,31 +1,29 @@
-import React, { useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import {
     GreenCheckIconSVG,
-    RedCheckIconSVG,
+    RedCheckIconSVG,           
     YellowCheckIconSVG,
 } from "../../../assets/svgComponents";
 import useOutsideClick from '../../../hooks/useOutsideClick';
 
 const InputField = ({ impressions, setImpressions, filteredData, setFilteredData, showChecks, section }) => {
-
+                             
     const ref = useRef(null);
 
     const { diseases, singleCase } = useSelector((state) => state.cases)
     const [showOptions, setShowOptions] = useState(false);
+    const [inputVal, setInputVal] = useState('');
 
-    useOutsideClick(ref, () => {
-        setShowOptions(false)
-    });
-    
-    const checkDiagnosis = (forIcon, sec = null) => {
+    const checkDiagnosis = useCallback((forIcon, sec = null) => {
 
       const value = forIcon ? impressions[section].value : sec;
 
-      const val = singleCase.known_ddx.toLowerCase() ===
+      if(singleCase){
+        const val = singleCase.known_ddx.toLowerCase() ===
         value.toLowerCase() 
         ? 
-          (forIcon ? <GreenCheckIconSVG /> : 'correct')
+        (forIcon ? <GreenCheckIconSVG /> : 'correct')
         : 
         (singleCase.acceptable_diagnosis1.toLowerCase() ===
             value.toLowerCase() ||
@@ -34,12 +32,45 @@ const InputField = ({ impressions, setImpressions, filteredData, setFilteredData
           singleCase.acceptable_diagnosis3.toLowerCase() ===
             value.toLowerCase()) 
         ? 
-          (forIcon ? <YellowCheckIconSVG /> : 'acceptable')
+        (forIcon ? <YellowCheckIconSVG /> : 'acceptable')
         : 
-          (forIcon ? <RedCheckIconSVG /> : 'incorrect')
+        (forIcon ? <RedCheckIconSVG /> : 'incorrect')
 
-      return val;
-    }
+        return val;
+      }
+    }, [impressions, singleCase, section])
+
+    useOutsideClick(ref, () => {
+      setShowOptions(false);
+    });  
+    
+    useEffect(() => {
+      impressions[section].value && setInputVal(impressions[section].value);
+    }, [impressions, section])
+    
+    useEffect(() => {
+      let disease = diseases.data.filter((dis) => dis.disease_name.toLowerCase() === inputVal.toLowerCase())[0]
+
+      if(disease){
+        setImpressions((prev) => ({
+          ...prev,
+          [section]: {
+            value: disease.disease_name,
+            link: disease.disease_reference,
+            result: checkDiagnosis(false, disease.disease_name)
+          },  
+        }));
+      } else {
+        setImpressions((prev) => ({
+          ...prev,
+          [section]: {
+            value: '',
+            link: '',
+            result: ''
+          },  
+        }));
+      }
+    }, [inputVal, diseases.data, section, setImpressions]);
 
   return (
     <div className="col-lg-4 col-sm-6 px-2" ref={ref}>
@@ -48,65 +79,65 @@ const InputField = ({ impressions, setImpressions, filteredData, setFilteredData
           <input   
             type="search"
             disabled={showChecks ? true : false}
-            className="form-select"
-            value={impressions[section].value}
+            className={(!showOptions && inputVal && (impressions[section].value !== inputVal)) ? "form-select border border-danger text-danger" : "form-select"}
+            value={inputVal}  
             onFocus={() => {   
-              if(showChecks) return;
-              setShowOptions(true)
+              if(showChecks) return;          
+              setShowOptions(true);
               setFilteredData({  
                 ...filteredData,  
-                [section]: impressions[section].value ?  diseases.data.filter((dis) =>
-                  dis.disease_name.toLowerCase().includes(impressions[section].value)
+                [section]: inputVal ?  diseases.data.filter((dis) =>
+                  dis.disease_name.toLowerCase().includes(inputVal.toLowerCase())
                 ) : diseases.data,
               })
-            }}
+            }}  
             onChange={(e) => {
               if(showChecks) return;
-              setShowOptions(true)
-              setImpressions((prev) => ({
-                ...prev,
-                [section]: {
-                    value: e.target.value,
-                    link: diseases.data.filter((dis) =>
-                    dis.disease_name.toLowerCase().includes(e.target.value))[0]?.disease_reference,
-                    result: checkDiagnosis(false, e.target.value)
-                },
-              }));
-              setFilteredData({
-                ...filteredData,
-                [section]: diseases.data.filter((dis) =>
-                  dis.disease_name.toLowerCase().includes(e.target.value)
-                )  
-              });               
+              setShowOptions(true);         
+
+              let disease = diseases.data.filter((dis) => dis.disease_name.toLowerCase().includes(e.target.value.toLowerCase()))[0]
+
+              if(!disease) {
+                setInputVal(inputVal);
+                return;
+              } else {
+                setInputVal(e.target.value);
+                setFilteredData({
+                  ...filteredData,
+                  [section]: diseases.data.filter((dis) =>
+                    dis.disease_name.toLowerCase().includes(e.target.value.toLowerCase())
+                  )  
+                }); 
+              }              
             }}
           />
+          {
+            (!showOptions && inputVal && (impressions[section].value !== inputVal)) &&
+            <div className='text-danger'>Please choose valid disease</div>
+          }
           {showChecks && singleCase && impressions[section].value && (
             <small>
               {
                 checkDiagnosis(true)
               }
-            </small>
+            </small>        
           )}
-
-          {showOptions && filteredData[section].length > 0 && (
+          {showOptions && (  
             <div className="serach-result">
-              {filteredData[section].map((dis) => {
-                return <div key={dis.disease_id} className="pointer" onClick={() => {
-                  setImpressions((prev) => ({
-                    ...prev,
-                    [section]: {
-                        value: dis.disease_name,
-                        link: dis.disease_reference ? dis.disease_reference : '',
-                        result: checkDiagnosis(false, dis.disease_name)
-                    },
-                  }))
-                }}>{dis.disease_name}</div>;
-              })}
+              {
+                filteredData[section].length > 0 ?
+                filteredData[section].map((dis) => {
+                  return <div key={dis.disease_id} className="pointer" onClick={() => {
+                    setInputVal(dis.disease_name)
+                  }}>{dis.disease_name}</div>;
+                }) : 
+                <p className='text-center text-danger'>No Disease Found</p>
+              }        
             </div>
           )}
         </div>
     </div>
-  )
+  )                         
 }
 
 export default InputField;
