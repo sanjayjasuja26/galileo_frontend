@@ -38,10 +38,10 @@ const InputField = ({ impressions, setImpressions, filteredData, setFilteredData
 
         return val;
       }
-    }, [impressions, singleCase, section])
+    }, [impressions, singleCase, section])    
 
     useOutsideClick(ref, () => {
-      setShowOptions(false);
+      setShowOptions(false);  
     });  
     
     useEffect(() => {
@@ -111,10 +111,10 @@ const InputField = ({ impressions, setImpressions, filteredData, setFilteredData
               }              
             }}
           />
-          {
+          {   
             (!showOptions && inputVal && (impressions[section].value !== inputVal)) &&
             <div className='text-danger'>Please choose valid disease</div>
-          }
+          }        
           {showChecks && singleCase && impressions[section].value && (
             <small>
               {
