@@ -1,10 +1,7 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom';
 
 const AllCasesTable = ({ cases }) => {     
   
-  const navigate = useNavigate();
-
   return (
     <div className="study-table table-responsive">
         <table className="table table-bordered table-striped">
@@ -21,7 +18,15 @@ const AllCasesTable = ({ cases }) => {
           <tbody>              
               {    
                 cases.map(c => (
-                  <tr key={c.case_id} className="pointer" onClick={() => navigate(`/neuro-radiology/${c.case_id}`)}>      
+                  <tr 
+                    key={c.case_id} 
+                    className="pointer" 
+                    onClick={() => {
+                      window.open(`${window.location.origin}/neuro-radiology/${c.case_id}`);
+                      if(c.folder) {
+                        window.open(c.folder);
+                      }
+                    }}>      
                       <th scope="row">{c.case_id}</th>
                       <td>{c.modality}</td>
                       <td>{c.attempted ? 'Completed' : 'To be done'}</td>
