@@ -1,7 +1,10 @@
 import React from 'react'
+import { useNavigate } from "react-router-dom";
 
 const AllCasesTable = ({ cases }) => {     
   
+  const navigate = useNavigate();
+
   return (
     <div className="study-table table-responsive">
         <table className="table table-bordered table-striped">
@@ -22,7 +25,7 @@ const AllCasesTable = ({ cases }) => {
                     key={c.case_id} 
                     className="pointer" 
                     onClick={() => {
-                      window.open(`${window.location.origin}/neuro-radiology/${c.case_id}`);
+                      navigate(`/neuro-radiology/${c.case_id}`)
                       if(c.folder) {
                         window.open(c.folder);
                       }
