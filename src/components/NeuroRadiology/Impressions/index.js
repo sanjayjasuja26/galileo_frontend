@@ -20,6 +20,7 @@ const Impressions = ({ impressions, setImpressions, showChecks }) => {
         setFilteredData={setFilteredData}
         showChecks={showChecks}
         section="first"
+        title="1st"
       />               
       <InputField 
         impressions={impressions}
@@ -28,6 +29,7 @@ const Impressions = ({ impressions, setImpressions, showChecks }) => {
         setFilteredData={setFilteredData}      
         showChecks={showChecks}
         section="second"
+        title="2nd"
       />                     
       <InputField 
         impressions={impressions}
@@ -36,6 +38,7 @@ const Impressions = ({ impressions, setImpressions, showChecks }) => {
         setFilteredData={setFilteredData}
         showChecks={showChecks}
         section="third"
+        title="3rd"
       />
     </div>
   );
