@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { installViewer } from '@ohif/viewer'
+
 import { Link } from "react-router-dom";
 import "./home.css";                 
 import NoAccess from "../../components/Access/NoAccess";
@@ -17,6 +19,37 @@ const Home = () => {
   const [section, setSection] = useState("");
   const { access, user } = useSelector((state) => state.auth);
   const { cases, caseAccess } = useSelector(state => state.cases);
+
+  const ohifViewerConfig = {
+    // default: '/'
+    routerBasename: '/',
+    servers: {
+      dicomWeb: [
+        {
+          name: 'DCM4CHEE',
+          wadoUriRoot: 'https://server.dcmjs.org/dcm4chee-arc/aets/DCM4CHEE/wado',
+          qidoRoot: 'https://server.dcmjs.org/dcm4chee-arc/aets/DCM4CHEE/rs',
+          wadoRoot: 'https://server.dcmjs.org/dcm4chee-arc/aets/DCM4CHEE/rs',
+          qidoSupportsIncludeField: true,
+          imageRendering: 'wadors',
+          thumbnailRendering: 'wadors',
+        },
+      ],
+    },
+  };
+  
+  const containerId = 'ohif'
+  const componentRenderedOrUpdatedCallback = function() {
+      console.log('OHIF Viewer rendered/updated');
+  };
+
+  useEffect(() => {
+    installViewer(
+      ohifViewerConfig,
+      containerId,
+      componentRenderedOrUpdatedCallback
+    );
+  }, [])
 
   useEffect(() => {                       
     if (access === "N") {         
@@ -116,6 +149,7 @@ const Home = () => {
                 </p>        
               </div>
               {renderSection()}
+              <div id={containerId}></div>
             </div>
           </div>
         </div>

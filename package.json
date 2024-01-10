@@ -5,6 +5,7 @@
   "dependencies": {
     "@emailjs/browser": "^3.5.0",
     "@ohif/ui": "^1.10.8",
+    "@ohif/viewer": "^4.12.36",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
@@ -21,7 +22,6 @@
     "react-router-dom": "^6.2.2",
     "react-scripts": "5.0.0",
     "react-toastify": "^8.2.0",
-
     "redux": "^4.1.2",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.4.1",
